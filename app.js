@@ -7,10 +7,6 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const authenRouter = require('./routes/authen');
-const usersRouter = require('./routes/users');
-const classesRouter = require('./routes/classes');
 const { sequelize } = require('./models');
 
 const app = express();
@@ -53,11 +49,17 @@ function admin_auth(req, res, next) {
     next()
 }
 
+const indexRouter = require('./routes/index');
+const authenRouter = require('./routes/authen');
+const usersRouter = require('./routes/users');
+const classesRouter = require('./routes/classes');
+const groupsRouter = require('./routes/groups');
 // app.get('*', auth);
 app.use('/', indexRouter);
 app.use('/authen', authenRouter);
 app.use('/users', usersRouter);
 app.use('/classes', classesRouter);
+app.use('/groups', groupsRouter);
 
 (async() => {
     try {

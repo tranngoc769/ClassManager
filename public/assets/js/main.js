@@ -223,6 +223,101 @@ $(document).ready(function() {
             console.log(response);
         });
     });
+    // Group
+    $('#add_group').click(function() {
+        let leader = $("#leader").val();
+        let group_name = $("#group_name").val();
+        let group_code = $("#group_code").val();
+        var settings = {
+            "url": "/groups/add",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "leader": leader,
+                "group_code": group_code,
+                "group_name": group_name
+            }),
+        };
+        $.ajax(settings).done(function(response) {
+            try {
+                response = JSON.parse(response)
+            } catch (error) {
+
+            }
+            if (response.code == 200) {
+                Swal.fire(
+                    'Thành công',
+                    'Thành công',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Không thành công',
+                    response.msg,
+                    'question'
+                )
+            }
+            console.log(response);
+        }).fail(function(response) {
+            Swal.fire(
+                'Không thành công',
+                response.toString(),
+                'error'
+            )
+            console.log(response);
+        });
+    });
+    $('#edit_group').click(function() {
+        let id = $("#id").val();
+        let leader = $("#leader").val();
+        let group_name = $("#group_name").val();
+        let group_code = $("#group_code").val();
+        var settings = {
+            "url": "/groups/update",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "id": id,
+                "group_code": group_code,
+                "group_name": group_name,
+                "leader": leader
+            }),
+        };
+        $.ajax(settings).done(function(response) {
+            try {
+                response = JSON.parse(response)
+            } catch (error) {
+
+            }
+            if (response.code == 200) {
+                Swal.fire(
+                    'Thành công',
+                    'Thành công',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Không thành công',
+                    response.msg,
+                    'question'
+                )
+            }
+            console.log(response);
+        }).fail(function(response) {
+            Swal.fire(
+                'Không thành công',
+                response.toString(),
+                'error'
+            )
+            console.log(response);
+        });
+    });
 
     $('#force').click(function() {
         var settings = {

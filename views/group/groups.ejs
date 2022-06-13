@@ -1,0 +1,66 @@
+<% extend('../partials/layout') %>
+    <!-- data tables css -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content container">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center mb-4">
+                    <h1 class="d-inline-block font-weight-normal mb-0">
+                        <%= title %>
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <!-- [ Inputs ] start -->
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-end">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Mã Nhóm</label>
+                                        <input id="group_code" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Tên nhóm</label>
+                                        <input id="group_name" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-end">
+                                <div class="col-sm-12">
+                                    <label for="">Chọn trưởng nhóm</label>
+                                    <select class="form-control" id="leader">
+                                        <% for(var i = 0; i < users.length; i++) { %>
+                                        <option selected value="<%= users[i].id %>"><%= users[i].full_name %>- <%= users[i].phone %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ Inputs ] end -->
+                <!-- [ Inputs ] start -->
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="datta-example mb-4">
+                                <div class="card-footer">
+                                    <button type="button" id="edit_group" class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Inputs ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    </div>
+    <script defer>
+        console.log("Page script")
+    </script>
