@@ -37,23 +37,29 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        price: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-            validate: {
-                notEmpty: {
-                    msg: 'price is required'
-                }
-            }
+        address: {
+            type: DataTypes.STRING,
+            allowNull: false
         },
-        exam_price: {
+        min_price: {
             type: DataTypes.FLOAT,
-            allowNull: false,
-            validate: {
-                notEmpty: {
-                    msg: 'exam_price is required'
-                }
-            }
+            allowNull: true,
+            defaultValue: 0
+        },
+        min_price: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
+        term_price: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
+        debit: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
         }
     }, {
         sequelize,

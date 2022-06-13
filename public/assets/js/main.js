@@ -55,6 +55,62 @@ $(document).ready(function() {
             console.log(response);
         });
     });
+    $('#update_user').click(function() {
+        let id = $("#id").val();
+        let is_lead = $("#is_lead").val();
+        let tele_id = $("#tele_id").val();
+        let tele_user = $("#tele_user").val();
+        let address = $("#address").val();
+        let social = $("#social").val();
+        let phone = $("#phone").val();
+        let full_name = $("#full_name").val();
+        var settings = {
+            "url": "/users/update",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "is_lead": is_lead,
+                "id": id,
+                "tele_id": tele_id,
+                "address": address,
+                "tele_user": tele_user,
+                "social": social,
+                "phone": phone,
+                "full_name": full_name
+            }),
+        };
+        $.ajax(settings).done(function(response) {
+            try {
+                response = JSON.parse(response)
+            } catch (error) {
+
+            }
+            if (response.code == 200) {
+                Swal.fire(
+                    'Thành công',
+                    'Thành công',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Không thành công',
+                    response.msg,
+                    'question'
+                )
+            }
+            console.log(response);
+        }).fail(function(response) {
+            Swal.fire(
+                'Không thành công',
+                response.toString(),
+                'error'
+            )
+            console.log(response);
+        });
+    });
     $('#force').click(function() {
         var settings = {
             "url": "/force",

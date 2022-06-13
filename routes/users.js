@@ -47,4 +47,43 @@ router.post('/add', async function(req, res, next) {
     }
     return res.send({ "code": 400, "msg": "Đã tồn tại" })
 });
+router.post('/update', async function(req, res, next) {
+    var json = JSON.stringify(req.body);
+    try {
+        json = JSON.parse(json);
+    } catch (error) {}
+    const [validate, error] = Util.validated_parameter(["tele_id", "tele_user", "is_lead", "id", "full_name"], json)
+    if (!validate) {
+        return res.send({ "code": 400, "msg": error });
+    }
+    const updated = await Users.update({
+        tele_id: json.tele_id,
+        tele_user: json.tele_user,
+        is_lead: json.is_lead,
+        full_name: json.full_name,
+        phone: json.phone,
+        social: json.social,
+        address: json.address
+    }, {
+        where: { id: json.id }
+    })
+    if (updated) {
+        return res.send({ "code": 200, "msg": "Thành công" })
+    }
+    return res.send({ "code": 400, "msg": "Không thành công" })
+});
+router.get('/edit/:userid', async(req, res) => {
+    const userid = +req.params.userid;
+    let user = await Users.findOne({ where: { id: userid } });
+    if (user == null) {
+        return res.send("invalid userid");
+    }
+    let render_data = {
+        title: "Chỉnh sửa người dùng",
+        user: user
+    }
+    res.render("user/edit_user", render_data)
+});
+
+
 module.exports = router;

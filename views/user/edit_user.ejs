@@ -1,0 +1,102 @@
+<% extend('../partials/layout') %>
+    <!-- data tables css -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content container">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center mb-4">
+                    <h1 class="d-inline-block font-weight-normal mb-0">
+                        <%= title %>
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <!-- [ Inputs ] start -->
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-end">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Họ và tên</label>
+                                        <input value="<%= user.full_name %>" id="full_name" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">SĐT</label>
+                                        <input value="<%= user.phone %>" id="phone" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-end">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Mạng xã hội</label>
+                                        <input value="<%= user.social %>" id="social" type="text" class="form-control" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-end">
+                                <div class="col-sm-12">
+                                    <form class="was-validated">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Địa chỉ</label>
+                                            <input value="<%= user.address %>" id="address" type="text" class="form-control" value="">
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="row align-items-end">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Telegram Username</label>
+                                        <input value="<%= user.tele_user %>" id="tele_user" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Telegram ID</label>
+                                        <input value="<%= user.tele_id %>" id="tele_id" type="text" class="form-control" placeholder="">
+                                        <input hidden value="<%= user.id %>" id="id" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ Inputs ] end -->
+                <!-- [ Inputs ] start -->
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="datta-example mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="exampleSelect1">Loại người dùng</label>
+                                                    <select class="form-control" id="is_lead">
+                                                    <option <% if(user.is_lead==0){ %>selected <% } %> value="0">Giáo viên</option>
+                                                    <option <% if(user.is_lead==1){ %>selected <% } %> value="1">Trưởng nhóm</option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" id="update_user" class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Inputs ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    </div>

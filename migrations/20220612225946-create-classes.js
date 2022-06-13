@@ -3,12 +3,16 @@ module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('Classes', {
             id: {
-                type: Sequelize.INTEGER,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
+            created_by: {
+                type: DataTypes.INTEGER,
+                allowNull: false
+            },
             class_code: {
-                type: Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: false,
                 validate: {
                     notEmpty: {
@@ -18,38 +22,32 @@ module.exports = {
                 unique: true
             },
             class_name: {
-                type: Sequelize.STRING,
+                type: DataTypes.STRING,
                 allowNull: false
             },
-            created_by: {
-                type: Sequelize.INTEGER,
+            address: {
+                type: DataTypes.STRING,
                 allowNull: false
             },
-            price: {
-                type: Sequelize.FLOAT,
-                allowNull: false,
-                validate: {
-                    notEmpty: {
-                        msg: 'price is required'
-                    }
-                }
+            min_price: {
+                type: DataTypes.FLOAT,
+                allowNull: true,
+                defaultValue: 0
             },
-            exam_price: {
-                type: Sequelize.FLOAT,
-                allowNull: false,
-                validate: {
-                    notEmpty: {
-                        msg: 'exam_price is required'
-                    }
-                }
+            min_price: {
+                type: DataTypes.FLOAT,
+                allowNull: true,
+                defaultValue: 0
             },
-            createdAt: {
-                allowNull: false,
-                type: Sequelize.DATE
+            term_price: {
+                type: DataTypes.FLOAT,
+                allowNull: true,
+                defaultValue: 0
             },
-            updatedAt: {
-                allowNull: false,
-                type: Sequelize.DATE
+            debit: {
+                type: DataTypes.FLOAT,
+                allowNull: true,
+                defaultValue: 0
             }
         });
     },
