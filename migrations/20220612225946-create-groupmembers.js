@@ -1,26 +1,17 @@
 'use strict';
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Groups', {
+        await queryInterface.createTable('Histories', {
             id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
-            is_delete: {
-                type: Sequelize.BOOLEAN,
-                allowNull: false,
-                defaultValue: 0
-            },
-            group_code: {
-                type: Sequelize.STRING,
+            group_id: {
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
-            group_name: {
-                type: Sequelize.STRING,
-                allowNull: false
-            },
-            leader: {
+            member_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
@@ -32,9 +23,10 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.DATE
             }
+
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Groups');
+        await queryInterface.dropTable('History');
     }
 };

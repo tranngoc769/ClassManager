@@ -49,7 +49,7 @@ module.exports = {
                 allowNull: true,
                 defaultValue: 0
             },
-            is_delele: {
+            is_delete: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
                 defaultValue: 0

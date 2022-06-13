@@ -26,7 +26,7 @@ module.exports = {
             dob: {
                 type: Sequelize.DATEONLY
             },
-            is_delele: {
+            is_delete: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
                 defaultValue: 0
