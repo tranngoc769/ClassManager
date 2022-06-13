@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from codedthemes.com/demos/admin-templates/treva/bootstrap/adm-invoice-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 12 Dec 2020 16:15:17 GMT -->
+
+<head>
+    <title>Quản lý tài khoản</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"> -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" /> -->
+    <meta name="description" content="" />
+    <meta name="keywords" content="">
+    <meta name="author" content="Codedthemes" />
+    <style>
+        .card .card-block,
+        .card .card-body {
+            padding: 15px 20px !important;
+        }
+    </style>
+    <!-- Hotjar Tracking Code for http://html.codedthemes.com/treva/bootstrap/index-tf.html -->
+    <script>
+        (function(h, o, t, j, a, r) {
+            h.hj = h.hj || function() {
+                (h.hj.q = h.hj.q || []).push(arguments)
+            };
+            h._hjSettings = {
+                hjid: 1628297,
+                hjsv: 6
+            };
+            a = o.getElementsByTagName('head')[0];
+            r = o.createElement('script');
+            r.async = 1;
+            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    </script>
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/vendor-all.min.js"></script>
+
+</head>
+
+<body class="">
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+    <!-- [ navigation menu ] start -->
+    <nav class="pcoded-navbar dashboard-nav menupos-fixed ">
+        <div class="navbar-wrapper  ">
+            <div class="navbar-content scroll-div ">
+                <ul class="nav pcoded-inner-navbar ">
+                   
+                    
+                    <li class="nav-item">
+						<a href="/" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Telegram</span></a>
+					</li>
+                    <li class="nav-item">
+						<a href="/discord" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Discord</span></a>
+					</li>
+                    <li class="nav-item">
+						<a href="/contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Nội dung</span></a>
+					</li>
+                    <li class="nav-item">
+						<a href="/admin_contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Chỉnh sửa Channel</span></a>
+					</li>
+                    <% if(role==1){ %>
+                    <li class="nav-item">
+						<a href="/users" class="nav-link "><span class="pcoded-micon"><i class="fas fa-user"></i></span><span class="pcoded-mtext">Quản lý tài khoản</span></a>
+					</li>
+                    <%} %>
+            </div>
+        </div>
+    </nav>
+    <!-- [ navigation menu ] end -->
+    <!-- [ Header ] start -->
+    <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed brand-dark ">
+
+
+        <div class="m-header">
+            <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+            <a href="index.html" class="b-brand">
+                <!-- ========   change your logo hear   ============ -->
+
+
+                <img src="assets/images/logo.svg" alt="" class="logo">
+
+            </a>
+            <a href="#!" class="mob-toggler">
+                <i class="feather icon-more-vertical"></i>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item h-auto d-none d-md-inline-block">
+                    <button style="font-family: 'feather';" type="button" class="btn btn-primary">Số tài khoản :  <%= total %>  </button>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li>
+                    <div class="dropdown drp-user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="assets/images/user/avatar-2.jpg" class="img-radius" alt="User-Profile-Image">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right profile-notification">
+                            <ul class="pro-body">
+                                <li><a href="adm-profile-public.html" class="dropdown-item"><i
+                                            class="feather icon-user"></i> Profile</a></li>
+                                <li><a href="adm-profile-conversations.html" class="dropdown-item"><i
+                                            class="feather icon-mail"></i> My Messages</a></li>
+                                <li><a href="auth-login4.html" class="dropdown-item"><i class="feather icon-lock"></i>
+                                        Lock Screen</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+    </header>
+    <!-- [ Header ] end -->
+
+
+
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content container">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- [ Dashboard ] start -->
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 filter-bar invoice-list">
+                            <div class="row">
+                                <% for(var i = 0; i < users.length; i++) { %>
+                                    <div name="usercard" class="col-md-3 col-sm-4">
+                                        <div class="card card-border-c-blue">
+                                            <div class="card-body">
+                                                <div>
+                                                    <h5 class="d-inline-block m-b-10 "><%=users[i].username %></h5>
+                                                </div>
+                                                <form>
+                                                    <div class="form-group ">
+                                                        <label  style="width: 100%;" class="h6 f-12 text-uppercase">Tên tài khoản</label>
+                                                        <input readonly disabled style="width: 100%;" class="form-control form-control-sm" target_name="<%=users[i].username %>" type="text" value="<%=users[i].username %>" name="username">
+                                                        <label style="width: 100%;" class="h6 f-12 text-uppercase">Mật khẩu</label>
+                                                        <input target_name="<%=users[i].username %>" style="width: 100%;" class="form-control form-control-sm"  type="password" value="" name="password">
+                                                        <label style="width: 100%;" class="h6 f-12 text-uppercase">Loại tài khoản</label>
+                                                        <select name="role" target_name="<%=users[i].username %>" class="form-control form-control-sm">
+                                                            <option value="1" <% if(users[i].role==1){ %> selected <% } %>>Admin</option>
+                                                            <option value="2" <% if(users[i].role==2){ %> selected <% } %>>Thành viên</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button style="width: 49%;" target_name="<%=users[i].username %>" name="update" type="button" class="btn btn-success"><i class="feather mr-2 icon-check-circle"></i>Cập nhật</button>
+                                                        <button style="width: 49%;" target_name="<%=users[i].username %>" name="delete" type="button" class="btn btn-danger"><i class="feather mr-2 icon-delete"></i>Xóa</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/plugins/bootstrap.min.js"></script>
+    <script src="assets/js/pcoded.min.js"></script>
+    <script src="assets/js/add_user.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="assets/js/user.js"></script>
+
+    <script>
+        // [ task-action ]
+        $(".task-right-header-action").on('click', function() {
+            $(".task-right-content-action").slideToggle();
+        });
+        // [ task-status ]
+        $(".task-right-header-status").on('click', function() {
+            $(".taskboard-right-progress").slideToggle();
+        });
+        // [ task-users ]
+        $(".task-right-header-users").on('click', function() {
+            $(".taskboard-right-users").slideToggle();
+        });
+        // [ task-revision ]
+        $(".task-right-header-revision").on('click', function() {
+            $(".taskboard-right-revision").slideToggle();
+        });
+        // [ task-collapse ]
+        $('.collapse').on('shown.bs.collapse', function() {
+            $(this).parent().find(".fa-caret-up").removeClass("fa-caret-up").addClass("fa-caret-down");
+        }).on('hidden.bs.collapse', function() {
+            $(this).parent().find(".fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-up");
+        });
+    </script>
+
+
+</body>
+
+
+<!-- Mirrored from codedthemes.com/demos/admin-templates/treva/bootstrap/adm-invoice-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 12 Dec 2020 16:15:17 GMT -->
+
+</html>

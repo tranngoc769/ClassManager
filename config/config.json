@@ -1,0 +1,23 @@
+{
+    "development": {
+        "username": "root",
+        "password": "",
+        "database": "classmanager",
+        "host": "localhost",
+        "dialect": "mysql"
+    },
+    "test": {
+        "username": "sql11440457",
+        "password": "yw3NGcx5jt",
+        "database": "sql11440457",
+        "host": "sql11.freemysqlhosting.net",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "root",
+        "password": "",
+        "database": "classmanager",
+        "host": "localhost",
+        "dialect": "mysql"
+    }
+}

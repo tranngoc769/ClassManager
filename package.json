@@ -1,0 +1,28 @@
+{
+    "name": "project-08---sqllibrarymanager",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start": "nodemon app.js"
+    },
+    "dependencies": {
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "ejs": "^3.1.8",
+        "express": "~4.16.1",
+        "express-session": "^1.17.3",
+        "http-errors": "~1.6.3",
+        "jade": "~1.11.0",
+        "md5": "^2.3.0",
+        "morgan": "~1.9.1",
+        "mysql2": "^2.3.0",
+        "node-emoji": "^1.11.0",
+        "node-telegram-bot-api": "^0.57.0",
+        "pug": "^3.0.2",
+        "sequelize": "^6.6.2",
+        "sqlite3": "^5.0.2"
+    },
+    "devDependencies": {
+        "sequelize-cli": "^6.4.1"
+    }
+}
