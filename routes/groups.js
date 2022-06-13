@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 const Groups = require('../models').Groups;
+const GroupsService = require('../services/groups')
 const Users = require('../models').Users;
 var moment = require('moment');
 const Util = require('../internal/util')
 
 /* GET groups listing. */
 router.get('/', async function(req, res, next) {
-    let groups = await Groups.findAll();
+    let groups = await GroupsService.getAllGroups();
     let render_data = {
         groups: groups,
         moment: moment,
