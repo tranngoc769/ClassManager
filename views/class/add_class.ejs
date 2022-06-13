@@ -1,0 +1,95 @@
+<% extend('../partials/layout') %>
+    <!-- data tables css -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content container">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center mb-4">
+                    <h1 class="d-inline-block font-weight-normal mb-0">
+                        <%= title %>
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <!-- [ Inputs ] start -->
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-end">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Mã Lớp</label>
+                                        <input id="class_code" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Tên lớp</label>
+                                        <input id="class_name" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-end">
+                                <div class="col-sm-12">
+                                    <form class="was-validated">
+                                        <div class="form-group">
+                                            <label for="">Địa chỉ</label>
+                                            <input id="address" type="text" class="form-control" value="">
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <div class="row align-items-end">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Giá phút</label>
+                                        <input id="min_price" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Giá ca</label>
+                                        <input id="term_price" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row align-items-end">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Giá dịch vụ khác</label>
+                                        <input id="other_price" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Dư nợ</label>
+                                        <input id="debit" type="text" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ Inputs ] end -->
+                <!-- [ Inputs ] start -->
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="datta-example mb-4">
+                                <div class="card-footer">
+                                    <button type="button" id="add_class" class="btn btn-primary">Thêm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Inputs ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    </div>
+    <script defer>
+        console.log("Page script")
+    </script>

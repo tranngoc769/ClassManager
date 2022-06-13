@@ -1,0 +1,109 @@
+<% extend('../partials/layout') %>
+    <!-- data tables css -->
+    <link rel="stylesheet" href="assets/css/plugins/dataTables.bootstrap4.min.css">
+    <div class="pcoded-main-container">
+        <div class="pcoded-content container">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- [ Dashboard ] start -->
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6 d-flex align-items-center mb-4">
+                            <h1 class="d-inline-block font-weight-normal mb-0">
+                                <%= title %>
+                            </h1>
+                        </div>
+                        <div class="col-sm-6 d-block d-sm-flex align-items-center justify-content-end mb-4 text-right">
+                            <a type="button" href="/classes/add" class="btn d-block ml-auto btn-primary"><i class="feather icon-plus mr-2"></i>Thêm mới</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="usertable" class="table table-center mb-0 ">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Mã Lớp</th>
+                                                    <th>Tên Lớp</th>
+                                                    <th>Địa chỉ</th>
+                                                    <th>Giá Phút</th>
+                                                    <th>Giá Ca</th>
+                                                    <th>Giá Khác</th>
+                                                    <th>Dư nợ</th>
+                                                    <th>Ngày tạo</th>
+                                                    <th>Ngày chỉnh sửa</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(var i = 0; i < classes.length; i++) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%=classes[i].id %>
+                                                        </td>
+                                                        <td>
+                                                            <%=classes[i].class_code %>
+                                                        </td>
+                                                        <td>
+                                                            <%=classes[i].class_name %>
+                                                        </td>
+                                                        <td>
+                                                            <%=classes[i].address %>
+                                                        </td>
+                                                        <td>
+                                                            <%=classes[i].min_price %>
+                                                        </td>
+                                                        <td>
+                                                            <%=classes[i].term_price %>
+                                                        </td>
+                                                        <td>
+                                                            <%=classes[i].other_price %>
+                                                        </td>
+                                                        <td>
+                                                            <%=classes[i].debit %>
+                                                        </td>
+
+                                                        <td>
+                                                            <%= moment(classes[i].createdAt).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(classes[i].updatedAt).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div class="btn-group card-option">
+                                                                <button type="button" class="btn shadow-none ">
+                                                            <i class="feather icon-plus"></i>
+                                                        </button>
+                                                                <button type="button" class="btn shadow-none px-0 dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="feather icon-more-horizontal"></i>
+                                                        </button>
+                                                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                                                    <li class="dropdown-item reload-card"><a href="/classes/edit/<%=classes[i].id %>"><i class="feather icon-refresh-cw"></i> Chỉnh sửa</a></li>
+                                                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="#!" class="mb-0 text-body"><i class="feather icon-plus mr-2"></i>Add Users</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ Dashboard ] end -->
+            </div>
+            <!-- datatable Js -->
+            <script src="assets/js/plugins/jquery.dataTables.min.js"></script>
+            <script src="assets/js/plugins/dataTables.bootstrap4.min.js"></script>
+            <script>
+                $('#usertable').DataTable();
+            </script>

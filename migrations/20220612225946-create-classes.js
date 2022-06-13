@@ -3,16 +3,16 @@ module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('Classes', {
             id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
             created_by: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
             class_code: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: false,
                 validate: {
                     notEmpty: {
@@ -22,32 +22,45 @@ module.exports = {
                 unique: true
             },
             class_name: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: false
             },
             address: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: false
             },
             min_price: {
-                type: DataTypes.FLOAT,
+                type: Sequelize.FLOAT,
                 allowNull: true,
                 defaultValue: 0
             },
             min_price: {
-                type: DataTypes.FLOAT,
+                type: Sequelize.FLOAT,
                 allowNull: true,
                 defaultValue: 0
             },
             term_price: {
-                type: DataTypes.FLOAT,
+                type: Sequelize.FLOAT,
+                allowNull: true,
+                defaultValue: 0
+            },
+            other_price: {
+                type: Sequelize.FLOAT,
                 allowNull: true,
                 defaultValue: 0
             },
             debit: {
-                type: DataTypes.FLOAT,
+                type: Sequelize.FLOAT,
                 allowNull: true,
                 defaultValue: 0
+            },
+            createdAt: {
+                allowNull: false,
+                type: Sequelize.DATE
+            },
+            updatedAt: {
+                allowNull: false,
+                type: Sequelize.DATE
             }
         });
     },

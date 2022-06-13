@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             defaultValue: 0
         },
-        min_price: {
+        other_price: {
             type: DataTypes.FLOAT,
             allowNull: true,
             defaultValue: 0

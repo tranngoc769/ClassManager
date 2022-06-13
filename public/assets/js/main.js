@@ -1,6 +1,7 @@
 $(document).ready(function() {
     console.log("ready");
     $("#mobile-collapse").click();
+    // User
     $('#add_user').click(function() {
         let is_lead = $("#is_lead").val();
         let tele_id = $("#tele_id").val();
@@ -111,6 +112,118 @@ $(document).ready(function() {
             console.log(response);
         });
     });
+    // Class
+    $('#add_class').click(function() {
+        let class_code = $("#class_code").val();
+        let class_name = $("#class_name").val();
+        let address = $("#address").val();
+        let min_price = $("#min_price").val();
+        let term_price = $("#term_price").val();
+        let debit = $("#debit").val();
+        let other_price = $("#other_price").val();
+        var settings = {
+            "url": "/classes/add",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "class_code": class_code,
+                "class_name": class_name,
+                "address": address,
+                "min_price": min_price,
+                "term_price": term_price,
+                "debit": debit,
+                "other_price": other_price,
+            }),
+        };
+        $.ajax(settings).done(function(response) {
+            try {
+                response = JSON.parse(response)
+            } catch (error) {
+
+            }
+            if (response.code == 200) {
+                Swal.fire(
+                    'Thành công',
+                    'Thành công',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Không thành công',
+                    response.msg,
+                    'question'
+                )
+            }
+            console.log(response);
+        }).fail(function(response) {
+            Swal.fire(
+                'Không thành công',
+                response.toString(),
+                'error'
+            )
+            console.log(response);
+        });
+    });
+    $('#edit_class').click(function() {
+        let id = $("#id").val();
+        let class_code = $("#class_code").val();
+        let class_name = $("#class_name").val();
+        let address = $("#address").val();
+        let min_price = $("#min_price").val();
+        let term_price = $("#term_price").val();
+        let debit = $("#debit").val();
+        let other_price = $("#other_price").val();
+        var settings = {
+            "url": "/classes/update",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "class_code": class_code,
+                "id": id,
+                "class_name": class_name,
+                "address": address,
+                "min_price": min_price,
+                "term_price": term_price,
+                "debit": debit,
+                "other_price": other_price,
+            }),
+        };
+        $.ajax(settings).done(function(response) {
+            try {
+                response = JSON.parse(response)
+            } catch (error) {
+
+            }
+            if (response.code == 200) {
+                Swal.fire(
+                    'Thành công',
+                    'Thành công',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Không thành công',
+                    response.msg,
+                    'question'
+                )
+            }
+            console.log(response);
+        }).fail(function(response) {
+            Swal.fire(
+                'Không thành công',
+                response.toString(),
+                'error'
+            )
+            console.log(response);
+        });
+    });
+
     $('#force').click(function() {
         var settings = {
             "url": "/force",

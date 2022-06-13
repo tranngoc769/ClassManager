@@ -10,6 +10,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const authenRouter = require('./routes/authen');
 const usersRouter = require('./routes/users');
+const classesRouter = require('./routes/classes');
 const { sequelize } = require('./models');
 
 const app = express();
@@ -56,6 +57,7 @@ function admin_auth(req, res, next) {
 app.use('/', indexRouter);
 app.use('/authen', authenRouter);
 app.use('/users', usersRouter);
+app.use('/classes', classesRouter);
 
 (async() => {
     try {
