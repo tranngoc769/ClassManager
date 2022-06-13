@@ -1,38 +1,32 @@
-$(document).ready(function () {
-    // =========================================================
-    // =========    Menu Customizer [ HTML ] code   ============
-    // =========================================================
+$(document).ready(function() {
+    console.log("ready");
     $("#mobile-collapse").click();
-    $('#update_contents').click(function () {
-        let good_morning = $("#good_morning").val();
-        let check_date = $("#check_date").val();
-        let dangky = $("#dangky").val();
-        let dadangky = $("#dadangky").val();
-        // 
-        
-        let tieude_nhacquahan = $("#tieude_nhacquahan").val();
-        let tieude_nhacthanhtoan = $("#tieude_nhacthanhtoan").val();
-        let nhacthanhtoan = $("#nhacthanhtoan").val().replace(/\n/g, '|');;
-        let nhacquahan = $("#nhacquahan").val().replace(/\n/g, '|');;
+    $('#add_user').click(function() {
+        let is_lead = $("#is_lead").val();
+        let tele_id = $("#tele_id").val();
+        let tele_user = $("#tele_user").val();
+        let address = $("#address").val();
+        let social = $("#social").val();
+        let phone = $("#phone").val();
+        let full_name = $("#full_name").val();
         var settings = {
-            "url": "/contents",
+            "url": "/users/add",
             "method": "POST",
             "timeout": 0,
             "headers": {
                 "Content-Type": "application/json"
             },
             "data": JSON.stringify({
-                "chaobuoisang": good_morning,
-                "kiemtradate": check_date,
-                "dangky": dangky,
-                "dadangky": dadangky,
-                "tieude_nhacquahan": tieude_nhacquahan,
-                "tieude_nhacthanhtoan": tieude_nhacthanhtoan,
-                "nhacquahan": nhacquahan,
-                "nhacthanhtoan": nhacthanhtoan,
-              }),
+                "is_lead": is_lead,
+                "tele_id": tele_id,
+                "address": address,
+                "tele_user": tele_user,
+                "social": social,
+                "phone": phone,
+                "full_name": full_name
+            }),
         };
-        $.ajax(settings).done(function (response) {
+        $.ajax(settings).done(function(response) {
             try {
                 response = JSON.parse(response)
             } catch (error) {
@@ -40,28 +34,28 @@ $(document).ready(function () {
             }
             if (response.code == 200) {
                 Swal.fire(
-                    'Cập nhật nội dung',
+                    'Thành công',
                     'Thành công',
                     'success'
                 )
             } else {
                 Swal.fire(
-                    'Cập nhật nội dung',
+                    'Không thành công',
                     response.msg,
                     'question'
                 )
             }
             console.log(response);
-        }).fail(function (response) {
+        }).fail(function(response) {
             Swal.fire(
-                'Cập nhật nội dung',
+                'Không thành công',
                 response.toString(),
                 'error'
             )
             console.log(response);
         });
     });
-    $('#force').click(function () {
+    $('#force').click(function() {
         var settings = {
             "url": "/force",
             "method": "GET",
@@ -70,7 +64,7 @@ $(document).ready(function () {
                 "Content-Type": "application/json"
             }
         };
-        $.ajax(settings).done(function (response) {
+        $.ajax(settings).done(function(response) {
             try {
                 response = JSON.parse(response)
             } catch (error) {
@@ -82,7 +76,7 @@ $(document).ready(function () {
                 'success'
             )
             console.log(response);
-        }).fail(function (response) {
+        }).fail(function(response) {
             Swal.fire(
                 'Gia hạn',
                 response.toString(),
@@ -91,7 +85,7 @@ $(document).ready(function () {
             console.log(response);
         });
     });
-    $('button[name=extend]').click(function () {
+    $('button[name=extend]').click(function() {
         try {
             let username = $(this)[0].getAttribute("target_name");
             let due_input = $(`input[name='due_date'][target_name='${username}']`)[0].value;
@@ -111,7 +105,7 @@ $(document).ready(function () {
                     "username": username
                 }),
             };
-            $.ajax(settings).done(function (response) {
+            $.ajax(settings).done(function(response) {
                 try {
                     response = JSON.parse(response)
                 } catch (error) {
@@ -131,7 +125,7 @@ $(document).ready(function () {
                     )
                 }
                 console.log(response);
-            }).fail(function (response) {
+            }).fail(function(response) {
                 Swal.fire(
                     'Gia hạn',
                     response.toString(),
@@ -144,8 +138,7 @@ $(document).ready(function () {
 
         }
     });
-
-    $('input[name=extend_date]').change(function () {
+    $('input[name=extend_date]').change(function() {
         try {
             let username = $(this)[0].getAttribute("target_name");
             let due_input = $(`input[name='due_date'][target_name='${username}']`)[0];

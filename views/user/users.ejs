@@ -1,4 +1,4 @@
-<% extend('partials/layout') %>
+<% extend('../partials/layout') %>
     <!-- data tables css -->
     <link rel="stylesheet" href="assets/css/plugins/dataTables.bootstrap4.min.css">
     <div class="pcoded-main-container">
@@ -9,7 +9,8 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-6 d-flex align-items-center mb-4">
-                            <h1 class="d-inline-block font-weight-normal mb-0"><%= title %>
+                            <h1 class="d-inline-block font-weight-normal mb-0">
+                                <%= title %>
                             </h1>
                         </div>
                         <div class="col-sm-6 d-block d-sm-flex align-items-center justify-content-end mb-4 text-right">
@@ -39,28 +40,46 @@
                                             <tbody>
                                                 <% for(var i = 0; i < users.length; i++) { %>
                                                     <tr>
-                                                        <td><%=users[i].id %></td>
+                                                        <td>
+                                                            <%=users[i].id %>
+                                                        </td>
                                                         <td>
                                                             <% if(users[i].is_lead){ %>
                                                                 <span class="badge badge-pill badge-info">Trưởng nhóm</span>
-                                                            <% }else{%>
-                                                                <span class="badge badge-pill badge-success">Giảng viên</span>
-                                                            <% } %>
+                                                                <% }else{%>
+                                                                    <span class="badge badge-pill badge-success">Giảng viên</span>
+                                                                    <% } %>
                                                         </td>
-                                                        <td><%=users[i].full_name %></td>
-                                                        <td><%=users[i].phone %></td>
-                                                        <td><%=users[i].address %></td>
-                                                        <td><%=users[i].social %></td>
+                                                        <td>
+                                                            <%=users[i].full_name %>
+                                                        </td>
+                                                        <td>
+                                                            <%=users[i].phone %>
+                                                        </td>
+                                                        <td>
+                                                            <%=users[i].address %>
+                                                        </td>
+                                                        <td>
+                                                            <%=users[i].social %>
+                                                        </td>
                                                         <td class="sorting_1">
                                                             <div class="media">
                                                                 <div class="media-body ml-3 align-self-center">
-                                                                    <h5 class="mb-1"><%=users[i].tele_user %></h5>
-                                                                    <p class="mb-0"><%=users[i].tele_id %></p>
+                                                                    <h5 class="mb-1">
+                                                                        <%=users[i].tele_user %>
+                                                                    </h5>
+                                                                    <p class="mb-0">
+                                                                        <%=users[i].tele_id %>
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td><%= moment(users[i].createdAt).format("YYYY-MM-DD HH:mm:ss") %></td>
-                                                        <td><%= moment(users[i].updatedAt).format("YYYY-MM-DD HH:mm:ss") %></td>
+                                                        <td>
+                                                            <%= moment(users[i].createdAt).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(users[i].updatedAt).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
                                                         <td class="text-right">
                                                             <div class="btn-group card-option">
                                                                 <button type="button" class="btn shadow-none ">
@@ -76,7 +95,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                <% } %>
+                                                    <% } %>
                                             </tbody>
                                         </table>
                                     </div>

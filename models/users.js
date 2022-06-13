@@ -30,11 +30,16 @@ module.exports = (sequelize, DataTypes) => {
         },
         tele_id: {
             type: DataTypes.BIGINT,
-            allowNull: true
+            allowNull: false
         },
         tele_user: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false,
+            validate: {
+                notEmpty: {
+                    msg: 'tele_user is required'
+                }
+            }
         },
         address: {
             type: DataTypes.STRING,
