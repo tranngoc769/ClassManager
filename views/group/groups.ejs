@@ -1,66 +1,92 @@
 <% extend('../partials/layout') %>
     <!-- data tables css -->
+    <link rel="stylesheet" href="assets/css/plugins/dataTables.bootstrap4.min.css">
     <div class="pcoded-main-container">
         <div class="pcoded-content container">
             <!-- [ Main Content ] start -->
             <div class="row">
-                <div class="col-sm-6 d-flex align-items-center mb-4">
-                    <h1 class="d-inline-block font-weight-normal mb-0">
-                        <%= title %>
-                    </h1>
-                </div>
-            </div>
-            <div class="row">
-                <!-- [ Inputs ] start -->
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row align-items-end">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Mã Nhóm</label>
-                                        <input id="group_code" type="text" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label for="">Tên nhóm</label>
-                                        <input id="group_name" type="text" class="form-control" placeholder="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row align-items-end">
-                                <div class="col-sm-12">
-                                    <label for="">Chọn trưởng nhóm</label>
-                                    <select class="form-control" id="leader">
-                                        <% for(var i = 0; i < users.length; i++) { %>
-                                        <option selected value="<%= users[i].id %>"><%= users[i].full_name %>- <%= users[i].phone %></option>
-                                        <% } %>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- [ Inputs ] end -->
-                <!-- [ Inputs ] start -->
+                <!-- [ Dashboard ] start -->
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="datta-example mb-4">
-                                <div class="card-footer">
-                                    <button type="button" id="edit_group" class="btn btn-primary">Cập nhật</button>
+                        <div class="col-sm-6 d-flex align-items-center mb-4">
+                            <h1 class="d-inline-block font-weight-normal mb-0">
+                                <%= title %>
+                            </h1>
+                        </div>
+                        <div class="col-sm-6 d-block d-sm-flex align-items-center justify-content-end mb-4 text-right">
+                            <a type="button" href="/groups/add" class="btn d-block ml-auto btn-primary"><i class="feather icon-plus mr-2"></i>Thêm mới</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="usertable" class="table table-center mb-0 ">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Mã Nhóm</th>
+                                                    <th>Tên nhóm</th>
+                                                    <th>Trưởng Nhóm</th>
+                                                    <th>Ngày tạo</th>
+                                                    <th>Ngày cập nhật</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(var i = 0; i < groups.length; i++) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%=groups[i].id %>
+                                                        </td>
+                                                        <td>
+                                                            <%=groups[i].group_code %>
+                                                        </td>
+                                                        <td>
+                                                            <%=groups[i].group_name %>
+                                                        </td>
+                                                        <td>
+                                                            <%=groups[i].leader %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(groups[i].createdAt).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(groups[i].updatedAt).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div class="btn-group card-option">
+                                                                <button type="button" class="btn shadow-none ">
+                                                            <i class="feather icon-plus"></i>
+                                                        </button>
+                                                                <button type="button" class="btn shadow-none px-0 dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="feather icon-more-horizontal"></i>
+                                                        </button>
+                                                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                                                    <li class="dropdown-item reload-card"><a href="/groups/edit/<%=groups[i].id %>"><i class="feather icon-refresh-cw"></i> Chỉnh sửa</a></li>
+                                                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <a href="#!" class="mb-0 text-body"><i class="feather icon-plus mr-2"></i>Add Users</a>
+                        </div>
                     </div>
                 </div>
+                <!-- [ Dashboard ] end -->
             </div>
-            <!-- [ Inputs ] end -->
-        </div>
-        <!-- [ Main Content ] end -->
-    </div>
-    </div>
-    <script defer>
-        console.log("Page script")
-    </script>
+            <!-- datatable Js -->
+            <script src="assets/js/plugins/jquery.dataTables.min.js"></script>
+            <script src="assets/js/plugins/dataTables.bootstrap4.min.js"></script>
+            <script>
+                $('#usertable').DataTable();
+            </script>

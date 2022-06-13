@@ -14,19 +14,7 @@ function asyncHandler(callbackFn) {
 
 // get / - Home route should redirect to the /books route
 router.get('/', asyncHandler(async(req, res) => {
-
-    let rows = [];
-    let total = 1;
-    let totalKicked = 1;
-    let username = req.session.username;
-    let role = req.session.role;
-    res.render('index', {
-        username: username,
-        role: role,
-        users: rows,
-        total: total,
-        kicked: totalKicked
-    });
+    return res.redirect('/groups');
 }));
 
 // get /books - Redirects to /books/pages/1
