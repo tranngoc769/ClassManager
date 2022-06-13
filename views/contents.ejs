@@ -1,268 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-
-
-<!-- Mirrored from codedthemes.com/demos/admin-templates/treva/bootstrap/adm-invoice-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 12 Dec 2020 16:15:17 GMT -->
-
-<head>
-    <title>Quản lý contents</title>
-    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 11]>
-    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    	<![endif]-->
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"> -->
-    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" /> -->
-    <meta name="description" content="" />
-    <meta name="keywords" content="">
-    <meta name="author" content="Codedthemes" />
-    <style>
-        .card .card-block,
-        .card .card-body {
-            padding: 15px 20px !important;
-        }
-    </style>
-    <!-- Hotjar Tracking Code for http://html.codedthemes.com/treva/bootstrap/index-tf.html -->
-    <script>
-        (function (h, o, t, j, a, r) {
-            h.hj = h.hj || function () {
-                (h.hj.q = h.hj.q || []).push(arguments)
-            };
-            h._hjSettings = {
-                hjid: 1628297,
-                hjsv: 6
-            };
-            a = o.getElementsByTagName('head')[0];
-            r = o.createElement('script');
-            r.async = 1;
-            r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
-    </script>
-
-    <!-- Favicon icon -->
-    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
-
-    <!-- vendor css -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/vendor-all.min.js"></script>
-
-</head>
-
-<body class="">
-    <!-- [ Pre-loader ] start -->
-    <div class="loader-bg">
-        <div class="loader-track">
-            <div class="loader-fill"></div>
-        </div>
-    </div>
-    <!-- [ Pre-loader ] End -->
-    <!-- [ navigation menu ] start -->
-    <nav class="pcoded-navbar dashboard-nav menupos-fixed ">
-        <div class="navbar-wrapper  ">
-            <div class="navbar-content scroll-div ">
-                <ul class="nav pcoded-inner-navbar ">
-                    
-                    <li class="nav-item">
-						<a href="/" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Telegram</span></a>
-					</li>
-                    <li class="nav-item">
-						<a href="/discord" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Discord</span></a>
-					</li>
-                    <li class="nav-item">
-                        <a href="/contents" class="nav-link "><span class="pcoded-micon"><i
-                                    class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Nội
-                                dung</span></a>
-                    </li>
-                    <li class="nav-item">
-						<a href="/admin_contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Chỉnh sửa Channel</span></a>
-					</li>
-                    
-                    <% if(role==1){ %>
-                        <li class="nav-item">
-                            <a href="/users" class="nav-link "><span class="pcoded-micon"><i class="fas fa-user"></i></span><span class="pcoded-mtext">Quản lý tài khoản</span></a>
-                        </li>
-                    <%} %>
-            </div>
-        </div>
-    </nav>
-    <!-- [ navigation menu ] end -->
-    <!-- [ Header ] start -->
-    <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed brand-dark ">
-
-
-        <div class="m-header">
-            <a class="mobile-menu" id="mobile-collapse" href="#"><span></span></a>
-            <a href="#" class="b-brand">
-                <!-- ========   change your logo hear   ============ -->
-
-
-                <img src="assets/images/logo.svg" alt="" class="logo">
-
-            </a>
-            <a href="#" class="mob-toggler">
-                <i class="feather icon-more-vertical"></i>
-            </a>
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <a class="dropdown-toggle h-drop" href="#" data-toggle="dropdown">
-                            <i class="feather icon-monitor mx-2"></i>
-                            <span class="d-none d-sm-inline-block">Dashboard</span>
-                        </a>
-                    </div>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto">
-                <li>
-                    <div class="dropdown drp-user">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="assets/images/user/avatar-2.jpg" class="img-radius" alt="User-Profile-Image">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right profile-notification">
-                            <ul class="pro-body">
-                                <li><a href="adm-profile-public.html" class="dropdown-item"><i
-                                            class="feather icon-user"></i> Profile</a></li>
-                                <li><a href="adm-profile-conversations.html" class="dropdown-item"><i
-                                            class="feather icon-mail"></i> My Messages</a></li>
-                                <li><a href="auth-login4.html" class="dropdown-item"><i class="feather icon-lock"></i>
-                                        Lock Screen</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-
-    </header>
-    <!-- [ Header ] end -->
-
-
-
-
-    <!-- [ Main Content ] start -->
-    <div class="pcoded-main-container">
-        <div class="pcoded-content container">
-            <!-- [ Main Content ] start -->
-            <div class="row">
-                <!-- [ Sidebar Forms ] start -->
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="float-right">
-                                        <a href="#" class="text-body text-h-primary"><i
-                                                class="fas fa-times-circle"></i></a>
-                                    </div>
-                                    <h5 class="mb-4">Quản lý nội dung</h5>
-                                    <form>
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">[EMOJI :kissing_heart: 😘,relaxed: 😁,grin: 😁,pleading_face: 🥺,...]</label>
-                                            <input type="text" class="form-control" disabled value="Cách dùng : Tham số #[tên_emoji] . Ví dụ : Yêu thương #kissing_heart --> Kết quả : Yêu thương 😘">
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Lời chào buổi sáng</label>
-                                            <input type="text" id="good_morning" class="form-control" placeholder=""
-                                                value="<%=contents.chaobuoisang %>">
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Kiểm tra thời hạn (tham số: @username,
-                                                @songay)</label>
-                                            <input type="text" id="check_date" class="form-control" placeholder=""
-                                                value="<%=contents.kiemtradate %>">
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Đăng ký (tham số: @username,
-                                                @ngaykichhoat)</label>
-                                            <input type="text" id="dangky" class="form-control" placeholder=""
-                                                value="<%=contents.dangky %>">
-                                        </div>
-                                        
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Đã đăng ký (tham số: @username,
-                                                @songay)</label>
-                                            <input type="text" id="dadangky" class="form-control" placeholder=""
-                                                value="<%=contents.dadangky %>">
-                                        </div>
-                                        <!--  -->
-                                        
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Tiêu đề thông báo nhắc thanh toán</label>
-                                            <input id="tieude_nhacthanhtoan" type="text" class="form-control" value="<%=contents.tieude_nhacthanhtoan %>">
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Tiêu đề thông báo nhắc quá hạn</label>
-                                            <input id="tieude_nhacquahan" type="text" class="form-control" value="<%=contents.tieude_nhacquahan %>">
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Nhắc thanh toán (tham số: @username,@songay,@ngayhethan)</label>
-                                            <textarea id="nhacthanhtoan" class="form-control" rows="3"><%=contents.nhacthanhtoan %></textarea>
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Kiểm tra thời hạn (tham số: @username)</label>
-                                            <textarea id="nhacquahan" class="form-control" rows="3"><%=contents.nhacquahan %></textarea>
-                                        </div>
-                                        <hr>
-                                        <div class="form-group mb-4">
-                                            <label class="h6 f-12 ">Nội dung chỉnh sửa bài đăng</label>
-                                            <textarea id="noidungchinhsua" class="form-control" rows="3"><%=contents.noidungchinhsua %></textarea>
-                                        </div>
-                                        <button id="update_contents" type="button" class="btn btn-primary btn-block">Cập
-                                            nhật</button>
-                                    </form>
+<% extend('layout') %>
+<div class="pcoded-main-container">
+    <div class="pcoded-content container">
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <!-- [ Sidebar Forms ] start -->
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-right">
+                                    <a href="#" class="text-body text-h-primary"><i
+                            class="fas fa-times-circle"></i></a>
                                 </div>
+                                <h5 class="mb-4">Quản lý nội dung</h5>
+                                <form>
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">[EMOJI :kissing_heart: 😘,relaxed: 😁,grin: 😁,pleading_face: 🥺,...]</label>
+                                        <input type="text" class="form-control" disabled value="Cách dùng : Tham số #[tên_emoji] . Ví dụ : Yêu thương #kissing_heart --> Kết quả : Yêu thương 😘">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Lời chào buổi sáng</label>
+                                        <input type="text" id="good_morning" class="form-control" placeholder="" value="<%=contents.chaobuoisang %>">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Kiểm tra thời hạn (tham số: @username,
+                            @songay)</label>
+                                        <input type="text" id="check_date" class="form-control" placeholder="" value="<%=contents.kiemtradate %>">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Đăng ký (tham số: @username,
+                            @ngaykichhoat)</label>
+                                        <input type="text" id="dangky" class="form-control" placeholder="" value="<%=contents.dangky %>">
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Đã đăng ký (tham số: @username,
+                            @songay)</label>
+                                        <input type="text" id="dadangky" class="form-control" placeholder="" value="<%=contents.dadangky %>">
+                                    </div>
+                                    <!--  -->
+
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Tiêu đề thông báo nhắc thanh toán</label>
+                                        <input id="tieude_nhacthanhtoan" type="text" class="form-control" value="<%=contents.tieude_nhacthanhtoan %>">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Tiêu đề thông báo nhắc quá hạn</label>
+                                        <input id="tieude_nhacquahan" type="text" class="form-control" value="<%=contents.tieude_nhacquahan %>">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Nhắc thanh toán (tham số: @username,@songay,@ngayhethan)</label>
+                                        <textarea id="nhacthanhtoan" class="form-control" rows="3"><%=contents.nhacthanhtoan %></textarea>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Kiểm tra thời hạn (tham số: @username)</label>
+                                        <textarea id="nhacquahan" class="form-control" rows="3"><%=contents.nhacquahan %></textarea>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group mb-4">
+                                        <label class="h6 f-12 ">Nội dung chỉnh sửa bài đăng</label>
+                                        <textarea id="noidungchinhsua" class="form-control" rows="3"><%=contents.noidungchinhsua %></textarea>
+                                    </div>
+                                    <button id="update_contents" type="button" class="btn btn-primary btn-block">Cập
+                        nhật</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- [ Sidebar Forms ] end -->
             </div>
-            <!-- [ Main Content ] end -->
+            <!-- [ Sidebar Forms ] end -->
         </div>
+        <!-- [ Main Content ] end -->
     </div>
-    <script src="assets/js/plugins/bootstrap.min.js"></script>
-    <script src="assets/js/pcoded.min.js"></script>
-    <script src="assets/js/menu-setting.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="assets/js/main.js"></script>
-
-    <script>
-        // [ task-action ]
-        $(".task-right-header-action").on('click', function () {
-            $(".task-right-content-action").slideToggle();
-        });
-        // [ task-status ]
-        $(".task-right-header-status").on('click', function () {
-            $(".taskboard-right-progress").slideToggle();
-        });
-        // [ task-users ]
-        $(".task-right-header-users").on('click', function () {
-            $(".taskboard-right-users").slideToggle();
-        });
-        // [ task-revision ]
-        $(".task-right-header-revision").on('click', function () {
-            $(".taskboard-right-revision").slideToggle();
-        });
-        // [ task-collapse ]
-        $('.collapse').on('shown.bs.collapse', function () {
-            $(this).parent().find(".fa-caret-up").removeClass("fa-caret-up").addClass("fa-caret-down");
-        }).on('hidden.bs.collapse', function () {
-            $(this).parent().find(".fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-up");
-        });
-    </script>
-
-
-</body>
-
-
-<!-- Mirrored from codedthemes.com/demos/admin-templates/treva/bootstrap/adm-invoice-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 12 Dec 2020 16:15:17 GMT -->
-
-</html>
+</div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('head') -%>
+
+<body class="">
+  <!-- [ Pre-loader ] start -->
+  <div class="loader-bg">
+      <div class="loader-track">
+          <div class="loader-fill"></div>
+      </div>
+  </div>
+  <!-- [ navigation menu ] start -->
+  <%- include('nav') -%>
+  <!-- [ navigation menu ] end -->
+  <!-- [ Header ] start -->
+  <%- include('header') -%>
+  <!-- [ Header ] end -->
+  <!-- [ Main Content ] start -->
+  <%- content %>
+  <!-- [ Main Content ] end -->
+
+  <!-- [ Script ] start -->
+  <%- include('script') -%>
+  <!-- [ Script ] end -->
+</body>
+</html>

@@ -26,7 +26,7 @@ const path = require('path')
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '/public')));
-
+app.engine('ejs', require('express-ejs-extend')); // add this line
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -52,7 +52,7 @@ function admin_auth(req, res, next) {
     next()
 }
 
-app.get('*', auth);
+// app.get('*', auth);
 app.use('/', indexRouter);
 app.use('/authen', authenRouter);
 app.use('/users', usersRouter);

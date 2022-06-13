@@ -34,6 +34,11 @@ module.exports = {
             full_name: {
                 type: Sequelize.STRING,
                 allowNull: true
+            },
+            is_delele: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: 0
             }
         });
     },
