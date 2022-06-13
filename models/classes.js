@@ -46,6 +46,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             defaultValue: 0
         },
+        is_delele: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: 0
+        },
         other_price: {
             type: DataTypes.FLOAT,
             allowNull: true,

@@ -46,6 +46,11 @@ module.exports = (sequelize, DataTypes) => {
                 }
             }
         },
+        is_delele: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: 0
+        },
         genre: DataTypes.STRING,
         dob: DataTypes.DATEONLY
     }, {

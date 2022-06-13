@@ -49,6 +49,11 @@ module.exports = {
                 allowNull: true,
                 defaultValue: 0
             },
+            is_delele: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: 0
+            },
             debit: {
                 type: Sequelize.FLOAT,
                 allowNull: true,
