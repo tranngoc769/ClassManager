@@ -1,6 +1,6 @@
 $(document).ready(function() {
     console.log("ready");
-    $("#mobile-collapse").click();
+    // $("#mobile-collapse").click();
     // User
     $('#add_user').click(function() {
         let is_lead = $("#is_lead").val();
@@ -287,6 +287,52 @@ $(document).ready(function() {
                 "group_code": group_code,
                 "group_name": group_name,
                 "leader": leader
+            }),
+        };
+        $.ajax(settings).done(function(response) {
+            try {
+                response = JSON.parse(response)
+            } catch (error) {
+
+            }
+            if (response.code == 200) {
+                Swal.fire(
+                    'Thành công',
+                    'Thành công',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Không thành công',
+                    response.msg,
+                    'question'
+                )
+            }
+            console.log(response);
+        }).fail(function(response) {
+            Swal.fire(
+                'Không thành công',
+                response.toString(),
+                'error'
+            )
+            console.log(response);
+        });
+    });
+
+    // Group
+    $('#add_member').click(function() {
+        let id = $("#id").val();
+        let members = $("#members").val()
+        var settings = {
+            "url": "/groups/add-members",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify({
+                "id": id,
+                "members": members
             }),
         };
         $.ajax(settings).done(function(response) {
