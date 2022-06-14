@@ -28,11 +28,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         checkin: {
-            type: DataTypes.DATETIME,
+            type: DataTypes.DATE,
             allowNull: true
         },
         checkout: {
-            type: DataTypes.DATETIME,
+            type: DataTypes.DATE,
             allowNull: true
         },
         room: {
