@@ -32,7 +32,7 @@ router.get('/add-member/:groupid', async function(req, res, next) {
     let group_id = +req.params.groupid;
     let members = await GroupMembers.findAll({
         where: {
-            grou1p_id: group_id
+            group_id: group_id
         }
     })
     let member_arr = [];
