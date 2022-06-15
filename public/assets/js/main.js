@@ -365,35 +365,12 @@ $(document).ready(function() {
         });
     });
 
-    $('#force').click(function() {
-        var settings = {
-            "url": "/force",
-            "method": "GET",
-            "timeout": 0,
-            "headers": {
-                "Content-Type": "application/json"
-            }
-        };
-        $.ajax(settings).done(function(response) {
-            try {
-                response = JSON.parse(response)
-            } catch (error) {
-
-            }
-            Swal.fire(
-                'Kiểm tra nhanh',
-                'Thành công',
-                'success'
-            )
-            console.log(response);
-        }).fail(function(response) {
-            Swal.fire(
-                'Gia hạn',
-                response.toString(),
-                'error'
-            )
-            console.log(response);
-        });
+    $('#filter_salary').click(function() {
+        let obj = {
+            from: $("#from").val(),
+            to: $("#to").val()
+        }
+        window.location.replace(window.location.pathname + "?" + $.param(obj))
     });
     $('button[name=extend]').click(function() {
         try {

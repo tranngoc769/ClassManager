@@ -5,7 +5,8 @@ const GroupsService = require('../services/groups')
 const Users = require('../models').Users;
 const GroupMembers = require('../models').GroupMembers;
 var moment = require('moment');
-const Util = require('../internal/util')
+const Util = require('../internal/util');
+const util = require('../internal/util');
 
 /* GET groups listing. */
 router.get('/', async function(req, res, next) {
@@ -146,6 +147,26 @@ router.get('/edit/:groupid', async(req, res) => {
 
     }
     res.render("group/edit_group", render_data)
+});
+
+router.get('/salary/:groupid', async(req, res) => {
+    const groupid = +req.params.groupid;
+    let from = util.getValidDatetime(req.query.from, "00:00:00");
+    let to = util.getValidDatetime(req.query.to, "23:59:59");
+    from = '2022-06-15 00:00:00'
+    let groups = await Groups.findOne({ where: { id: groupid } });
+    if (groups == null) {
+        return res.send("invalid groupid");
+    }
+    let salaries = await GroupsService.getSummarySalary(groups.id, from, to);
+    let render_data = {
+        title: "Thống kê lương",
+        moment: moment,
+        salaries: salaries,
+        from: moment(from).format("YYYY-MM-DD"),
+        to: moment(to).format("YYYY-MM-DD"),
+    }
+    res.render("group/group_salary", render_data)
 });
 
 

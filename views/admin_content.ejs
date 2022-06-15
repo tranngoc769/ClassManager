@@ -28,8 +28,8 @@
     </style>
     <!-- Hotjar Tracking Code for http://html.codedthemes.com/treva/bootstrap/index-tf.html -->
     <script>
-        (function (h, o, t, j, a, r) {
-            h.hj = h.hj || function () {
+        (function(h, o, t, j, a, r) {
+            h.hj = h.hj || function() {
                 (h.hj.q = h.hj.q || []).push(arguments)
             };
             h._hjSettings = {
@@ -48,8 +48,8 @@
     <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
 
     <!-- vendor css -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/vendor-all.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="/assets/js/vendor-all.min.js"></script>
 
 </head>
 
@@ -66,22 +66,22 @@
         <div class="navbar-wrapper  ">
             <div class="navbar-content scroll-div ">
                 <ul class="nav pcoded-inner-navbar ">
-                    
+
                     <li class="nav-item">
-						<a href="/" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Telegram</span></a>
-					</li>
+                        <a href="/" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Telegram</span></a>
+                    </li>
                     <li class="nav-item">
-						<a href="/discord" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Discord</span></a>
-					</li>
+                        <a href="/discord" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Discord</span></a>
+                    </li>
                     <li class="nav-item">
                         <a href="/contents" class="nav-link "><span class="pcoded-micon"><i
                                     class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Nội
                                 dung</span></a>
                     </li>
-                    
+
                     <li class="nav-item">
-						<a href="/admin_contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Chỉnh sửa Channel</span></a>
-					</li>
+                        <a href="/admin_contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Chỉnh sửa Channel</span></a>
+                    </li>
                     <% if(role==1){ %>
                         <li class="nav-item">
                             <a href="/users" class="nav-link "><span class="pcoded-micon"><i class="fas fa-user"></i></span><span class="pcoded-mtext">Quản lý tài khoản</span></a>
@@ -101,7 +101,7 @@
                 <!-- ========   change your logo hear   ============ -->
 
 
-                <img src="assets/images/logo.svg" alt="" class="logo">
+                <img src="/assets/images/logo.svg" alt="" class="logo">
 
             </a>
             <a href="#" class="mob-toggler">
@@ -123,7 +123,7 @@
                 <li>
                     <div class="dropdown drp-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="assets/images/user/avatar-2.jpg" class="img-radius" alt="User-Profile-Image">
+                            <img src="/assets/images/user/avatar-2.jpg" class="img-radius" alt="User-Profile-Image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-notification">
                             <ul class="pro-body">
@@ -159,7 +159,7 @@
                             <h5>Chỉnh sửa bài viết trong Channel</h5>
                         </div>
                         <div class="card-body">
-                            
+
                             <% for(var i = 0; i < contents.length; i++) { %>
                                 <div class="row" task="admin_content">
                                     <div class="col-sm-6">
@@ -175,9 +175,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            <% } %>
-                            
-                        <button id="update_contents_admin" type="button" class="btn btn-primary btn-block">Cập
+                                <% } %>
+
+                                    <button id="update_contents_admin" type="button" class="btn btn-primary btn-block">Cập
                             nhật</button>
                         </div>
                     </div>
@@ -185,33 +185,33 @@
             </div>
         </div>
     </div>
-    <script src="assets/js/plugins/bootstrap.min.js"></script>
-    <script src="assets/js/pcoded.min.js"></script>
-    <script src="assets/js/menu-setting.js"></script>
+    <script src="/assets/js/plugins/bootstrap.min.js"></script>
+    <script src="/assets/js/pcoded.min.js"></script>
+    <script src="/assets/js/menu-setting.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 
     <script>
         // [ task-action ]
-        $(".task-right-header-action").on('click', function () {
+        $(".task-right-header-action").on('click', function() {
             $(".task-right-content-action").slideToggle();
         });
         // [ task-status ]
-        $(".task-right-header-status").on('click', function () {
+        $(".task-right-header-status").on('click', function() {
             $(".taskboard-right-progress").slideToggle();
         });
         // [ task-users ]
-        $(".task-right-header-users").on('click', function () {
+        $(".task-right-header-users").on('click', function() {
             $(".taskboard-right-users").slideToggle();
         });
         // [ task-revision ]
-        $(".task-right-header-revision").on('click', function () {
+        $(".task-right-header-revision").on('click', function() {
             $(".taskboard-right-revision").slideToggle();
         });
         // [ task-collapse ]
-        $('.collapse').on('shown.bs.collapse', function () {
+        $('.collapse').on('shown.bs.collapse', function() {
             $(this).parent().find(".fa-caret-up").removeClass("fa-caret-up").addClass("fa-caret-down");
-        }).on('hidden.bs.collapse', function () {
+        }).on('hidden.bs.collapse', function() {
             $(this).parent().find(".fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-up");
         });
     </script>

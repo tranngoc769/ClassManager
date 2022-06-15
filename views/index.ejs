@@ -21,9 +21,10 @@
     <meta name="keywords" content="">
     <meta name="author" content="Codedthemes" />
     <style>
-        ._hj_feedback_container ._hj-1O2Rr__MinimizedWidgetMiddle__container._hj-1QnQT__MinimizedWidgetMiddle__right ._hj-21t0-__MinimizedWidgetMiddle__label{
+        ._hj_feedback_container ._hj-1O2Rr__MinimizedWidgetMiddle__container._hj-1QnQT__MinimizedWidgetMiddle__right ._hj-21t0-__MinimizedWidgetMiddle__label {
             display: none !important;
         }
+        
         .card .card-block,
         .card .card-body {
             padding: 15px 20px !important;
@@ -51,8 +52,8 @@
     <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
 
     <!-- vendor css -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/vendor-all.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script src="/assets/js/vendor-all.min.js"></script>
 
 </head>
 
@@ -69,24 +70,24 @@
         <div class="navbar-wrapper  ">
             <div class="navbar-content scroll-div ">
                 <ul class="nav pcoded-inner-navbar ">
-                   
+
                     <li class="nav-item">
-						<a href="/" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Telegram</span></a>
-					</li>
+                        <a href="/" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Telegram</span></a>
+                    </li>
                     <li class="nav-item">
-						<a href="/discord" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Discord</span></a>
-					</li>
+                        <a href="/discord" class="nav-link "><span class="pcoded-micon"><i class="fas fa-sitemap"></i></span><span class="pcoded-mtext">Discord</span></a>
+                    </li>
                     <li class="nav-item">
-						<a href="/contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Nội dung</span></a>
-					</li>
+                        <a href="/contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Nội dung</span></a>
+                    </li>
                     <li class="nav-item">
-						<a href="/admin_contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Chỉnh sửa Channel</span></a>
-					</li>
+                        <a href="/admin_contents" class="nav-link "><span class="pcoded-micon"><i class="fas fa-clipboard-list"></i></span><span class="pcoded-mtext">Chỉnh sửa Channel</span></a>
+                    </li>
                     <% if(role==1){ %>
-                    <li class="nav-item">
-						<a href="/users" class="nav-link "><span class="pcoded-micon"><i class="fas fa-user"></i></span><span class="pcoded-mtext">Quản lý tài khoản</span></a>
-					</li>
-                    <%} %>
+                        <li class="nav-item">
+                            <a href="/users" class="nav-link "><span class="pcoded-micon"><i class="fas fa-user"></i></span><span class="pcoded-mtext">Quản lý tài khoản</span></a>
+                        </li>
+                        <%} %>
             </div>
         </div>
     </nav>
@@ -101,7 +102,7 @@
                 <!-- ========   change your logo hear   ============ -->
 
 
-                <img src="assets/images/logo.svg" alt="" class="logo">
+                <img src="/assets/images/logo.svg" alt="" class="logo">
 
             </a>
             <a href="#!" class="mob-toggler">
@@ -119,7 +120,7 @@
                     </div>
                 </li>
                 <li class="nav-item h-auto d-none d-md-inline-block">
-                    <button  id="force" type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>
+                    <button id="force" type="button" class="btn btn-success"><i class="feather icon-check-circle"></i></button>
                 </li>
                 <li class="nav-item h-auto d-none d-md-inline-block">
                     <button style="font-family: 'feather';" type="button" class="btn btn-primary">Số member tổng :  <%= total %>  </button>
@@ -136,7 +137,7 @@
                 <li>
                     <div class="dropdown drp-user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="assets/images/user/avatar-2.jpg" class="img-radius" alt="User-Profile-Image">
+                            <img src="/assets/images/user/avatar-2.jpg" class="img-radius" alt="User-Profile-Image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-notification">
                             <ul class="pro-body">
@@ -190,7 +191,9 @@
                                         <div class="card card-border-c-blue">
                                             <div class="card-body">
                                                 <div>
-                                                    <h5 class="d-inline-block m-b-10 "><%=users[i].username %></h5>
+                                                    <h5 class="d-inline-block m-b-10 ">
+                                                        <%=users[i].username %>
+                                                    </h5>
                                                 </div>
                                                 <form>
                                                     <div class="form-group ">
@@ -213,10 +216,11 @@
                                                                 <% } %>>
                                                                     <label class="custom-control-label" for="customRadioclr7">Đã kick</label>
                                                             </div>
-                                                        </div></div>
-                                                        <button style="width: 58%;" target_name="<%=users[i].username %>" name="extend" type="button" class="btn btn-<% if(users[i].isKicked==0){ %>success<% }else{%>kicked<% }%> "><i class="feather mr-2 icon-check-circle"></i>Gia hạn</button>
-                                                        <button style="width: 40%;" target_name="<%=users[i].username %>" name="kick" type="button" class="btn btn-<% if(users[i].isKicked==0){ %>danger<% }else{%>kicked<% }%> "><i class="feather mr-2 icon-delete"></i>Kick</button>
-                                                    
+                                                        </div>
+                                                    </div>
+                                                    <button style="width: 58%;" target_name="<%=users[i].username %>" name="extend" type="button" class="btn btn-<% if(users[i].isKicked==0){ %>success<% }else{%>kicked<% }%> "><i class="feather mr-2 icon-check-circle"></i>Gia hạn</button>
+                                                    <button style="width: 40%;" target_name="<%=users[i].username %>" name="kick" type="button" class="btn btn-<% if(users[i].isKicked==0){ %>danger<% }else{%>kicked<% }%> "><i class="feather mr-2 icon-delete"></i>Kick</button>
+
                                                 </form>
                                             </div>
                                         </div>
@@ -229,11 +233,11 @@
             </div>
         </div>
     </div>
-    <script src="assets/js/plugins/bootstrap.min.js"></script>
-    <script src="assets/js/pcoded.min.js"></script>
-    <script src="assets/js/menu-setting.js"></script>
+    <script src="/assets/js/plugins/bootstrap.min.js"></script>
+    <script src="/assets/js/pcoded.min.js"></script>
+    <script src="/assets/js/menu-setting.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 
     <script>
         // [ task-action ]
@@ -265,7 +269,7 @@
                 <div class="modal-body p-0 text-center">
                     <div class="media advance-modal align-items-center">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <img class="img-fluid d-none d-sm-block w-50" src="assets/images/uikit/modal-img.jpg" alt="First slide">
+                        <img class="img-fluid d-none d-sm-block w-50" src="/assets/images/uikit/modal-img.jpg" alt="First slide">
                         <div class="media-body p-l-40 p-r-40 py-4 py-sm-0">
                             <h3 class="mb-3 font-weight-bold">Điều chỉnh ngày cho thành viên</h3>
                             <form class="text-left">

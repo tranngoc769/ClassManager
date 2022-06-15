@@ -1,3 +1,4 @@
+const moment = require('moment')
 module.exports = {
     validated_parameter: (array, data) => {
         let status = true;
@@ -11,5 +12,12 @@ module.exports = {
             return [false, err.join(",")];
         }
         return [true, null]
+    },
+    getValidDatetime: (datestring, timestring) => {
+        datestring = datestring.replace("T", " ")
+        if (moment(datestring, "YYYY-MM-DD", true).isValid()) {
+            return datestring + " " + timestring
+        }
+        return moment(new Date()).format("YYYY-MM-DD " + timestring);
     }
 }
