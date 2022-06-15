@@ -39,7 +39,7 @@ router.get('/members/:group_id', async function(req, res, next) {
     let group_id = +req.params.group_id;
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
-    let groups = await Groups.findOne({ where: { id: group_id } });
+    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
