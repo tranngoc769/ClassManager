@@ -1,0 +1,90 @@
+<% extend('../partials/layout') %>
+    <!-- data tables css -->
+    <link rel="stylesheet" href="/assets/css/plugins/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/css/plugins/dataTables.bootstrap4.min.css">
+    <div class="pcoded-main-container">
+        <div class="pcoded-content container">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- [ Dashboard ] start -->
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 datta-example">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="dt-responsive table-responsive">
+                                        <table id="usertable" class="table table-striped nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Mã lớp</th>
+                                                    <th>Tên lớp</th>
+                                                    <th>Tổng ca</th>
+                                                    <th>Phòng</th>
+                                                    <th>Kinh phí</th>
+                                                    <th>Chi phí</th>
+                                                    <th>Lợi nhuận </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(var i = 0; i < reports.length; i++) { %>
+                                                    <tr>
+                                                        <td>
+                                                            <%=reports[i].id %>
+                                                        </td>
+                                                        <td>
+                                                            <%=reports[i].class_code %>
+                                                        </td>
+                                                        <td>
+                                                            <%=reports[i].class_name %>
+                                                        </td>
+                                                        <td>
+                                                            <%=reports[i].class_code %>
+                                                        </td>
+                                                        <td>
+                                                            <%=reports[i].total %>
+                                                        </td>
+                                                        <td>
+                                                            <%= (reports[i].center_payment).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
+                                                        </td>
+                                                        <td>
+                                                            <%= (reports[i].salary).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
+                                                        </td>
+                                                        <td>
+                                                            <%= (reports[i].turn_over*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [ Dashboard ] end -->
+            </div>
+            <!-- datatable Js -->
+            <script src="/assets/js/plugins/jquery.dataTables.min.js"></script>
+            <script src="/assets/js/plugins/dataTables.bootstrap4.min.js"></script>
+            <script src="/assets/js/plugins/dataTables.buttons.min.js"></script>
+            <script src="/assets/js/plugins/dataTables.responsive.min.js"></script>
+            <script>
+                $('#usertable').DataTable({
+                    responsive: true,
+                    columnDefs: [{
+                        className: 'dt-body-right'
+                    }],
+
+                    "autoWidth": false,
+                    "rowCallback": function(row, data, index) {
+                        return;
+                        var that = row;
+                        if (!$(row).attr('role') || $(row).attr('role') != 'row' || $(row).hasClass('parent')) {
+                            return;
+                        }
+                        $(row).addClass('parent');
+                    }
+                });
+            </script>

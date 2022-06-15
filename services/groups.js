@@ -43,6 +43,17 @@ module.exports = {
         });
         return all_salary;
     },
+
+    getClassReport: async(group_id, from, to) => {
+        let sql = `select COUNT(cl.id) as total,SUM(salary) as salary,SUM(sumary_price) as center_payment,SUM(turn_over) as turn_over, cl.id, cl.class_code, cl.class_name from histories h join classes cl on h.class_id = cl.id
+        join groupmembers gm on h.user_id = gm.member_id
+        WHERE h.checkin BETWEEN '${from}' and '${to}' and cl.is_delete = 0 and h.checkout is not null and gm.group_id = ${group_id}
+        GROUP BY h.class_id`;
+        let all_salary = await sequelize.query(sql, {
+            type: QueryTypes.SELECT
+        });
+        return all_salary;
+    },
     getWorkingUsers: async(group_id, from, to, isNull) => {
         let sql = `SELECT u.tele_id, u.tele_user, u.full_name, u.phone, u.address, u.social, u.updatedAt, u.createdAt, u.day_salary, u.thi_salary, u.dv_salary, u.is_delete, u.is_lead FROM histories AS h JOIN groupmembers AS gm ON h.user_id = gm.member_id JOIN classes AS cl ON cl.id = h.class_id JOIN users AS u ON h.user_id = u.id WHERE   h.checkout is ${isNull} null  and u.is_delete = 0 and h.checkin BETWEEN '${from}' and '${to}' and gm.group_id = ${group_id} group by h.user_id`
         let all_salary = await sequelize.query(sql, {

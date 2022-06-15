@@ -234,7 +234,27 @@ router.get('/salary/:group_id', async(req, res) => {
     }
     res.render("group/group_salary", render_data)
 });
-
+router.get('/report/:group_id', async(req, res) => {
+    const group_id = +req.params.group_id;
+    const user_id = +req.query.user_id;
+    let from = util.getValidDatetime(req.query.from, "00:00:00");
+    let to = util.getValidDatetime(req.query.to, "23:59:59");
+    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
+    if (groups == null) {
+        return res.send("invalid group_id");
+    }
+    let reports = await GroupsService.getClassReport(groups.id, from, to);
+    let formatter = new Intl.NumberFormat('vi-VI', { maximumSignificantDigits: 3 });
+    let render_data = {
+        reports: reports,
+        title: "Thống kê lớp",
+        moment: moment,
+        formatter: formatter,
+        from: moment(from).format("YYYY-MM-DD"),
+        to: moment(to).format("YYYY-MM-DD"),
+    }
+    res.render("group/report", render_data)
+});
 router.get('/working/:group_id', async(req, res) => {
     const group_id = +req.params.group_id;
     let from = util.getValidDatetime(req.query.from, "00:00:00");
