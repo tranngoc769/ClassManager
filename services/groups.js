@@ -44,33 +44,7 @@ module.exports = {
         return all_salary;
     },
     getWorkingUsers: async(group_id, from, to, isNull) => {
-        let sql = `SELECT
-        cl.class_code,
-        h.id,
-        h.time_keep,
-        h.salary,
-        h.turn_over,
-        h.sumary_price,
-        h.is_user_paid,
-        h.class_id,
-        h.user_id,
-        h.action,
-        h.description,
-        h.checkin,
-        h.checkout,
-        h.paid_date,
-        h.room,
-        h.createdAt,
-        h.updatedAt,
-        u.tele_id,
-        u.tele_user,
-        u.full_name,
-        u.phone 
-    FROM
-        histories AS h
-        JOIN groupmembers AS gm ON h.user_id = gm.member_id
-        JOIN classes cl ON cl.id = h.class_id
-        JOIN users AS u ON h.user_id = u.id  WHERE h.checkout is ${isNull} null and h.checkin BETWEEN '${from}' and '${to}' and gm.group_id = ${group_id}`
+        let sql = `SELECT u.tele_id, u.tele_user, u.full_name, u.phone, u.address, u.social, u.updatedAt, u.createdAt, u.day_salary, u.thi_salary, u.dv_salary, u.is_delete, u.is_lead FROM histories AS h JOIN groupmembers AS gm ON h.user_id = gm.member_id JOIN classes AS cl ON cl.id = h.class_id JOIN users AS u ON h.user_id = u.id WHERE  h.checkout is ${isNull} null and h.checkin BETWEEN '${from}' and '${to}' and gm.group_id = ${group_id} group by h.user_id`
         let all_salary = await sequelize.query(sql, {
             type: QueryTypes.SELECT
         });

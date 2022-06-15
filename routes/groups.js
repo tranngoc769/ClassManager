@@ -230,12 +230,12 @@ router.get('/working/:group_id', async(req, res) => {
     if (groups == null) {
         return res.send("invalid group_id");
     }
-    let histories = await GroupsService.getWorkingUsers(group_id, from, to, "");
+    let workk_members = await GroupsService.getWorkingUsers(group_id, from, to, "");
     let free_members = await GroupsService.getWorkingUsers(group_id, from, to, " not ");
     let render_data = {
-        title: "Thành viên đang đi dạy",
+        title: "Tình trạng làm việc",
         moment: moment,
-        salaries: histories,
+        workk_members: workk_members,
         free_members: free_members,
         from: moment(from).format("YYYY-MM-DD"),
         to: moment(to).format("YYYY-MM-DD"),

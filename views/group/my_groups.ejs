@@ -23,7 +23,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Mã Nhóm</th>
+                                                    <th>Hành động</th>
+                                                    <th>Mã nhóm</th>
                                                     <th>Tên nhóm</th>
                                                     <th>Trưởng Nhóm</th>
                                                     <th>Ngày tạo</th>
@@ -36,6 +37,21 @@
                                                     <tr>
                                                         <td>
                                                             <%=groups[i].id %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div class="btn-group card-option">
+                                                                <button type="button" class="btn shadow-none ">
+                                                                    <a  title="Báo cáo" href="/groups/report/<%=groups[i].id %>"><i class="fas fa-book"></i></a>
+                                                                </button>
+                                                                <button type="button" class="btn shadow-none px-0 dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="feather icon-more-horizontal"></i>
+                                                                </button>
+                                                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                                                    <li class="dropdown-item"><a href="/groups/working/<%=groups[i].id %>"><i class="feather icon-shield"></i> Danh sách đang đi làm</a></li>
+                                                                    <li class="dropdown-item"><a href="/groups/salary/<%=groups[i].id %>"><i class="feather icon-save"></i> Lịch sử làm việc</a></li>
+                                                                    <li class="dropdown-item"><a href="/groups/members/<%=groups[i].id %>"><i class="feather icon-user"></i> Danh sách thành viên</a></li>
+                                                                </ul>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <%=groups[i].group_code %>
@@ -51,22 +67,6 @@
                                                         </td>
                                                         <td>
                                                             <%= moment(groups[i].updatedAt).format("YYYY-MM-DD HH:mm:ss") %>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            <div class="btn-group card-option">
-                                                                <button type="button" class="btn shadow-none ">
-                                                            <i class="feather icon-plus"></i>
-                                                        </button>
-                                                                <button type="button" class="btn shadow-none px-0 dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="feather icon-more-horizontal"></i>
-                                                        </button>
-                                                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                                    <li class="dropdown-item"><a href="/groups/add-member/<%=groups[i].id %>"><i class="feather icon-edit"></i> Chỉnh sửa</a></li>
-                                                                    <li class="dropdown-item"><a href="/groups/working/<%=groups[i].id %>"><i class="feather icon-shield"></i> Danh sách đang đi làm</a></li>
-                                                                    <li class="dropdown-item"><a href="/groups/salary/<%=groups[i].id %>"><i class="feather icon-save"></i> Lịch sử làm việc</a></li>
-                                                                    <li class="dropdown-item"><a href="/groups/members/<%=groups[i].id %>"><i class="feather icon-user"></i> Danh sách thành viên</a></li>
-                                                                </ul>
-                                                            </div>
                                                         </td>
                                                     </tr>
                                                     <% } %>

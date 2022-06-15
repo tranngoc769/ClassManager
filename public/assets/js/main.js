@@ -1,3 +1,14 @@
+function get_current_date() {
+    var date = new Date();
+    var dateStr =
+        (date.getFullYear() + "00" + "-" + (date.getMonth() + 1)).slice(-2) + "-" +
+        ("00" + date.getDate()).slice(-2) + " " +
+        ("00" + date.getHours()).slice(-2) + ":" +
+        ("00" + date.getMinutes()).slice(-2) + ":" +
+        ("00" + date.getSeconds()).slice(-2);
+    console.log(dateStr);
+    return dateStr;
+}
 $(document).ready(function() {
     console.log("ready");
     // $("#mobile-collapse").click();
@@ -416,6 +427,7 @@ $(document).ready(function() {
                             "Content-Type": "application/json"
                         },
                         "data": JSON.stringify({
+                            "center_paid_date": get_current_date(),
                             "is_center_paid": 1,
                             'id': hid
                         }),
@@ -479,6 +491,7 @@ $(document).ready(function() {
                             "Content-Type": "application/json"
                         },
                         "data": JSON.stringify({
+                            "paid_date": get_current_date(),
                             "is_user_paid": 1,
                             'id': hid
                         }),
