@@ -9,6 +9,10 @@ $(document).ready(function() {
         let address = $("#address").val();
         let social = $("#social").val();
         let phone = $("#phone").val();
+        let thi_salary = $("#thi_salary").val();
+        let day_salary = $("#day_salary").val();
+        let dv_salary = $("#dv_salary").val();
+
         let full_name = $("#full_name").val();
         var settings = {
             "url": "/users/add",
@@ -19,6 +23,9 @@ $(document).ready(function() {
             },
             "data": JSON.stringify({
                 "is_lead": is_lead,
+                "thi_salary": thi_salary,
+                "day_salary": day_salary,
+                "dv_salary": dv_salary,
                 "tele_id": tele_id,
                 "address": address,
                 "tele_user": tele_user,
@@ -64,6 +71,9 @@ $(document).ready(function() {
         let address = $("#address").val();
         let social = $("#social").val();
         let phone = $("#phone").val();
+        let thi_salary = $("#thi_salary").val();
+        let day_salary = $("#day_salary").val();
+        let dv_salary = $("#dv_salary").val();
         let full_name = $("#full_name").val();
         var settings = {
             "url": "/users/update",
@@ -75,6 +85,9 @@ $(document).ready(function() {
             "data": JSON.stringify({
                 "is_lead": is_lead,
                 "id": id,
+                "thi_salary": thi_salary,
+                "day_salary": day_salary,
+                "dv_salary": dv_salary,
                 "tele_id": tele_id,
                 "address": address,
                 "tele_user": tele_user,
@@ -347,6 +360,9 @@ $(document).ready(function() {
                     'Thành công',
                     'success'
                 )
+                setTimeout(function() {
+                    window.location.reload();
+                }, 3000)
             } else {
                 Swal.fire(
                     'Không thành công',
@@ -366,75 +382,134 @@ $(document).ready(function() {
     });
 
     $('#filter_salary').click(function() {
-        let obj = {
-            from: $("#from").val(),
-            to: $("#to").val()
-        }
+        const urlSearchParams = new URLSearchParams(window.location.search);
+        let obj = Object.fromEntries(urlSearchParams.entries());
+        obj.from = $("#from").val()
+        obj.to = $("#to").val()
         window.location.replace(window.location.pathname + "?" + $.param(obj))
     });
-    $('button[name=extend]').click(function() {
+    $(document).on('click', 'span[name=is_center_paid]', function() {
         try {
-            let username = $(this)[0].getAttribute("target_name");
-            let due_input = $(`input[name='due_date'][target_name='${username}']`)[0].value;
-            let extend_input = $(`input[name='extend_date'][target_name='${username}']`)[0].value;
-            let userid = $(`input[name='userid'][target_name='${username}']`)[0].value;
-            var settings = {
-                "url": "/update",
-                "method": "POST",
-                "timeout": 0,
-                "headers": {
-                    "Content-Type": "application/json"
-                },
-                "data": JSON.stringify({
-                    "due_date": due_input,
-                    "extend_date": extend_input,
-                    "userid": userid,
-                    "username": username
-                }),
-            };
-            $.ajax(settings).done(function(response) {
-                try {
-                    response = JSON.parse(response)
-                } catch (error) {
+            var item = $(this);
+            let hid = $(this)[0].getAttribute("h_id");
+            let is_paid = $(this)[0].getAttribute("is_paid");
+            console.log(hid)
+            console.log(is_paid)
+            if (is_paid * 1 == 1) {
+                return;
+            }
+            Swal.fire({
+                title: 'Bạn có chắc chứ?',
+                text: "Xác nhận đã nhận thanh toán từ trung tâm!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var settings = {
+                        "url": "/groups/paid",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({
+                            "is_center_paid": 1,
+                            'id': hid
+                        }),
+                    };
+                    $.ajax(settings).done(function(response) {
+                        try {
+                            response = JSON.parse(response)
+                        } catch (error) {
 
+                        }
+                        if (response.code == 200) {
+                            item.parent().html('<span class="badge badge-pill badge-success">Đã thanh toán</span>')
+                        } else {
+                            Swal.fire(
+                                'Thất bại',
+                                response.msg,
+                                'question'
+                            )
+                        }
+                        console.log(response);
+                    }).fail(function(response) {
+                        Swal.fire(
+                            'Lỗi',
+                            response.toString(),
+                            'error'
+                        )
+                        console.log(response);
+                    });
                 }
-                if (response.code == 200) {
-                    Swal.fire(
-                        'Gia hạn',
-                        'Thành công',
-                        'success'
-                    )
-                } else {
-                    Swal.fire(
-                        'Gia hạn',
-                        response.msg,
-                        'question'
-                    )
-                }
-                console.log(response);
-            }).fail(function(response) {
-                Swal.fire(
-                    'Gia hạn',
-                    response.toString(),
-                    'error'
-                )
-                console.log(response);
-            });
+            })
 
         } catch (error) {
 
         }
     });
-    $('input[name=extend_date]').change(function() {
+    $(document).on('click', 'span[name=is_user_paid]', function() {
         try {
-            let username = $(this)[0].getAttribute("target_name");
-            let due_input = $(`input[name='due_date'][target_name='${username}']`)[0];
-            let current_data = due_input.getAttribute("current_data");
-            let dt = new Date(current_data);
-            dt.setDate(dt.getDate() + 30);
-            // 
-            var new_date = `${dt.getFullYear().toString().padStart(4, '0')}-${(dt.getMonth() + 1).toString().padStart(2, '0')}-${dt.getDate().toString().padStart(2, '0')}`
-            due_input.value = new_date;
+            var item = $(this);
+            let hid = $(this)[0].getAttribute("h_id");
+            let is_paid = $(this)[0].getAttribute("is_paid");
+            console.log(hid)
+            console.log(is_paid)
+            if (is_paid * 1 == 1) {
+                return;
+            }
+            Swal.fire({
+                title: 'Bạn có chắc chứ?',
+                text: "Xác nhận đã nhận thanh toán từ trung tâm!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var settings = {
+                        "url": "/groups/paid",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({
+                            "is_user_paid": 1,
+                            'id': hid
+                        }),
+                    };
+                    $.ajax(settings).done(function(response) {
+                        try {
+                            response = JSON.parse(response)
+                        } catch (error) {
+
+                        }
+                        if (response.code == 200) {
+                            item.parent().html('<span class="badge badge-pill badge-success">Đã thanh toán</span>')
+                        } else {
+                            Swal.fire(
+                                'Thất bại',
+                                response.msg,
+                                'question'
+                            )
+                        }
+                        console.log(response);
+                    }).fail(function(response) {
+                        Swal.fire(
+                            'Lỗi',
+                            response.toString(),
+                            'error'
+                        )
+                        console.log(response);
+                    });
+                }
+            })
+
         } catch (error) {
 
         }

@@ -9,31 +9,42 @@
                 <!-- [ Dashboard ] start -->
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-sm-4 d-flex align-items-center mb-4">
-                            <h1 class="d-inline-block font-weight-normal mb-0">
-                                <%= title %>
-                            </h1>
+                        <div class="col-md-3 col-lg-3">
+                            <p class="text-uppercase">Lợi nhuận</p>
+                            <h2 class=" d-inline-block">
+                                <%= formatter.format(turn_overs) %>đ
+                            </h2><br>
+                            <p class="text-danger d-inline-block mb-0">
+                                <%= formatter.format(debit_turn_overs) %>đ<i class="mr-2 ml-1 feather icon-arrow-up"></i>(Trung tâm thiếu)</p>
                         </div>
-                        <div class="col-sm-8 d-block d-sm-flex align-items-center justify-content-end mb-4 text-right">
+                        <div class="col-md-3 col-lg-3">
+                            <p class="text-uppercase">Chi trả</p>
+                            <h2 class=" d-inline-block">
+                                <%= formatter.format(paid) %>đ
+                            </h2><br>
+                            <p class="text-danger d-inline-block mb-0">
+                                <%= formatter.format(debit_paid) %>đ<i class="mr-2 ml-1 feather icon-arrow-down"></i>(Thiếu giảng viên)</p>
+                        </div>
+                        <div class="col-sm-6 d-block d-sm-flex align-items-center justify-content-end mb-4 text-right">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1">Từ ngày</span>
                                 </div>
-                                <input id="from" class="form-control" type="date" value="<%= from.replace(" ", "T")%>" id="example-date-input">
+                                <input id="from" class="form-control" type="date" value="<%= from.replace(" ", "T ")%>" id="example-date-input">
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span  class="input-group-text" id="basic-addon1">Đến ngày</span>
+                                    <span class="input-group-text" id="basic-addon1">Đến ngày</span>
                                 </div>
-                                <input id="to" class="form-control" type="date" value="<%= to.replace(" ", "T")%>" id="example-date-input">
+                                <input id="to" class="form-control" type="date" value="<%= to.replace(" ", "T ")%>" id="example-date-input">
                             </div>
-                            
+
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="filter_salary">Lọc</span>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div class="row">
@@ -43,25 +54,24 @@
                                     <div class="dt-responsive table-responsive">
                                         <table id="usertable" class="table table-striped nowrap">
                                             <thead>
-                                                <!-- checkin: checkout: class_id: createdAt: description: full_name: id: is_paid: paid_date: phone: room: salary: tele_id: tele_user: time_keep: total_day: total_dv: total_thi: updatedAt: user_id: -->
+                                                <!-- checkin: checkout: class_id: createdAt: description: full_name: id: is_user_paid: paid_date: phone: room: salary: tele_id: tele_user: time_keep: total_day: total_dv: total_thi: updatedAt: user_id: -->
                                                 <tr>
-                                                    <th>Thao tác</th>
-                                                    <th>Mã người dùng</th>
+                                                    <th>Loại</th>
+                                                    <th></th>
+                                                    <th>ID</th>
                                                     <th>Họ và tên</th>
                                                     <th>SĐT</th>
                                                     <th>Mã lớp</th>
                                                     <th>Phòng</th>
-                                                    <th>Mô Tả</th>
-                                                    <th>Checkin</th>
-                                                    <th>Checkout</th>
+                                                    <th>Check In/Out</th>
                                                     <th>Thời gian</th>
-                                                    <th>Thực nhận</th>
-                                                    <th>Lương dạy</th>
-                                                    <th>Lương coi thi</th>
-                                                    <th>Lương dịch vụ</th>
-                                                    <th>Thanh toán</th>
-                                                    <th>Ngày thanh toán</th>
-                                                    <th></th>
+                                                    <th>Trả Giảng Viên </th>
+                                                    <th>Lợi nhuận</th>
+                                                    <th>Nhận tiền</th>
+                                                    <th>Trả tiền</th>
+                                                    <th>Center Payment</th>
+                                                    <th>Ngày trả tiền</th>
+                                                    <th>Ngày nhận tiền</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -76,8 +86,19 @@
                                                                         <span class="badge badge-pill badge-danger">Dịch vụ</span>
                                                                         <% } %>
                                                         </td>
+                                                        <td class="text-right">
+                                                            <div class="btn-group card-option">
+                                                                <button type="button" class="btn shadow-none px-0 dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="feather icon-more-horizontal"></i>
+                                                                </button>
+                                                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                                                    <li class="dropdown-item"><a href="/salaries/edit/<%=salaries[i].id %>"><i class="feather icon-refresh-cw"></i> Chỉnh sửa</a></li>
+                                                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
                                                         <td>
-                                                            <%=salaries[i].user_id %>
+                                                            <%=salaries[i].id %>
                                                         </td>
                                                         <td>
                                                             <%=salaries[i].full_name %>
@@ -91,14 +112,17 @@
                                                         <td>
                                                             <%=salaries[i].room %>
                                                         </td>
-                                                        <td>
-                                                            <%=salaries[i].description %>
-                                                        </td>
-                                                        <td>
-                                                            <%= moment(salaries[i].checkin).format("YYYY-MM-DD HH:mm:ss") %>
-                                                        </td>
-                                                        <td>
-                                                            <%= moment(salaries[i].checkout).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        <td class="sorting_1">
+                                                            <div class="media">
+                                                                <div class="media-body ml-3 align-self-center">
+                                                                    <p class="mb-0">
+                                                                        <%= moment(salaries[i].checkin).format("YYYY-MM-DD HH:mm:ss") %>
+                                                                    </p>
+                                                                    <p class="mb-0">
+                                                                        <%= moment(salaries[i].checkout).format("YYYY-MM-DD HH:mm:ss") %>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <%=salaries[i].time_keep %>
@@ -107,37 +131,31 @@
                                                             <%= (salaries[i].salary).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
                                                         </td>
                                                         <td>
-                                                            <%= (salaries[i].total_day*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
+                                                            <%= (salaries[i].turn_over*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
                                                         </td>
                                                         <td>
-                                                            <%= (salaries[i].total_thi*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
-                                                        </td>
-                                                        <td>
-                                                            <%= (salaries[i].total_dv*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
-                                                        </td>
-                                                        <td>
-                                                            <% if(salaries[i].is_paid==1){ %>
-                                                                <span class="badge badge-pill badge-info">Đã thanh toán</span>
+                                                            <% if(salaries[i].is_center_paid==1){ %>
+                                                                <span is_paid="<%=salaries[i].is_center_paid %>" h_id="<%=salaries[i].id %>" name="is_center_paid" class="badge badge-pill badge-success">Đã thanh toán</span>
                                                                 <% }else {%>
-                                                                    <span class="badge badge-pill badge-danger">Chưa thanh toán</span>
+                                                                    <span is_paid="<%=salaries[i].is_center_paid %>" h_id="<%=salaries[i].id %>" name="is_center_paid" class="badge badge-pill badge-danger">Chưa thanh toán</span>
                                                                     <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <% if(salaries[i].is_user_paid==1){ %>
+                                                                <span is_paid="<%=salaries[i].is_user_paid %>" h_id="<%=salaries[i].id %>" name="is_user_paid" class="badge badge-pill badge-success">Đã thanh toán</span>
+                                                                <% }else {%>
+                                                                    <span is_paid="<%=salaries[i].is_user_paid %>" h_id="<%=salaries[i].id %>" name="is_user_paid" class="badge badge-pill badge-danger">Chưa thanh toán</span>
+                                                                    <% } %>
+                                                        </td>
+
+                                                        <td>
+                                                            <%= (salaries[i].sumary_price*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
                                                         </td>
                                                         <td>
                                                             <%= moment(salaries[i].paid_date).format("YYYY-MM-DD HH:mm:ss") %>
                                                         </td>
-                                                        <td class="text-right">
-                                                            <div class="btn-group card-option">
-                                                                <button type="button" class="btn shadow-none ">
-                                                            <i class="feather icon-plus"></i>
-                                                        </button>
-                                                                <button type="button" class="btn shadow-none px-0 dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="feather icon-more-horizontal"></i>
-                                                        </button>
-                                                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                                    <li class="dropdown-item reload-card"><a href="/salaries/edit/<%=salaries[i].id %>"><i class="feather icon-refresh-cw"></i> Chỉnh sửa</a></li>
-                                                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
-                                                                </ul>
-                                                            </div>
+                                                        <td>
+                                                            <%= moment(salaries[i].center_paid_date).format("YYYY-MM-DD HH:mm:ss") %>
                                                         </td>
                                                     </tr>
                                                     <% } %>

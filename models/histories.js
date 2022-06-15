@@ -29,7 +29,22 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             defaultValue: 0
         },
-        is_paid: {
+        sumary_price: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
+        turn_over: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
+        is_user_paid: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            defaultValue: 0
+        },
+        is_center_paid: {
             type: DataTypes.BOOLEAN,
             allowNull: true,
             defaultValue: 0
@@ -65,6 +80,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         },
         paid_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: DataTypes.NOW
+        },
+        center_paid_date: {
             type: DataTypes.DATE,
             allowNull: true,
             defaultValue: DataTypes.NOW

@@ -2,6 +2,9 @@
     <!-- data tables css -->
     <link rel="stylesheet" href="/assets/css/plugins/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/css/plugins/dataTables.bootstrap4.min.css">
+    <!-- select2 css -->
+    <link rel="stylesheet" href="/assets/css/plugins/select2.min.css">
+    <script src="/assets/js/plugins/select2.full.min.js"></script>
     <div class="pcoded-main-container">
         <div class="pcoded-content container">
             <!-- [ Main Content ] start -->
@@ -9,24 +12,20 @@
                 <!-- [ Dashboard ] start -->
                 <div class="col-sm-12">
                     <div class="row">
-                        <div class="col-sm-6 d-flex align-items-center mb-4">
+                        <div class="col-sm-4 d-flex align-items-center mb-4">
                             <h1 class="d-inline-block font-weight-normal mb-0">
                                 <%= title %>
                             </h1>
                         </div>
-                        <div class="col-sm-6 d-block d-sm-flex align-items-center justify-content-end mb-4 text-right">
-                            <a type="button" href="/users/add" class="btn d-block ml-auto btn-primary"><i class="feather icon-plus mr-2"></i>Thêm mới</a>
-                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 datta-example">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="dt-responsive table-responsive">
-                                        <table id="usertable" class="table table-striped nowrap">
+                                        <table id="usertable" class="table table-center mb-0 ">
                                             <thead>
                                                 <tr>
-                                                    <th></th>
                                                     <th>ID</th>
                                                     <th>Loại</th>
                                                     <th>Họ và tên</th>
@@ -34,24 +33,16 @@
                                                     <th>Địa chỉ</th>
                                                     <th>MXH</th>
                                                     <th>Telegram</th>
-                                                    <th>Lương dạy</th>
-                                                    <th>Lương coi thi</th>
-                                                    <th>Lương dịch vụ</th>
                                                     <th>Ngày tạo</th>
                                                     <th>Ngày cập nhật</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <% for(var i = 0; i < users.length; i++) { %>
                                                     <tr>
-                                                        <td class="text-right">
-                                                            <div class="btn-group card-option">
-                                                                <a href="/users/edit/<%=users[i].id %>"><i class="feather icon-edit"></i></a>
-                                                                <a href="#!"><i class="feather icon-trash"></i></a>
-                                                            </div>
-                                                        </td>
                                                         <td>
-                                                            <%=users[i].id %>
+                                                            <%=users[i].member_id %>
                                                         </td>
                                                         <td>
                                                             <% if(users[i].is_lead){ %>
@@ -85,19 +76,24 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <%=users[i].day_salary %>
-                                                        </td>
-                                                        <td>
-                                                            <%=users[i].thi_salary %>
-                                                        </td>
-                                                        <td>
-                                                            <%=users[i].dv_salary %>
-                                                        </td>
-                                                        <td>
                                                             <%= moment(users[i].createdAt).format("YYYY-MM-DD HH:mm:ss") %>
                                                         </td>
                                                         <td>
                                                             <%= moment(users[i].updatedAt).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div class="btn-group card-option">
+                                                                <button type="button" class="btn shadow-none ">
+                                                            <i class="feather icon-plus"></i>
+                                                        </button>
+                                                                <button type="button" class="btn shadow-none px-0 dropdown-toggle no-arrow" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="feather icon-more-horizontal"></i>
+                                                        </button>
+                                                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                                                    <li class="dropdown-item"><a href="/users/edit/<%=users[i].member_id %>"><i class="feather icon-user"></i> Chỉnh sửa</a></li>
+                                                                    <li class="dropdown-item"><a href="/groups/salary/<%=group_id %>?user_id=<%=users[i].member_id %>"><i class="feather icon-user"></i> Quá trình làm việc</a></li>
+                                                                </ul>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                     <% } %>
@@ -107,8 +103,44 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <a href="#!" class="mb-0 text-body"><i class="feather icon-plus mr-2"></i>Add Users</a>
+                    </div>
+                    <div class="row">
+                        <!-- [ Inputs ] start -->
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row align-items-end">
+                                        <div class="col-xl-12 col-md-12 mb-5">
+                                            <h5>Danh sách thành viên nhóm</h5>
+                                            <hr>
+                                            <select id="members" class="js-example-responsive col-sm-12 select2-hidden-accessible" multiple="" style="width:100%;" data-select2-id="19" tabindex="-1" aria-hidden="true">
+                                                    <% for(var i = 0; i < user_all.length; i++) { %>
+                                                    <option  <% if( members.includes( user_all[i].id)){%> selected <%}%> value="<%= user_all[i].id %>"><%= user_all[i].full_name %>- <%= user_all[i].phone %></option>
+                                                    <% } %>
+                                                </select>
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $(".js-example-responsive").select2();
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ Inputs ] end -->
+                        <!-- [ Inputs ] start -->
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="datta-example mb-4">
+                                        <div class="card-footer">
+                                            <input id="id" value="<%= group_id %>" hidden>
+                                            <button type="button" id="add_member" class="btn btn-primary">Cập nhật</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

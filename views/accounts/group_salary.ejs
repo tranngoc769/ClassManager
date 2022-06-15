@@ -53,6 +53,14 @@
                                                     <th>Phòng</th>
                                                     <th>Mô Tả</th>
                                                     <th>Checkin</th>
+                                                    <th>Checkout</th>
+                                                    <th>Thời gian</th>
+                                                    <th>Thực nhận</th>
+                                                    <th>Lương dạy</th>
+                                                    <th>Lương coi thi</th>
+                                                    <th>Lương dịch vụ</th>
+                                                    <th>Thanh toán</th>
+                                                    <th>Ngày thanh toán</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -88,6 +96,34 @@
                                                         </td>
                                                         <td>
                                                             <%= moment(salaries[i].checkin).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(salaries[i].checkout).format("YYYY-MM-DD HH:mm:ss") %>
+                                                        </td>
+                                                        <td>
+                                                            <%=salaries[i].time_keep %>
+                                                        </td>
+                                                        <td>
+                                                            <%= (salaries[i].salary).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
+                                                        </td>
+                                                        <td>
+                                                            <%= (salaries[i].total_day*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
+                                                        </td>
+                                                        <td>
+                                                            <%= (salaries[i].total_thi*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
+                                                        </td>
+                                                        <td>
+                                                            <%= (salaries[i].total_dv*1).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ" %>
+                                                        </td>
+                                                        <td>
+                                                            <% if(salaries[i].is_user_paid==1){ %>
+                                                                <span class="badge badge-pill badge-info">Đã thanh toán</span>
+                                                                <% }else {%>
+                                                                    <span class="badge badge-pill badge-danger">Chưa thanh toán</span>
+                                                                    <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(salaries[i].paid_date).format("YYYY-MM-DD HH:mm:ss") %>
                                                         </td>
                                                         <td class="text-right">
                                                             <div class="btn-group card-option">

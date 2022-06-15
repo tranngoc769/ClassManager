@@ -14,7 +14,7 @@
                             </h1>
                         </div>
                         <div class="col-sm-6 d-block d-sm-flex align-items-center justify-content-end mb-4 text-right">
-                            <a type="button" href="/classes/add" class="btn d-block ml-auto btn-primary"><i class="feather icon-plus mr-2"></i>Thêm mới</a>
+                            <a type="button" href="/accounts/add" class="btn d-block ml-auto btn-primary"><i class="feather icon-plus mr-2"></i>Thêm mới</a>
                         </div>
                     </div>
                     <div class="row">
@@ -26,51 +26,34 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Mã Lớp</th>
-                                                    <th>Tên Lớp</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Giá Phút</th>
-                                                    <th>Giá Ca</th>
-                                                    <th>Giá Khác</th>
-                                                    <th>Dư nợ</th>
+                                                    <th>Username</th>
+                                                    <th>Giới tính</th>
+                                                    <th>Ngày sinh</th>
                                                     <th>Ngày tạo</th>
-                                                    <th>Ngày chỉnh sửa</th>
+                                                    <th>Ngày cập nhật</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% for(var i = 0; i < classes.length; i++) { %>
+                                                <% for(var i = 0; i < accounts.length; i++) { %>
                                                     <tr>
                                                         <td>
-                                                            <%=classes[i].id %>
+                                                            <%=accounts[i].id %>
                                                         </td>
                                                         <td>
-                                                            <%=classes[i].class_code %>
+                                                            <%=accounts[i].username %>
                                                         </td>
                                                         <td>
-                                                            <%=classes[i].class_name %>
+                                                            <%=accounts[i].genre %>
                                                         </td>
                                                         <td>
-                                                            <%=classes[i].address %>
+                                                            <%= moment(accounts[i].dob).format("YYYY-MM-DD HH:mm:ss") %>
                                                         </td>
                                                         <td>
-                                                            <%=classes[i].min_price %>
+                                                            <%= moment(accounts[i].createdAt).format("YYYY-MM-DD HH:mm:ss") %>
                                                         </td>
                                                         <td>
-                                                            <%=classes[i].term_price %>
-                                                        </td>
-                                                        <td>
-                                                            <%=classes[i].other_price %>
-                                                        </td>
-                                                        <td>
-                                                            <%=classes[i].debit %>
-                                                        </td>
-
-                                                        <td>
-                                                            <%= moment(classes[i].createdAt).format("YYYY-MM-DD HH:mm:ss") %>
-                                                        </td>
-                                                        <td>
-                                                            <%= moment(classes[i].updatedAt).format("YYYY-MM-DD HH:mm:ss") %>
+                                                            <%= moment(accounts[i].updatedAt).format("YYYY-MM-DD HH:mm:ss") %>
                                                         </td>
                                                         <td class="text-right">
                                                             <div class="btn-group card-option">
@@ -81,7 +64,7 @@
                                                             <i class="feather icon-more-horizontal"></i>
                                                         </button>
                                                                 <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
-                                                                    <li class="dropdown-item"><a href="/classes/edit/<%=classes[i].id %>"><i class="feather icon-refresh-cw"></i> Chỉnh sửa</a></li>
+                                                                    <li class="dropdown-item"><a href="/accounts/edit/<%=accounts[i].id %>"><i class="feather icon-refresh-cw"></i> Chỉnh sửa</a></li>
                                                                     <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
                                                                 </ul>
                                                             </div>

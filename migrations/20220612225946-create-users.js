@@ -40,6 +40,21 @@ module.exports = {
                 allowNull: false,
                 defaultValue: 0
             },
+            day_salary: {
+                type: Sequelize.FLOAT,
+                allowNull: true,
+                defaultValue: 0
+            },
+            thi_salary: {
+                type: Sequelize.FLOAT,
+                allowNull: true,
+                defaultValue: 0
+            },
+            dv_salary: {
+                type: Sequelize.FLOAT,
+                allowNull: true,
+                defaultValue: 0
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

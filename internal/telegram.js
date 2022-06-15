@@ -48,9 +48,9 @@ async function init_bot() {
             reply = settings.missing_params;
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}) + " mã lớp hoặc hành động")
         }
-        if (action == "DV" && description == undefined) {
-            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}) + " mô tả dịch vụ")
-        }
+        // if (action == "DV" && description == undefined) {
+        //     return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}) + " mô tả dịch vụ")
+        // }
         let user_id = msg.from.id;
         let username = msg.from.username;
         // Check user existed
@@ -87,7 +87,7 @@ async function init_bot() {
             // Check have checked in
         let history = await Histories.findOne({
             where: {
-                user_id: user_id,
+                user_id: dbUserid,
                 checkout: null
             }
         });
@@ -178,21 +178,33 @@ async function init_bot() {
         if (time_keep <= 10 * 60) {
             time_keep = 0;
         }
-        let currency = 0;
-        if (action == 'DAY') { currency = classes.min_price }
-        if (action == 'THI') { currency = classes.term_price }
-        if (action == 'DV') { currency = classes.other_price }
+        let center_currency = 0;
+        let user_currency = 0;
+        if (action == 'DAY') {
+            center_currency = classes.min_price;
+            user_currency = dbUser.day_salary
+        }
+        if (action == 'THI') {
+            center_currency = classes.term_price;
+            user_currency = dbUser.thi_salary
+        }
+        if (action == 'DV') {
+            center_currency = classes.other_price;
+            user_currency = dbUser.dv_salary
+        }
         // 
-        let salary = time_keep * (currency / 3600);
-        let checkout_history = await Histories.update({ salary: salary, checkout: checkout_date_formatted, time_keep: time_keep, checkout: checkout_date_formatted }, {
+        time_keep = time_keep;
+        let user_salary = time_keep * (user_currency) / 60;
+        let center_payment = time_keep * (center_currency) / 60;
+        let turn_over = center_payment - user_salary;
+        let checkout_history = await Histories.update({ salary: user_salary, checkout: checkout_date_formatted, time_keep: time_keep, checkout: checkout_date_formatted, sumary_price: center_payment, turn_over: turn_over }, {
             where: {
                 id: history.id
             }
         });
         if (checkout_history) {
             reply = settings.checkout_ok;
-            // Hệ thống đã ghi nhận GV @full_name Kết thúc  @action tại lớp @class_name Phòng @room. Thời gian là @checkout. Tổng thời gian làm việc lần này là: [@time_keep] Bạn sẽ nhận được [@salary]
-            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { time_keep: (time_keep / 60).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "phút", action, action, class_name: class_name, salary: (salary).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ", room: room, username, checkout: checkout_date_formatted, full_name: dbUser.full_name, id: checkout_history.id }))
+            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { time_keep: (time_keep / 60).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "phút", action, action, class_name: class_name, salary: (user_salary).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ", room: room, username, checkout: checkout_date_formatted, full_name: dbUser.full_name, id: checkout_history.id }))
         }
     });
 

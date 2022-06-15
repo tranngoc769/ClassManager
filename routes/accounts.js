@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
+const Accounts = require('../models').Accounts;
+
 const Groups = require('../models').Groups;
 const GroupsService = require('../services/groups')
 const Users = require('../models').Users;
-const Histories = require('../models').Histories;
 const GroupMembers = require('../models').GroupMembers;
 var moment = require('moment');
 const Util = require('../internal/util');
@@ -11,13 +12,17 @@ const util = require('../internal/util');
 
 /* GET groups listing. */
 router.get('/', async function(req, res, next) {
-    let groups = await GroupsService.getAllGroups();
+    let accounts = await Accounts.findAll({
+        where: {
+            is_delete: 0
+        }
+    });
     let render_data = {
-        groups: groups,
+        accounts: accounts,
         moment: moment,
-        title: "Danh sách nhóm"
+        title: "Danh sách tài khoản"
     }
-    res.render("group/groups", render_data)
+    res.render("accounts/accounts", render_data)
 });
 /* GET groups listing. */
 router.get('/my', async function(req, res, next) {
@@ -191,28 +196,8 @@ router.get('/salary/:group_id', async(req, res) => {
         return res.send("invalid group_id");
     }
     let salaries = await GroupsService.getSummarySalary(groups.id, from, to, user_id);
-    let turn_overs = 0;
-    let paid = 0;
-    let debit_turn_overs = 0;
-    let debit_paid = 0;
-    salaries.forEach(element => {
-        turn_overs += element.turn_over;
-        paid += element.salary;
-        if (element.is_center_paid == 0) {
-            debit_turn_overs += element.turn_over;
-        }
-        if (element.is_user_paid == 0) {
-            debit_paid += element.salary;
-        }
-    });
-    let formatter = new Intl.NumberFormat('vi-VI', { maximumSignificantDigits: 3 });
     let render_data = {
-        turn_overs: turn_overs,
-        paid: paid,
-        formatter: formatter,
-        debit_turn_overs: debit_turn_overs,
-        debit_paid: debit_paid,
-        title: "Thống kê lương nhóm",
+        title: "Thống kê lương",
         moment: moment,
         salaries: salaries,
         from: moment(from).format("YYYY-MM-DD"),
@@ -230,32 +215,16 @@ router.get('/working/:group_id', async(req, res) => {
     if (groups == null) {
         return res.send("invalid group_id");
     }
-    let histories = await GroupsService.getWorkingUsers(group_id, from, to, "");
-    let free_members = await GroupsService.getWorkingUsers(group_id, from, to, " not ");
+    let salaries = await GroupsService.getWorkingUsers(groups.id, from, to);
     let render_data = {
         title: "Thành viên đang đi dạy",
         moment: moment,
-        salaries: histories,
-        free_members: free_members,
+        salaries: salaries,
         from: moment(from).format("YYYY-MM-DD"),
         to: moment(to).format("YYYY-MM-DD"),
     }
     res.render("group/working", render_data)
 });
 
-// return res.send({ "code": 403, "msg": "không thể xác thực" })
 
-router.post('/paid', async function(req, res, next) {
-    var json = JSON.stringify(req.body);
-    try {
-        json = JSON.parse(json);
-    } catch (error) {}
-    const updated = await Histories.update(json, {
-        where: { id: json.id }
-    })
-    if (updated) {
-        return res.send({ "code": 200, "msg": "Thành công" })
-    }
-    return res.send({ "code": 400, "msg": "Không thành công" })
-});
 module.exports = router;

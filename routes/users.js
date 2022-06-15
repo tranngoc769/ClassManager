@@ -37,6 +37,9 @@ router.post('/add', async function(req, res, next) {
             tele_user: json.tele_user,
             is_lead: json.is_lead,
             full_name: json.full_name,
+            dv_salary: json.dv_salary,
+            thi_salary: json.thi_salary,
+            day_salary: json.day_salary,
             phone: json.phone,
             social: json.social,
             address: json.address
@@ -62,6 +65,9 @@ router.post('/update', async function(req, res, next) {
         is_lead: json.is_lead,
         full_name: json.full_name,
         phone: json.phone,
+        dv_salary: json.dv_salary,
+        thi_salary: json.thi_salary,
+        day_salary: json.day_salary,
         social: json.social,
         address: json.address
     }, {

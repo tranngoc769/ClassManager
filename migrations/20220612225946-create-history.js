@@ -3,22 +3,42 @@ module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('Histories', {
             id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
             time_keep: {
-                type: DataTypes.FLOAT,
+                type: Sequelize.FLOAT,
                 allowNull: true,
                 defaultValue: 0
             },
-            is_paid: {
-                type: DataTypes.BOOLEAN,
+            salary: {
+                type: Sequelize.FLOAT,
+                allowNull: true,
+                defaultValue: 0
+            },
+            sumary_price: {
+                type: Sequelize.FLOAT,
+                allowNull: true,
+                defaultValue: 0
+            },
+            turn_over: {
+                type: Sequelize.FLOAT,
+                allowNull: true,
+                defaultValue: 0
+            },
+            is_user_paid: {
+                type: Sequelize.BOOLEAN,
+                allowNull: true,
+                defaultValue: 0
+            },
+            is_center_paid: {
+                type: Sequelize.BOOLEAN,
                 allowNull: true,
                 defaultValue: 0
             },
             class_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false,
                 validate: {
                     notEmpty: {
@@ -27,39 +47,39 @@ module.exports = {
                 }
             },
             user_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
             action: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: false
             },
             description: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: true,
                 defaultValue: ""
             },
             checkin: {
-                type: DataTypes.DATE,
+                type: Sequelize.DATE,
                 allowNull: true
             },
             checkout: {
-                type: DataTypes.DATE,
+                type: Sequelize.DATE,
                 allowNull: true
             },
             paid_date: {
-                type: DataTypes.DATE,
+                type: Sequelize.DATE,
                 allowNull: true,
-                defaultValue: DataTypes.NOW
+                defaultValue: Sequelize.NOW
+            },
+            center_paid_date: {
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: Sequelize.NOW
             },
             room: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: true
-            },
-            salary: {
-                type: Sequelize.FLOAT,
-                allowNull: true,
-                defaultValue: 0
             },
             createdAt: {
                 allowNull: false,

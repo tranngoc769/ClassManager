@@ -460,6 +460,7 @@ ol,
 ul,
 dl {
     margin-top: 0;
+    text-align: left !important;
     margin-bottom: 1rem;
 }
 

@@ -56,6 +56,21 @@ module.exports = (sequelize, DataTypes) => {
         full_name: {
             type: DataTypes.STRING,
             allowNull: true
+        },
+        day_salary: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
+        thi_salary: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
+        dv_salary: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
         }
     }, {
         sequelize,
