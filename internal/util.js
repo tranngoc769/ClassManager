@@ -14,7 +14,7 @@ module.exports = {
         return [true, null]
     },
     getValidDatetime: (datestring, timestring) => {
-        datestring = datestring.replace("T", " ")
+        // datestring = datestring.replace("T", " ")
         if (moment(datestring, "YYYY-MM-DD", true).isValid()) {
             return datestring + " " + timestring
         }
