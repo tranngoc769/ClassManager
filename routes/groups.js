@@ -34,7 +34,7 @@ router.get('/members/:group_id', async function(req, res, next) {
     let group_id = +req.params.group_id;
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
-    let groups = await Groups.findOne({ where: { id: group_id } });
+    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
@@ -48,7 +48,11 @@ router.get('/members/:group_id', async function(req, res, next) {
         member_arr.push(element.member_id)
     });
     let users = await GroupsService.getGroupMembers(group_id);
-    let user_all = await Users.findAll();
+    let user_all = await Users.findAll({
+        where: {
+            is_delete: 0
+        }
+    });
     let render_data = {
         users: users,
         members: member_arr,
@@ -74,7 +78,11 @@ router.get('/add-member/:group_id', async function(req, res, next) {
     members.forEach(element => {
         member_arr.push(element.member_id)
     });
-    let users = await Users.findAll();
+    let users = await Users.findAll({
+        where: {
+            is_delete: 0
+        }
+    });
     let render_data = {
         users: users,
         members: member_arr,
@@ -112,6 +120,9 @@ router.post('/add-members', async function(req, res, next) {
 });
 router.get('/add', async function(req, res, next) {
     let users = await Users.findAll({
+        where: {
+            is_delete: 0
+        },
         attributes: ['id', 'full_name', 'phone']
     });
     let render_data = {
@@ -166,11 +177,14 @@ router.post('/update', async function(req, res, next) {
 });
 router.get('/edit/:group_id', async(req, res) => {
     const group_id = +req.params.group_id;
-    let groups = await Groups.findOne({ where: { id: group_id } });
+    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
     let users = await Users.findAll({
+        where: {
+            is_delete: 0
+        },
         attributes: ['id', 'full_name', 'phone']
     });
     let render_data = {
@@ -186,7 +200,7 @@ router.get('/salary/:group_id', async(req, res) => {
     const user_id = +req.query.user_id;
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
-    let groups = await Groups.findOne({ where: { id: group_id } });
+    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
@@ -226,7 +240,7 @@ router.get('/working/:group_id', async(req, res) => {
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
     from = '2022-06-15 00:00:00'
-    let groups = await Groups.findOne({ where: { id: group_id } });
+    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }

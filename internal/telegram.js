@@ -76,7 +76,8 @@ async function init_bot() {
         // Check class
         let classes = await Classes.findOne({
             where: {
-                class_code: class_name
+                class_code: class_name,
+                is_delete: 0
             }
         });
         if (classes == null) {
@@ -149,7 +150,8 @@ async function init_bot() {
         // Check class
         let classes = await Classes.findOne({
             where: {
-                class_code: class_name
+                class_code: class_name,
+                is_delete: 0
             }
         });
         if (classes == null) {

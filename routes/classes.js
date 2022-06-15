@@ -6,7 +6,11 @@ const Util = require('../internal/util')
 
 /* GET classes listing. */
 router.get('/', async function(req, res, next) {
-    let classes = await Classes.findAll();
+    let classes = await Classes.findAll({
+        where: {
+            is_delete: 0
+        }
+    });
     let render_data = {
         classes: classes,
         moment: moment,
@@ -76,7 +80,7 @@ router.post('/update', async function(req, res, next) {
 });
 router.get('/edit/:classid', async(req, res) => {
     const classid = +req.params.classid;
-    let classes = await Classes.findOne({ where: { id: classid } });
+    let classes = await Classes.findOne({ where: { id: classid, is_delete: 0 } });
     if (classes == null) {
         return res.send("invalid classid");
     }

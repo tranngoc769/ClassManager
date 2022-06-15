@@ -6,7 +6,11 @@ const Util = require('../internal/util')
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
-    let users = await Users.findAll();
+    let users = await Users.findAll({
+        where: {
+            is_delete: 0
+        }
+    });
     let render_data = {
         users: users,
         moment: moment,
@@ -80,7 +84,7 @@ router.post('/update', async function(req, res, next) {
 });
 router.get('/edit/:userid', async(req, res) => {
     const userid = +req.params.userid;
-    let user = await Users.findOne({ where: { id: userid } });
+    let user = await Users.findOne({ where: { id: userid, is_delete: 0 } });
     if (user == null) {
         return res.send("invalid userid");
     }
