@@ -14,6 +14,26 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
     Histories.init({
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        time_keep: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
+        salary: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
+        is_paid: {
+            type: DataTypes.BOOLEAN,
+            allowNull: true,
+            defaultValue: 0
+        },
         class_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -27,6 +47,15 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        action: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: ""
+        },
         checkin: {
             type: DataTypes.DATE,
             allowNull: true
@@ -34,6 +63,11 @@ module.exports = (sequelize, DataTypes) => {
         checkout: {
             type: DataTypes.DATE,
             allowNull: true
+        },
+        paid_date: {
+            type: DataTypes.DATE,
+            allowNull: true,
+            defaultValue: DataTypes.NOW
         },
         room: {
             type: DataTypes.STRING,

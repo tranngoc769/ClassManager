@@ -1,18 +1,18 @@
 'use strict';
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Histories', {
+        await queryInterface.createTable('GroupMembers', {
             id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
             group_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
             member_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
             createdAt: {
@@ -27,6 +27,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('History');
+        await queryInterface.dropTable('GroupMembers');
     }
 };

@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "start": "nodemon app.js"
+        "start": "TZ='Asia/Ho_Chi_Minh' nodemon app.js"
     },
     "dependencies": {
         "cookie-parser": "~1.4.4",
@@ -17,6 +17,7 @@
         "md5": "^2.3.0",
         "morgan": "~1.9.1",
         "mysql2": "^2.3.0",
+        "node-datetime": "^2.1.2",
         "node-emoji": "^1.11.0",
         "node-telegram-bot-api": "^0.57.0",
         "pug": "^3.0.2",

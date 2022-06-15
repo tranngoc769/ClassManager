@@ -122,6 +122,7 @@ console.log("Listening " + port)
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+process.env.TZ = "Asia/Ho_Chi_Minh";
 
 /**
  * Normalize a port into a number, string, or false.

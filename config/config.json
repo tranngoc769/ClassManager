@@ -4,6 +4,7 @@
         "password": "",
         "database": "classmanager",
         "host": "localhost",
+        "timezone": "Asia/Ho_Chi_Minh",
         "dialect": "mysql"
     },
     "test": {
@@ -16,6 +17,7 @@
     "production": {
         "username": "root",
         "password": "",
+        "timezone": "Asia/Ho_Chi_Minh",
         "database": "classmanager",
         "host": "localhost",
         "dialect": "mysql"
