@@ -24,6 +24,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
+                                                    <th>Trạng thái</th>
                                                     <th>Username</th>
                                                     <th>Giới tính</th>
                                                     <th>Ngày sinh</th>
@@ -37,6 +38,10 @@
                                                     <tr>
                                                         <td>
                                                             <%=accounts[i].id %>
+                                                        </td>
+                                                        <td>
+                                                            <span g_id="<%=accounts[i].id %>" status="<%=accounts[i].is_delete %>" class=" active_account badge badge-pill
+                                                                    <% if(accounts[i].is_delete){ %>badge-danger">Vô hiệu<% }else{%>badge-success">Hoạt động <% } %> </span>
                                                         </td>
                                                         <td>
                                                             <%=accounts[i].username %>
@@ -80,6 +85,3 @@
                 </div>
                 <!-- [ Dashboard ] end -->
             </div>
-            <script>
-                $('#usertable').DataTable();
-            </script>

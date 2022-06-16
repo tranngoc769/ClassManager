@@ -1,5 +1,5 @@
 function fill_add_user() {
-    $("#is_lead").val("1");
+    $("#user_level").val("1");
     $("#tele_id").val("1234");
     $("#tele_user").val("qua");
     $("#address").val("123 TC");

@@ -43,7 +43,7 @@ router.post('/add', async function(req, res, next) {
     try {
         json = JSON.parse(json);
     } catch (error) {}
-    const [validate, error] = Util.validated_parameter(["tele_id", "tele_user", "is_lead", "full_name"], json)
+    const [validate, error] = Util.validated_parameter(["tele_id", "tele_user", "user_level", "full_name"], json)
     if (!validate) {
         return res.send({ "code": 400, "msg": error });
     }
@@ -52,7 +52,7 @@ router.post('/add', async function(req, res, next) {
         defaults: {
             tele_id: json.tele_id,
             tele_user: json.tele_user,
-            is_lead: json.is_lead,
+            user_level: json.user_level,
             full_name: json.full_name,
             dv_salary: json.dv_salary,
             thi_salary: json.thi_salary,
@@ -72,14 +72,14 @@ router.post('/update', async function(req, res, next) {
     try {
         json = JSON.parse(json);
     } catch (error) {}
-    const [validate, error] = Util.validated_parameter(["tele_id", "tele_user", "is_lead", "id", "full_name"], json)
+    const [validate, error] = Util.validated_parameter(["tele_id", "tele_user", "user_level", "id", "full_name"], json)
     if (!validate) {
         return res.send({ "code": 400, "msg": error });
     }
     const updated = await Users.update({
         tele_id: json.tele_id,
         tele_user: json.tele_user,
-        is_lead: json.is_lead,
+        user_level: json.user_level,
         full_name: json.full_name,
         phone: json.phone,
         dv_salary: json.dv_salary,

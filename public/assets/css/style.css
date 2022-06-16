@@ -11761,7 +11761,7 @@ a.text-dark:focus {
 }
 
 .text-body {
-    color: #00000 !important;
+    color: #000000 !important;
 }
 
 .text-muted {
@@ -11843,9 +11843,6 @@ a.text-dark:focus {
     h3 {
         page-break-after: avoid;
     }
-    @ page {
-        size: a3;
-    }
     body {
         min-width: 992px !important;
     }
@@ -11899,7 +11896,6 @@ a.text-dark:focus {
     font-weight: normal !important;
     font-variant: normal !important;
     text-transform: none !important;
-    speak: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -11912,7 +11908,6 @@ a.text-dark:focus {
     font-weight: normal !important;
     font-variant: normal !important;
     text-transform: none !important;
-    speak: none;
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -11981,7 +11976,6 @@ a.text-dark:focus {
 .feather {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'feather' !important;
-    speak: none;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -13114,28 +13108,24 @@ a.text-dark:focus {
 }
 
 .fa-rotate-90 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
 }
 
 .fa-rotate-180 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
     -webkit-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     transform: rotate(180deg);
 }
 
 .fa-rotate-270 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
     -webkit-transform: rotate(270deg);
     -ms-transform: rotate(270deg);
     transform: rotate(270deg);
 }
 
 .fa-flip-horizontal {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
     -webkit-transform: scaleX(-1);
     -ms-transform: scaleX(-1);
     transform: scaleX(-1);
@@ -13145,11 +13135,6 @@ a.text-dark:focus {
     -webkit-transform: scaleY(-1);
     -ms-transform: scaleY(-1);
     transform: scaleY(-1);
-}
-
-.fa-flip-horizontal.fa-flip-vertical,
-.fa-flip-vertical {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
 }
 
 .fa-flip-horizontal.fa-flip-vertical {
@@ -18872,7 +18857,6 @@ a.text-dark:focus {
     right: 10px;
     top: 10px;
     display: inline-block;
-    float: right;
     padding: 0;
     position: absolute;
 }
@@ -21000,11 +20984,11 @@ pre[class*=language-]:before {
 
 .pct-select.select-nocolor .select-selected:after {
     border: 6px solid transparent;
-    border-color: #00000 transparent transparent transparent;
+    border-color: #000000 transparent transparent transparent;
 }
 
 .pct-select.select-nocolor .select-selected.select-arrow-active:after {
-    border-color: transparent transparent #00000 transparent;
+    border-color: transparent transparent #000000 transparent;
 }
 
 .pct-select.select-nocolor .select-items div,
@@ -24319,7 +24303,6 @@ pre[class*=language-]:before {
 }
 
 .pcoded-navbar .header-logo+.scroll-div {
-    float: left;
     display: inline-block;
 }
 
@@ -29022,7 +29005,6 @@ div.dtk-focus-alt table.dataTable tbody th.focus {
 }
 
 #task-container li {
-    float: left;
     width: 49%;
     overflow: auto;
     height: auto;
@@ -29088,7 +29070,6 @@ div.dtk-focus-alt table.dataTable tbody th.focus {
     border: 1px solid #e3e3e3;
     cursor: pointer;
     display: inline-block;
-    float: left;
     height: 24px;
     margin-right: 0.5em;
     position: relative;
@@ -29157,7 +29138,6 @@ div.dtk-focus-alt table.dataTable tbody th.focus {
     border: 1px solid #e3e3e3;
     cursor: pointer;
     display: inline-block;
-    float: left;
     height: 24px;
     margin-right: 0.5em;
     position: relative;

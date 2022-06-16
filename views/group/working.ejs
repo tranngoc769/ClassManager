@@ -65,7 +65,7 @@
                                                             <%=workk_members[i].id %>
                                                         </td>
                                                         <td>
-                                                            <% if(workk_members[i].is_lead){ %>
+                                                            <% if(workk_members[i].user_level){ %>
                                                                 <span class="badge badge-pill badge-info">Trưởng nhóm</span>
                                                                 <% }else{%>
                                                                     <span class="badge badge-pill badge-success">Giảng viên</span>
@@ -156,7 +156,7 @@
                                                             <%=free_members[i].id %>
                                                         </td>
                                                         <td>
-                                                            <% if(free_members[i].is_lead){ %>
+                                                            <% if(free_members[i].user_level){ %>
                                                                 <span class="badge badge-pill badge-info">Trưởng nhóm</span>
                                                                 <% }else{%>
                                                                     <span class="badge badge-pill badge-success">Giảng viên</span>
