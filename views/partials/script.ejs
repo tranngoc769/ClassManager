@@ -1,9 +1,32 @@
+<!-- datatable Js -->
+<script src="/assets/js/plugins/jquery.dataTables.min.js"></script>
+<script src="/assets/js/plugins/dataTables.bootstrap4.min.js"></script>
+<script src="/assets/js/plugins/dataTables.buttons.min.js"></script>
+<script src="/assets/js/plugins/dataTables.responsive.min.js"></script>
 <script src="/assets/js/plugins/bootstrap.min.js"></script>
 <script src="/assets/js/pcoded.min.js"></script>
 <script src="/assets/js/menu-setting.js"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/assets/js/mock.js"></script>
 <script src="/assets/js/main.js"></script>
+<script>
+    $('#usertable').DataTable({
+        responsive: true,
+        columnDefs: [{
+            className: 'dt-body-right'
+        }],
+
+        "autoWidth": false,
+        "rowCallback": function(row, data, index) {
+            return;
+            var that = row;
+            if (!$(row).attr('role') || $(row).attr('role') != 'row' || $(row).hasClass('parent')) {
+                return;
+            }
+            $(row).addClass('parent');
+        }
+    });
+</script>
 <script>
     // [ task-action ]
     $(".task-right-header-action").on('click', function() {

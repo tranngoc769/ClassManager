@@ -3,14 +3,24 @@ var router = express.Router();
 const Classes = require('../models').Classes;
 var moment = require('moment');
 const Util = require('../internal/util')
-
+router.post('/active', async function(req, res, next) {
+    var json = JSON.stringify(req.body);
+    try {
+        json = JSON.parse(json);
+    } catch (error) {}
+    const updated = await Classes.update({
+        is_delete: json.is_delete
+    }, {
+        where: { id: json.id }
+    })
+    if (updated) {
+        return res.send({ "code": 200, "msg": "Thành công" })
+    }
+    return res.send({ "code": 400, "msg": "Đã tồn tại" })
+});
 /* GET classes listing. */
 router.get('/', async function(req, res, next) {
-    let classes = await Classes.findAll({
-        where: {
-            is_delete: 0
-        }
-    });
+    let classes = await Classes.findAll();
     let render_data = {
         classes: classes,
         moment: moment,

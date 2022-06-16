@@ -1,6 +1,5 @@
 <% extend('../partials/layout') %>
     <!-- data tables css -->
-    <link rel="stylesheet" href="/assets/css/plugins/dataTables.bootstrap4.min.css">
     <div class="pcoded-main-container">
         <div class="pcoded-content container">
             <!-- [ Main Content ] start -->
@@ -26,7 +25,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Mã nhóm</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Mã</th>
                                                     <th>Tên nhóm</th>
                                                     <th>Trưởng Nhóm</th>
                                                     <th>Ngày tạo</th>
@@ -39,6 +39,10 @@
                                                     <tr>
                                                         <td>
                                                             <%=groups[i].id %>
+                                                        </td>
+                                                        <td>
+                                                            <span g_id="<%=groups[i].id %>" status="<%=groups[i].is_delete %>" class=" active_group badge badge-pill
+                                                                    <% if(groups[i].is_delete){ %>badge-danger">Vô hiệu<% }else{%>badge-success">Hoạt động <% } %> </span>
                                                         </td>
                                                         <td>
                                                             <%=groups[i].group_code %>
@@ -77,16 +81,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <a href="#!" class="mb-0 text-body"><i class="feather icon-plus mr-2"></i>Add Users</a>
-                        </div>
+
                     </div>
                 </div>
                 <!-- [ Dashboard ] end -->
             </div>
-            <!-- datatable Js -->
-            <script src="/assets/js/plugins/jquery.dataTables.min.js"></script>
-            <script src="/assets/js/plugins/dataTables.bootstrap4.min.js"></script>
-            <script>
-                $('#usertable').DataTable();
-            </script>

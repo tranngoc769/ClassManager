@@ -3,16 +3,29 @@ var router = express.Router();
 const Users = require('../models').Users;
 var moment = require('moment');
 const Util = require('../internal/util')
-
+router.post('/active', async function(req, res, next) {
+    var json = JSON.stringify(req.body);
+    try {
+        json = JSON.parse(json);
+    } catch (error) {}
+    const updated = await Users.update({
+        is_delete: json.is_delete
+    }, {
+        where: { id: json.id }
+    })
+    if (updated) {
+        return res.send({ "code": 200, "msg": "Thành công" })
+    }
+    return res.send({ "code": 400, "msg": "Đã tồn tại" })
+});
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
-    let users = await Users.findAll({
-        where: {
-            is_delete: 0
-        }
-    });
+
+    let formatter = new Intl.NumberFormat('vi-VI', { maximumSignificantDigits: 3 });
+    let users = await Users.findAll();
     let render_data = {
         users: users,
+        formatter: formatter,
         moment: moment,
         title: "Danh sách người dùng"
     }

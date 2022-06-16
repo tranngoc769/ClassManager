@@ -1,7 +1,4 @@
 <% extend('../partials/layout') %>
-    <!-- data tables css -->
-    <link rel="stylesheet" href="/assets/css/plugins/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="/assets/css/plugins/dataTables.bootstrap4.min.css">
     <div class="pcoded-main-container">
         <div class="pcoded-content container">
             <!-- [ Main Content ] start -->
@@ -27,16 +24,17 @@
                                             <thead>
                                                 <tr>
                                                     <th></th>
-                                                    <th>ID</th>
+                                                    <th></th>
+                                                    <th>Trạng thái</th>
                                                     <th>Loại</th>
                                                     <th>Họ và tên</th>
                                                     <th>SĐT</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>MXH</th>
                                                     <th>Telegram</th>
                                                     <th>Lương dạy</th>
                                                     <th>Lương coi thi</th>
                                                     <th>Lương dịch vụ</th>
+                                                    <th>Địa chỉ</th>
+                                                    <th>MXH</th>
                                                     <th>Ngày tạo</th>
                                                     <th>Ngày cập nhật</th>
                                                 </tr>
@@ -44,14 +42,17 @@
                                             <tbody>
                                                 <% for(var i = 0; i < users.length; i++) { %>
                                                     <tr>
+                                                        <td>
+                                                            <%=users[i].id %>
+                                                        </td>
                                                         <td class="text-right">
                                                             <div class="btn-group card-option">
                                                                 <a href="/users/edit/<%=users[i].id %>"><i class="feather icon-edit"></i></a>
-                                                                <a href="#!"><i class="feather icon-trash"></i></a>
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <%=users[i].id %>
+                                                            <span g_id="<%=users[i].id %>" status="<%=users[i].is_delete %>" class="active_user badge badge-pill
+                                                                    <% if(users[i].is_delete){ %>badge-danger">Vô hiệu<% }else{%>badge-success">Hoạt động <% } %> </span>
                                                         </td>
                                                         <td>
                                                             <% if(users[i].is_lead){ %>
@@ -66,12 +67,7 @@
                                                         <td>
                                                             <%=users[i].phone %>
                                                         </td>
-                                                        <td>
-                                                            <%=users[i].address %>
-                                                        </td>
-                                                        <td>
-                                                            <%=users[i].social %>
-                                                        </td>
+
                                                         <td class="sorting_1">
                                                             <div class="media">
                                                                 <div class="media-body ml-3 align-self-center">
@@ -85,13 +81,19 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <%=users[i].day_salary %>
+                                                            <%=formatter.format(users[i].day_salary)%> đ
                                                         </td>
                                                         <td>
-                                                            <%=users[i].thi_salary %>
+                                                            <%=formatter.format(users[i].thi_salary)%> đ
                                                         </td>
                                                         <td>
-                                                            <%=users[i].dv_salary %>
+                                                            <%=formatter.format(users[i].dv_salary)%> đ
+                                                        </td>
+                                                        <td>
+                                                            <%=users[i].address %>
+                                                        </td>
+                                                        <td>
+                                                            <%=users[i].social %>
                                                         </td>
                                                         <td>
                                                             <%= moment(users[i].createdAt).format("YYYY-MM-DD HH:mm:ss") %>
@@ -107,33 +109,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <a href="#!" class="mb-0 text-body"><i class="feather icon-plus mr-2"></i>Add Users</a>
-                        </div>
+
                     </div>
                 </div>
                 <!-- [ Dashboard ] end -->
             </div>
             <!-- datatable Js -->
-            <script src="/assets/js/plugins/jquery.dataTables.min.js"></script>
-            <script src="/assets/js/plugins/dataTables.bootstrap4.min.js"></script>
-            <script src="/assets/js/plugins/dataTables.buttons.min.js"></script>
-            <script src="/assets/js/plugins/dataTables.responsive.min.js"></script>
-            <script>
-                $('#usertable').DataTable({
-                    responsive: true,
-                    columnDefs: [{
-                        className: 'dt-body-right'
-                    }],
-
-                    "autoWidth": false,
-                    "rowCallback": function(row, data, index) {
-                        return;
-                        var that = row;
-                        if (!$(row).attr('role') || $(row).attr('role') != 'row' || $(row).hasClass('parent')) {
-                            return;
-                        }
-                        $(row).addClass('parent');
-                    }
-                });
-            </script>

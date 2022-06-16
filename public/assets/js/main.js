@@ -527,4 +527,206 @@ $(document).ready(function() {
 
         }
     });
+
+    $(document).on('click', '.active_group', function() {
+        try {
+            var item = $(this);
+            let g_id = $(this)[0].getAttribute("g_id");
+            let status = $(this)[0].getAttribute("status");
+            if (status == "false") { status = 0; }
+            if (status == "true") { status = 1; }
+            let next_status = (status * 1 + 1) % 2;
+            let msg = 'Xác nhận kích hoạt nhóm';
+            let html = `badge-success">Hoạt động `;
+            if (next_status == 1) {
+                msg = 'Xác nhận vô hiệu hóa nhóm';
+                html = `badge-danger">Vô hiệu `;
+            }
+            Swal.fire({
+                title: 'Bạn có chắc chứ?',
+                text: msg,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var settings = {
+                        "url": "/groups/active",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({
+                            "is_delete": next_status,
+                            'id': g_id
+                        }),
+                    };
+                    $.ajax(settings).done(function(response) {
+                        try {
+                            response = JSON.parse(response)
+                        } catch (error) {
+
+                        }
+                        if (response.code == 200) {
+                            item.parent().html(`<span g_id="${g_id}" status="${next_status}"  class="active_group badge badge-pill ${html}</span>`)
+                        } else {
+                            Swal.fire(
+                                'Thất bại',
+                                response.msg,
+                                'question'
+                            )
+                        }
+                        console.log(response);
+                    }).fail(function(response) {
+                        Swal.fire(
+                            'Lỗi',
+                            response.toString(),
+                            'error'
+                        )
+                        console.log(response);
+                    });
+                }
+            })
+
+        } catch (error) {
+
+        }
+    });
+    $(document).on('click', '.active_class', function() {
+        try {
+            var item = $(this);
+            let g_id = $(this)[0].getAttribute("g_id");
+            let status = $(this)[0].getAttribute("status");
+            if (status == "false") { status = 0; }
+            if (status == "true") { status = 1; }
+            let next_status = (status * 1 + 1) % 2;
+            let msg = 'Xác nhận kích hoạt lớp';
+            let html = `badge-success">Hoạt động `;
+            if (next_status == 1) {
+                msg = 'Xác nhận vô hiệu hóa lớp';
+                html = `badge-danger">Vô hiệu `;
+            }
+            Swal.fire({
+                title: 'Bạn có chắc chứ?',
+                text: msg,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var settings = {
+                        "url": "/classes/active",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({
+                            "is_delete": next_status,
+                            'id': g_id
+                        }),
+                    };
+                    $.ajax(settings).done(function(response) {
+                        try {
+                            response = JSON.parse(response)
+                        } catch (error) {
+
+                        }
+                        if (response.code == 200) {
+                            item.parent().html(`<span g_id="${g_id}" status="${next_status}"  class="active_group badge badge-pill ${html}</span>`)
+                        } else {
+                            Swal.fire(
+                                'Thất bại',
+                                response.msg,
+                                'question'
+                            )
+                        }
+                        console.log(response);
+                    }).fail(function(response) {
+                        Swal.fire(
+                            'Lỗi',
+                            response.toString(),
+                            'error'
+                        )
+                        console.log(response);
+                    });
+                }
+            })
+
+        } catch (error) {
+
+        }
+    });
+    $(document).on('click', '.active_user', function() {
+        try {
+            var item = $(this);
+            let g_id = $(this)[0].getAttribute("g_id");
+            let status = $(this)[0].getAttribute("status");
+            if (status == "false") { status = 0; }
+            if (status == "true") { status = 1; }
+            let next_status = (status * 1 + 1) % 2;
+            let msg = 'Xác nhận kích hoạt hóa người dùng';
+            let html = `badge-success">Hoạt động `;
+            if (next_status == 1) {
+                msg = 'Xác nhận vô hiệu người dùng';
+                html = `badge-danger">Vô hiệu `;
+            }
+            Swal.fire({
+                title: 'Bạn có chắc chứ?',
+                text: msg,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Xác nhận!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var settings = {
+                        "url": "/users/active",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({
+                            "is_delete": next_status,
+                            'id': g_id
+                        }),
+                    };
+                    $.ajax(settings).done(function(response) {
+                        try {
+                            response = JSON.parse(response)
+                        } catch (error) {
+
+                        }
+                        if (response.code == 200) {
+                            item.parent().html(`<span g_id="${g_id}" status="${next_status}"  class="active_user badge badge-pill ${html}</span>`)
+                        } else {
+                            Swal.fire(
+                                'Thất bại',
+                                response.msg,
+                                'question'
+                            )
+                        }
+                        console.log(response);
+                    }).fail(function(response) {
+                        Swal.fire(
+                            'Lỗi',
+                            response.toString(),
+                            'error'
+                        )
+                        console.log(response);
+                    });
+                }
+            })
+
+        } catch (error) {
+
+        }
+    });
 });

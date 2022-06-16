@@ -154,6 +154,22 @@ router.post('/add', async function(req, res, next) {
     }
     return res.send({ "code": 400, "msg": "Đã tồn tại" })
 });
+
+router.post('/active', async function(req, res, next) {
+    var json = JSON.stringify(req.body);
+    try {
+        json = JSON.parse(json);
+    } catch (error) {}
+    const updated = await Groups.update({
+        is_delete: json.is_delete
+    }, {
+        where: { id: json.id }
+    })
+    if (updated) {
+        return res.send({ "code": 200, "msg": "Thành công" })
+    }
+    return res.send({ "code": 400, "msg": "Đã tồn tại" })
+});
 router.post('/update', async function(req, res, next) {
     var json = JSON.stringify(req.body);
     try {
