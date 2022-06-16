@@ -34,6 +34,7 @@
                                                     <th>Lương coi thi</th>
                                                     <th>Lương dịch vụ</th>
                                                     <th>Địa chỉ</th>
+                                                    <th>Tên tài khoản</th>
                                                     <th>MXH</th>
                                                     <th>Ngày tạo</th>
                                                     <th>Ngày cập nhật</th>
@@ -57,9 +58,11 @@
                                                         <td>
                                                             <% if(users[i].user_level){ %>
                                                                 <span class="badge badge-pill badge-info">Trưởng nhóm</span>
-                                                                <% }else{%>
+                                                                <% }else if(users[i].user_level ==0){%>
                                                                     <span class="badge badge-pill badge-success">Giảng viên</span>
-                                                                    <% } %>
+                                                                    <% }else{%>
+                                                                        <span class="badge badge-pill badge-danger">Admin</span>
+                                                                        <% } %>
                                                         </td>
                                                         <td>
                                                             <%=users[i].full_name %>
@@ -91,6 +94,9 @@
                                                         </td>
                                                         <td>
                                                             <%=users[i].address %>
+                                                        </td>
+                                                        <td>
+                                                            <%=users[i].username %>
                                                         </td>
                                                         <td>
                                                             <%=users[i].social %>

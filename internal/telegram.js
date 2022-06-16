@@ -55,7 +55,7 @@ async function init_bot() {
         let username = msg.from.username;
         // Check user existed
         let dbUser = await Users.findOne({
-            where: { tele_id: user_id, is_lead: 0, is_delete: 0 },
+            where: { tele_id: user_id, user_level: 0, is_delete: 0 },
             someAttribute: {
 
             }
@@ -129,7 +129,7 @@ async function init_bot() {
         let username = msg.from.username;
         // Check user existed
         let dbUser = await Users.findOne({
-            where: { tele_id: user_id, is_lead: 0, is_delete: 0 },
+            where: { tele_id: user_id, user_level: 0, is_delete: 0 },
             someAttribute: {
 
             }

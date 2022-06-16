@@ -20,17 +20,19 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true
         },
         user_level: {
-            type: Sequelize.INTEGER,
+            type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: 0
         },
         username: {
-            type: Sequelize.STRING,
-            allowNull: false
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: "Teacher"
         },
         password: {
-            type: Sequelize.STRING,
-            allowNull: false
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: ""
         },
         is_delete: {
             type: DataTypes.BOOLEAN,

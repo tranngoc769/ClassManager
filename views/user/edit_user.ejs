@@ -103,7 +103,20 @@
                                                     <select class="form-control" id="user_level">
                                                     <option <% if(user.user_level==0){ %>selected <% } %> value="0">Giáo viên</option>
                                                     <option <% if(user.user_level==1){ %>selected <% } %> value="1">Trưởng nhóm</option>
+                                                    <option <% if(user.user_level==2){ %>selected <% } %> value="2">Admin</option>
                                                 </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleSelect1">Tên tài khoản [Không bắt buộc]</label>
+                                                    <input value="<%= user.username %>" id="username" type="text" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleSelect1">Mật khẩu [Không bắt buộc]</label>
+                                                    <input value="" id="password" type="password" class="form-control" placeholder="">
                                                 </div>
                                             </div>
                                         </div>

@@ -2850,7 +2850,7 @@ pre code {
     color: #171F46;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid #D7DFE9;
+    border: 1px solid #000000;
     border-radius: 4px;
     -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -5892,8 +5892,8 @@ input[type="button"].btn-block {
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid #D7DFE9;
-    border-radius: 4px;
+    border: 1px solid #c5a6b1;
+    border-radius: 10px;
 }
 
 .card>hr {

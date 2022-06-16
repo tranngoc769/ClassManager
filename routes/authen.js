@@ -2,8 +2,7 @@ var express = require('express');
 var router = express.Router();
 const md5 = require("md5");
 const { Op } = require('sequelize');
-const AccountsService = require('../services/accounts');
-const Accounts = require('../models').Accounts;
+const Users = require('../models').Users;
 
 function auth(req, res, next) {
     const nonSecurePaths = ['/signin', '/login'];
@@ -68,7 +67,7 @@ router.post('/signin', async(req, res) => {
     }
     // 
     let mdpass = md5(password);
-    const user = await Accounts.findOne({ where: { username: username, "password": mdpass } });
+    const user = await Users.findOne({ where: { username: username, "password": mdpass } });
     if (user === null) {
         return res.send({ "code": 403, "msg": "Không tồn tại tài khoản" })
     }

@@ -14,7 +14,7 @@ $(document).ready(function() {
     // $("#mobile-collapse").click();
     // User
     $('#add_user').click(function() {
-        let is_lead = $("#is_lead").val();
+        let user_level = $("#user_level").val();
         let tele_id = $("#tele_id").val();
         let tele_user = $("#tele_user").val();
         let address = $("#address").val();
@@ -23,7 +23,18 @@ $(document).ready(function() {
         let thi_salary = $("#thi_salary").val();
         let day_salary = $("#day_salary").val();
         let dv_salary = $("#dv_salary").val();
-
+        let username = $("#username").val()
+        let password = $("#password").val()
+        if (user_level == 1 || user_level == 2) {
+            if (username == "" || password == "" || password.length < 8) {
+                Swal.fire(
+                    'Thiếu thông tin',
+                    "Username, password là bắt buộc đối với tài khoản trưởng nhóm, admin. Mật khẩu tối thiểu 8 kí tự",
+                    'question'
+                )
+                return;
+            }
+        }
         let full_name = $("#full_name").val();
         var settings = {
             "url": "/users/add",
@@ -33,7 +44,7 @@ $(document).ready(function() {
                 "Content-Type": "application/json"
             },
             "data": JSON.stringify({
-                "is_lead": is_lead,
+                "user_level": user_level,
                 "thi_salary": thi_salary,
                 "day_salary": day_salary,
                 "dv_salary": dv_salary,
@@ -41,6 +52,8 @@ $(document).ready(function() {
                 "address": address,
                 "tele_user": tele_user,
                 "social": social,
+                "username": username,
+                "password": password,
                 "phone": phone,
                 "full_name": full_name
             }),
@@ -76,7 +89,7 @@ $(document).ready(function() {
     });
     $('#update_user').click(function() {
         let id = $("#id").val();
-        let is_lead = $("#is_lead").val();
+        let user_level = $("#user_level").val();
         let tele_id = $("#tele_id").val();
         let tele_user = $("#tele_user").val();
         let address = $("#address").val();
@@ -86,6 +99,18 @@ $(document).ready(function() {
         let day_salary = $("#day_salary").val();
         let dv_salary = $("#dv_salary").val();
         let full_name = $("#full_name").val();
+        let username = $("#username").val()
+        let password = $("#password").val()
+        if (user_level == 1 || user_level == 2) {
+            if (username == "") {
+                Swal.fire(
+                    'Thiếu thông tin',
+                    "Username là bắt buộc đối với tài khoản trưởng nhóm, admin. Mật khẩu tối thiểu 8 kí tự",
+                    'question'
+                )
+                return;
+            }
+        }
         var settings = {
             "url": "/users/update",
             "method": "POST",
@@ -94,7 +119,7 @@ $(document).ready(function() {
                 "Content-Type": "application/json"
             },
             "data": JSON.stringify({
-                "is_lead": is_lead,
+                "user_level": user_level,
                 "id": id,
                 "thi_salary": thi_salary,
                 "day_salary": day_salary,
@@ -104,6 +129,8 @@ $(document).ready(function() {
                 "tele_user": tele_user,
                 "social": social,
                 "phone": phone,
+                "username": username,
+                "password": password,
                 "full_name": full_name
             }),
         };

@@ -1,4 +1,5 @@
 var express = require('express');
+const md5 = require('md5');
 var router = express.Router();
 const Users = require('../models').Users;
 var moment = require('moment');
@@ -47,6 +48,12 @@ router.post('/add', async function(req, res, next) {
     if (!validate) {
         return res.send({ "code": 400, "msg": error });
     }
+    if (json.username == "") {
+        json.username = "GV";
+    }
+    if (json.password == "") {
+        json.password = "00000000";
+    }
     const [user, created] = await Users.findOrCreate({
         where: { tele_id: json.tele_id },
         defaults: {
@@ -59,6 +66,8 @@ router.post('/add', async function(req, res, next) {
             day_salary: json.day_salary,
             phone: json.phone,
             social: json.social,
+            username: json.username,
+            password: md5(json.password),
             address: json.address
         }
     })
@@ -76,7 +85,10 @@ router.post('/update', async function(req, res, next) {
     if (!validate) {
         return res.send({ "code": 400, "msg": error });
     }
-    const updated = await Users.update({
+    if (json.username == "") {
+        json.username = "GV";
+    }
+    let data = {
         tele_id: json.tele_id,
         tele_user: json.tele_user,
         user_level: json.user_level,
@@ -85,9 +97,17 @@ router.post('/update', async function(req, res, next) {
         dv_salary: json.dv_salary,
         thi_salary: json.thi_salary,
         day_salary: json.day_salary,
+        username: json.username,
         social: json.social,
         address: json.address
-    }, {
+    }
+    if (json.password != "") {
+        if (json.password.length < 8) {
+            return res.send({ "code": 400, "msg": "Mật khẩu tối thiểu 8 kí tự" })
+        }
+        data.password = md5(json.password)
+    }
+    const updated = await Users.update(data, {
         where: { id: json.id }
     })
     if (updated) {

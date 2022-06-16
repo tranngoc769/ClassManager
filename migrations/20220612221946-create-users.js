@@ -7,12 +7,20 @@ module.exports = {
                 primaryKey: true,
                 autoIncrement: true
             },
-            is_lead: {
-                type: Sequelize.BOOLEAN,
+            user_level: {
+                type: Sequelize.INTEGER,
                 allowNull: false
             },
             tele_id: {
                 type: Sequelize.BIGINT,
+                allowNull: true
+            },
+            username: {
+                type: Sequelize.STRING,
+                allowNull: true
+            },
+            password: {
+                type: Sequelize.STRING,
                 allowNull: true
             },
             tele_user: {
