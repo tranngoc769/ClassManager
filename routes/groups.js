@@ -17,6 +17,7 @@ router.get('/', async function(req, res, next) {
         moment: moment,
         title: "Danh sách nhóm"
     }
+    render_data.session = req.session;
     res.render("group/groups", render_data)
 });
 /* GET groups listing. */
@@ -28,6 +29,7 @@ router.get('/my', async function(req, res, next) {
         moment: moment,
         title: "Danh sách nhóm của tôi"
     }
+    render_data.session = req.session;
     res.render("group/my_groups", render_data)
 });
 router.get('/members/:group_id', async function(req, res, next) {
@@ -65,6 +67,7 @@ router.get('/members/:group_id', async function(req, res, next) {
         moment: moment,
         title: "Danh sách thành viên nhóm của tôi"
     }
+    render_data.session = req.session;
     res.render("group/group_membere", render_data)
 });
 router.get('/add-member/:group_id', async function(req, res, next) {
@@ -90,6 +93,7 @@ router.get('/add-member/:group_id', async function(req, res, next) {
         moment: moment,
         title: "Quản lý thành viên nhóm"
     }
+    render_data.session = req.session;
     res.render("group/add_members", render_data)
 });
 router.post('/add-members', async function(req, res, next) {
@@ -129,6 +133,7 @@ router.get('/add', async function(req, res, next) {
         title: "Thêm nhóm",
         users: users
     }
+    render_data.session = req.session;
     res.render("group/add_group", render_data)
 });
 
@@ -209,6 +214,7 @@ router.get('/edit/:group_id', async(req, res) => {
         users: users
 
     }
+    render_data.session = req.session;
     res.render("group/edit_group", render_data)
 });
 router.get('/salary/:group_id', async(req, res) => {
@@ -248,6 +254,7 @@ router.get('/salary/:group_id', async(req, res) => {
         from: moment(from).format("YYYY-MM-DD"),
         to: moment(to).format("YYYY-MM-DD"),
     }
+    render_data.session = req.session;
     res.render("group/group_salary", render_data)
 });
 router.get('/report/:group_id', async(req, res) => {
@@ -269,6 +276,7 @@ router.get('/report/:group_id', async(req, res) => {
         from: moment(from).format("YYYY-MM-DD"),
         to: moment(to).format("YYYY-MM-DD"),
     }
+    render_data.session = req.session;
     res.render("group/report", render_data)
 });
 router.get('/working/:group_id', async(req, res) => {
@@ -290,6 +298,7 @@ router.get('/working/:group_id', async(req, res) => {
         from: moment(from).format("YYYY-MM-DD"),
         to: moment(to).format("YYYY-MM-DD"),
     }
+    render_data.session = req.session;
     res.render("group/working", render_data)
 });
 

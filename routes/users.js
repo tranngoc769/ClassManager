@@ -30,12 +30,14 @@ router.get('/', async function(req, res, next) {
         moment: moment,
         title: "Danh sách người dùng"
     }
+    render_data.session = req.session;
     res.render("user/users", render_data)
 });
 router.get('/add', function(req, res, next) {
     let render_data = {
         title: "Thêm người dùng"
     }
+    render_data.session = req.session;
     res.render("user/add_user", render_data)
 });
 
@@ -125,6 +127,7 @@ router.get('/edit/:userid', async(req, res) => {
         title: "Chỉnh sửa người dùng",
         user: user
     }
+    render_data.session = req.session;
     res.render("user/edit_user", render_data)
 });
 

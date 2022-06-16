@@ -103,7 +103,9 @@
                                                     <select class="form-control" id="user_level">
                                                         <option selected value="0">Giáo viên</option>
                                                         <option value="1">Trưởng nhóm</option>
-                                                        <option value="2">Admin</option>
+                                                        <% if (session.user_level*1 < 2){ %>
+                                                            <option value="2">Admin</option>
+                                                        <% } %>
                                                     </select>
                                                 </div>
                                             </div>

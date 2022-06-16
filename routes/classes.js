@@ -26,12 +26,14 @@ router.get('/', async function(req, res, next) {
         moment: moment,
         title: "Danh sách lớp"
     }
+    render_data.session = req.session;
     res.render("class/classes", render_data)
 });
 router.get('/add', function(req, res, next) {
     let render_data = {
         title: "Thêm lớp"
     }
+    render_data.session = req.session;
     res.render("class/add_class", render_data)
 });
 
@@ -98,6 +100,7 @@ router.get('/edit/:classid', async(req, res) => {
         title: "Chỉnh sửa lớp",
         classes: classes
     }
+    render_data.session = req.session;
     res.render("class/edit_class", render_data)
 });
 

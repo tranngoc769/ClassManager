@@ -32,7 +32,7 @@ app.use(cookieParser());
 function auth(req, res, next) {
     const nonSecurePaths = ['/authen/signin', '/authen/login'];
     if (nonSecurePaths.includes(req.path)) return next();
-    if (req.session.loggedin != true && (req.session.username == "" || req.session.username == undefined)) {
+    if (req.session.loggedin != true && (req.session.username == "" || req.session.username == undefined) && (req.session.user_level * 1 == 0 || req.session.user_level == undefined)) {
         res.redirect('/authen/signin');
         return
     }
@@ -42,7 +42,7 @@ function auth(req, res, next) {
 function admin_auth(req, res, next) {
     const nonSecurePaths = ['/signin', '/login'];
     if (nonSecurePaths.includes(req.path)) return next();
-    if (req.session.loggedin != true && (req.session.username == "" || req.session.username == undefined)) {
+    if (req.session.loggedin != true && (req.session.username == "" || req.session.username == undefined) && (req.session.user_level * 1 == 0 || req.session.user_level == undefined)) {
         return res.send({ "code": 403, "msg": "không thể xác thực" })
         return
     }
@@ -54,7 +54,7 @@ const authenRouter = require('./routes/authen');
 const usersRouter = require('./routes/users');
 const classesRouter = require('./routes/classes');
 const groupsRouter = require('./routes/groups');
-// app.get('*', auth);
+app.get('*', auth);
 app.use('/', indexRouter);
 app.use('/authen', authenRouter);
 app.use('/users', usersRouter);
@@ -77,7 +77,10 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err); // let the error handler below handle it further    
 });
-
+app.use(function(req, res, next) {
+    res.locals.session = req.session;
+    next();
+});
 // catch all errors
 app.use(function(err, req, res, next) {
     err.status = err.status || 500;

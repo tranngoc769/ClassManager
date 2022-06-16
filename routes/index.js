@@ -37,6 +37,7 @@ router.get('/books/pages/:pageNr', asyncHandler(async(req, res) => {
         res.redirect('/books/pages/1');
     } else {
         // render the page
+        render_data.session = req.session;
         res.render('index.pug', {
             title: 'Books',
             books: getBooksForPage(books, requestedPage),
@@ -91,6 +92,7 @@ router.get('/books/search/:pageNr', asyncHandler(async(req, res) => {
         res.redirect(`/books/search/1?searchValue=${req.query.searchValue}`);
     } else {
         // It is, render the page
+        render_data.session = req.session;
         res.render('index.pug', {
             title: 'Search Results',
             books: getBooksForPage(books, requestedPage),
@@ -102,6 +104,7 @@ router.get('/books/search/:pageNr', asyncHandler(async(req, res) => {
 
 // get /books/new - Shows the create new book form
 router.get('/books/new', asyncHandler(async(req, res) => {
+    render_data.session = req.session;
     res.render('new-book.pug', { title: 'New Book' });
 }));
 
@@ -114,6 +117,7 @@ router.post('/books/new', asyncHandler(async(req, res) => {
     } catch (error) {
         if (error.name === "SequelizeValidationError") { // checking the error
             book = await Book.build(req.body);
+            render_data.session = req.session;
             res.render('new-book.pug', { title: "New Book", errors: error.errors });
         } else {
             throw error; // error caught in the asyncHandler's catch block
@@ -125,6 +129,7 @@ router.post('/books/new', asyncHandler(async(req, res) => {
 router.get('/books/:id', asyncHandler(async(req, res) => {
     const book = await Book.findByPk(req.params.id);
     if (book) {
+        render_data.session = req.session;
         res.render('update-book.pug', { title: book.title, book });
     } else {
         const error = new Error('The book you are looking for does not exist.🤷‍♂️');
@@ -149,6 +154,7 @@ router.post('/books/:id', asyncHandler(async(req, res) => {
         if (error.name === "SequelizeValidationError") { // checking the error
             book = await Book.build(req.body);
             book.id = req.params.id; // make sure correct book gets updated
+            render_data.session = req.session;
             res.render('update-book.pug', {
                 title: book.title,
                 book,
