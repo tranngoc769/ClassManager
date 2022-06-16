@@ -82,7 +82,7 @@ router.post('/signin', async(req, res) => {
 // post /books/:id/delete - Deletes a book
 router.get('/signout', asyncHandler(async(req, res) => {
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/authen');
 }));
 
 module.exports = router;

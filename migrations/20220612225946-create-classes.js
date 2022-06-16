@@ -49,6 +49,11 @@ module.exports = {
                 allowNull: true,
                 defaultValue: 0
             },
+            ca_price: {
+                type: Sequelize.FLOAT,
+                allowNull: true,
+                defaultValue: 0
+            },
             is_delete: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,

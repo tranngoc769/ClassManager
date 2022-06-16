@@ -26,6 +26,11 @@
                                 <li class="nav-item">
                                     <a href="/authen/signout" class="nav-link "><span class="pcoded-micon"><i class="fas fa-outdent"></i></span><span class="pcoded-mtext">Đăng xuất</span></a>
                                 </li>
+                                <% if (session.user_level == 2){ %>
+                                    <li class="nav-item">
+                                        <a href="/settings" class="nav-link "><span class="pcoded-micon"><i class="feather icon-settings"></i></span><span class="pcoded-mtext">Cấu hình</span></a>
+                                    </li>
+                                    <% }%>
         </div>
     </div>
 </nav>

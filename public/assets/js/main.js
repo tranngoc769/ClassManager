@@ -11,6 +11,59 @@ function get_current_date() {
 }
 $(document).ready(function() {
     console.log("ready");
+
+    $('#update_settings').click(function() {
+        let setting_inputs = $("input[name=setting_value]");
+        let data = []
+        for (let index = 0; index < setting_inputs.length; index++) {
+            const element = setting_inputs[index];
+            let setting_name = $(element)[0].getAttribute("setting_name");
+            let setting_val = $(element).val();
+            let setting_description = $(element)[0].getAttribute("setting_description");
+            data.push({
+                description: setting_description,
+                name: setting_name,
+                value: setting_val
+            })
+        }
+        var settings = {
+            "url": "/settings",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify(data),
+        };
+        $.ajax(settings).done(function(response) {
+            try {
+                response = JSON.parse(response)
+            } catch (error) {
+
+            }
+            if (response.code == 200) {
+                Swal.fire(
+                    'Thành công',
+                    'Thành công',
+                    'success'
+                )
+            } else {
+                Swal.fire(
+                    'Không thành công',
+                    response.msg,
+                    'question'
+                )
+            }
+            console.log(response);
+        }).fail(function(response) {
+            Swal.fire(
+                'Không thành công',
+                response.toString(),
+                'error'
+            )
+            console.log(response);
+        });
+    });
     // $("#mobile-collapse").click();
     // User
     $('#add_user').click(function() {
@@ -21,6 +74,7 @@ $(document).ready(function() {
         let social = $("#social").val();
         let phone = $("#phone").val();
         let thi_salary = $("#thi_salary").val();
+        let ca_salary = $("#ca_salary").val();
         let day_salary = $("#day_salary").val();
         let dv_salary = $("#dv_salary").val();
         let username = $("#username").val()
@@ -52,6 +106,7 @@ $(document).ready(function() {
                 "address": address,
                 "tele_user": tele_user,
                 "social": social,
+                "ca_salary": ca_salary,
                 "username": username,
                 "password": password,
                 "phone": phone,
@@ -99,6 +154,7 @@ $(document).ready(function() {
         let day_salary = $("#day_salary").val();
         let dv_salary = $("#dv_salary").val();
         let full_name = $("#full_name").val();
+        let ca_salary = $("#ca_salary").val();
         let username = $("#username").val()
         let password = $("#password").val()
         if (user_level == 1 || user_level == 2) {
@@ -124,6 +180,7 @@ $(document).ready(function() {
                 "thi_salary": thi_salary,
                 "day_salary": day_salary,
                 "dv_salary": dv_salary,
+                "ca_salary": ca_salary,
                 "tele_id": tele_id,
                 "address": address,
                 "tele_user": tele_user,
@@ -170,6 +227,7 @@ $(document).ready(function() {
         let address = $("#address").val();
         let min_price = $("#min_price").val();
         let term_price = $("#term_price").val();
+        let ca_price = $("#ca_price").val();
         let debit = $("#debit").val();
         let other_price = $("#other_price").val();
         var settings = {
@@ -184,6 +242,7 @@ $(document).ready(function() {
                 "class_name": class_name,
                 "address": address,
                 "min_price": min_price,
+                "ca_price": ca_price,
                 "term_price": term_price,
                 "debit": debit,
                 "other_price": other_price,
@@ -224,6 +283,7 @@ $(document).ready(function() {
         let class_name = $("#class_name").val();
         let address = $("#address").val();
         let min_price = $("#min_price").val();
+        let ca_price = $("#ca_price").val();
         let term_price = $("#term_price").val();
         let debit = $("#debit").val();
         let other_price = $("#other_price").val();
@@ -237,6 +297,7 @@ $(document).ready(function() {
             "data": JSON.stringify({
                 "class_code": class_code,
                 "id": id,
+                "ca_price": ca_price,
                 "class_name": class_name,
                 "address": address,
                 "min_price": min_price,

@@ -99,6 +99,7 @@ router.post('/update', async function(req, res, next) {
         dv_salary: json.dv_salary,
         thi_salary: json.thi_salary,
         day_salary: json.day_salary,
+        ca_salary: json.ca_salary,
         username: json.username,
         social: json.social,
         address: json.address
@@ -130,6 +131,4 @@ router.get('/edit/:userid', async(req, res) => {
     render_data.session = req.session;
     res.render("user/edit_user", render_data)
 });
-
-
 module.exports = router;

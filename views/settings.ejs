@@ -1,0 +1,45 @@
+<% extend('./partials/layout') %>
+    <!-- data tables css -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-content container">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-sm-6 d-flex align-items-center mb-4">
+                    <h1 class="d-inline-block font-weight-normal mb-0">
+                        <%= title %>
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="datta-example mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <% for(var i = 0; i < settings.length; i++) { %>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for=""><%= settings[i].description %></label>
+                                                        <input name="setting_value" setting_description="<%= settings[i].description %>" setting_name="<%= settings[i].name %>" value="<%= settings[i].value %>" type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" id="update_settings" class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Inputs ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+    </div>

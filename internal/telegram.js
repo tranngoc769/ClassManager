@@ -33,7 +33,6 @@ async function init_bot() {
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
         let message = msg.text;
-        message = "VAO LOP1 DAY 101"
         let pars = message.split(" ");
         let class_name = pars[1];
         let action = pars[2];
@@ -112,7 +111,6 @@ async function init_bot() {
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
         let message = msg.text;
-        message = "RA LOP1 DAY 101"
         let pars = message.split(" ");
         let class_name = pars[1];
         let action = pars[2];
@@ -183,8 +181,13 @@ async function init_bot() {
         let center_currency = 0;
         let user_currency = 0;
         if (action == 'DAY') {
-            center_currency = classes.min_price;
-            user_currency = dbUser.day_salary
+            if (classes.ca_price == null || classes.ca_price == 0) {
+                center_currency = classes.min_price;
+                user_currency = dbUser.day_salary
+            } else {
+                center_currency = classes.ca_price;
+                user_currency = dbUser.ca_salary
+            }
         }
         if (action == 'THI') {
             center_currency = classes.term_price;
@@ -196,17 +199,20 @@ async function init_bot() {
         }
         // 
         time_keep = time_keep;
-        let user_salary = time_keep * (user_currency) / 60;
-        let center_payment = time_keep * (center_currency) / 60;
+        let minute = parseInt(time_keep / 60);
+        minute = minute - (minute % 5);
+        // vd : 68 , --> 68 - 3 = 65
+        let user_salary = minute * (user_currency)
+        let center_payment = minute * (center_currency)
         let turn_over = center_payment - user_salary;
-        let checkout_history = await Histories.update({ salary: user_salary, checkout: checkout_date_formatted, time_keep: time_keep, checkout: checkout_date_formatted, sumary_price: center_payment, turn_over: turn_over }, {
+        let checkout_history = await Histories.update({ salary: user_salary, checkout: checkout_date_formatted, time_keep: minute, checkout: checkout_date_formatted, sumary_price: center_payment, turn_over: turn_over }, {
             where: {
                 id: history.id
             }
         });
         if (checkout_history) {
             reply = settings.checkout_ok;
-            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { time_keep: (time_keep / 60).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "phút", action, action, class_name: class_name, salary: (user_salary).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ", room: room, username, checkout: checkout_date_formatted, full_name: dbUser.full_name, id: checkout_history.id }))
+            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { time_keep: minute + " phút", action, action, class_name: class_name, salary: (user_salary).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ", room: room, username, checkout: checkout_date_formatted, full_name: dbUser.full_name, id: checkout_history.id }))
         }
     });
 

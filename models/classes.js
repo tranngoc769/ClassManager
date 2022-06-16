@@ -61,6 +61,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
             defaultValue: 0
         },
+        ca_price: {
+            type: DataTypes.FLOAT,
+            allowNull: true,
+            defaultValue: 0
+        },
         debit: {
             type: DataTypes.FLOAT,
             allowNull: true,
