@@ -54,7 +54,7 @@ const authenRouter = require('./routes/authen');
 const usersRouter = require('./routes/users');
 const classesRouter = require('./routes/classes');
 const groupsRouter = require('./routes/groups');
-// app.get('*', auth);
+app.get('*', auth);
 app.use('/', indexRouter);
 app.use('/authen', authenRouter);
 app.use('/users', usersRouter);

@@ -1,7 +1,7 @@
 {
     "development": {
-        "username": "root",
-        "password": "",
+        "username": "myuser",
+        "password": "ClassManager@2020",
         "database": "classmanager",
         "host": "localhost",
         "timezone": "Asia/Ho_Chi_Minh",
@@ -15,8 +15,8 @@
         "dialect": "mysql"
     },
     "production": {
-        "username": "root",
-        "password": "",
+        "username": "myuser",
+        "password": "ClassManager@2020",
         "timezone": "Asia/Ho_Chi_Minh",
         "database": "classmanager",
         "host": "localhost",

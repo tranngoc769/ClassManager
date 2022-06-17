@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('groups', {
+        await queryInterface.createTable('Groupss', {
             id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
@@ -35,6 +35,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('groups');
+        await queryInterface.dropTable('Groupss');
     }
 };

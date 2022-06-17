@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const Groups = require('../models').Groups;
-const GroupsService = require('../services/groups')
+const Groupss = require('../models').Groupss;
+const GroupssService = require('../services/groups')
 const Users = require('../models').Users;
 const Histories = require('../models').Histories;
 const GroupMembers = require('../models').GroupMembers;
@@ -11,7 +11,7 @@ const util = require('../internal/util');
 
 /* GET groups listing. */
 router.get('/', async function(req, res, next) {
-    let groups = await GroupsService.getAllGroups();
+    let groups = await GroupssService.getAllGroupss();
     let render_data = {
         groups: groups,
         moment: moment,
@@ -23,7 +23,7 @@ router.get('/', async function(req, res, next) {
 /* GET groups listing. */
 router.get('/my', async function(req, res, next) {
     let leader = 24;
-    let groups = await GroupsService.getGroupsByLeader(leader);
+    let groups = await GroupssService.getGroupssByLeader(leader);
     let render_data = {
         groups: groups,
         moment: moment,
@@ -36,7 +36,7 @@ router.get('/members/:group_id', async function(req, res, next) {
     let group_id = +req.params.group_id;
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
-    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
+    let groups = await Groupss.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
@@ -49,7 +49,7 @@ router.get('/members/:group_id', async function(req, res, next) {
     members.forEach(element => {
         member_arr.push(element.member_id)
     });
-    let users = await GroupsService.getGroupMembers(group_id);
+    let users = await GroupssService.getGroupMembers(group_id);
     let user_all = await Users.findAll({
         where: {
             is_delete: 0
@@ -146,7 +146,7 @@ router.post('/add', async function(req, res, next) {
     if (!validate) {
         return res.send({ "code": 400, "msg": error });
     }
-    const [groups, created] = await Groups.findOrCreate({
+    const [groups, created] = await Groupss.findOrCreate({
         where: { group_code: json.group_code },
         defaults: {
             group_code: json.group_code,
@@ -165,7 +165,7 @@ router.post('/active', async function(req, res, next) {
     try {
         json = JSON.parse(json);
     } catch (error) {}
-    const updated = await Groups.update({
+    const updated = await Groupss.update({
         is_delete: json.is_delete
     }, {
         where: { id: json.id }
@@ -184,7 +184,7 @@ router.post('/update', async function(req, res, next) {
     if (!validate) {
         return res.send({ "code": 400, "msg": error });
     }
-    const updated = await Groups.update({
+    const updated = await Groupss.update({
         group_code: json.group_code,
         group_name: json.group_name,
         leader: json.leader
@@ -198,7 +198,7 @@ router.post('/update', async function(req, res, next) {
 });
 router.get('/edit/:group_id', async(req, res) => {
     const group_id = +req.params.group_id;
-    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
+    let groups = await Groupss.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
@@ -222,11 +222,11 @@ router.get('/salary/:group_id', async(req, res) => {
     const user_id = +req.query.user_id;
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
-    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
+    let groups = await Groupss.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
-    let salaries = await GroupsService.getSummarySalary(groups.id, from, to, user_id);
+    let salaries = await GroupssService.getSummarySalary(groups.id, from, to, user_id);
     let turn_overs = 0;
     let paid = 0;
     let debit_turn_overs = 0;
@@ -262,11 +262,11 @@ router.get('/report/:group_id', async(req, res) => {
     const user_id = +req.query.user_id;
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
-    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
+    let groups = await Groupss.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
-    let reports = await GroupsService.getClassReport(groups.id, from, to);
+    let reports = await GroupssService.getClassReport(groups.id, from, to);
     let formatter = new Intl.NumberFormat('vi-VI', { maximumSignificantDigits: 3 });
     let render_data = {
         reports: reports,
@@ -284,12 +284,12 @@ router.get('/working/:group_id', async(req, res) => {
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
     from = '2022-06-15 00:00:00'
-    let groups = await Groups.findOne({ where: { id: group_id, is_delete: 0 } });
+    let groups = await Groupss.findOne({ where: { id: group_id, is_delete: 0 } });
     if (groups == null) {
         return res.send("invalid group_id");
     }
-    let workk_members = await GroupsService.getWorkingUsers(group_id, from, to, "");
-    let free_members = await GroupsService.getWorkingUsers(group_id, from, to, " not ");
+    let workk_members = await GroupssService.getWorkingUsers(group_id, from, to, "");
+    let free_members = await GroupssService.getWorkingUsers(group_id, from, to, " not ");
     let render_data = {
         title: "Tình trạng làm việc",
         moment: moment,
