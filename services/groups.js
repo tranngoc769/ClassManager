@@ -55,8 +55,16 @@ module.exports = {
         return all_salary;
     },
     getWorkingUsers: async(group_id, from, to, isNull) => {
-        let sql = `SELECT u.tele_id, u.tele_user, u.full_name, u.phone, u.address, u.social, u.updatedAt, u.createdAt, u.day_salary, u.thi_salary, u.dv_salary, u.is_delete, u.user_level FROM Histories AS h JOIN GroupMembers AS gm ON h.user_id = gm.member_id JOIN Classes AS cl ON cl.id = h.class_id JOIN Users AS u ON h.user_id = u.id WHERE   h.checkout is ${isNull} null  and u.is_delete = 0 and h.checkin BETWEEN '${from}' and '${to}' and gm.group_id = ${group_id} group by h.user_id`
+        let sql = `SELECT cl.class_name,cl.class_code,  h.room, h.user_id, u.tele_id, u.tele_user, u.full_name, u.phone, u.address, u.social, u.updatedAt, u.createdAt, u.day_salary, u.thi_salary, u.dv_salary, u.is_delete, u.user_level FROM Histories AS h JOIN GroupMembers AS gm ON h.user_id = gm.member_id JOIN Classes AS cl ON cl.id = h.class_id JOIN Users AS u ON h.user_id = u.id WHERE   h.checkout is ${isNull} null  and u.is_delete = 0 and h.checkin BETWEEN '${from}' and '${to}' and gm.group_id = ${group_id} group by h.user_id`
         let all_salary = await sequelize.query(sql, {
+            type: QueryTypes.SELECT
+        });
+        return all_salary;
+    },
+    getFreeUsers: async(group_id, from, to, list) => {
+        let sql = `SELECT cl.class_name,cl.class_code, h.user_id, u.tele_id, u.tele_user, u.full_name, u.phone, u.address, u.social, u.updatedAt, u.createdAt, u.day_salary, u.thi_salary, u.dv_salary, u.is_delete, u.user_level FROM Histories AS h JOIN GroupMembers AS gm ON h.user_id = gm.member_id JOIN Classes AS cl ON cl.id = h.class_id JOIN Users AS u ON h.user_id = u.id WHERE h.user_id IN(:status) and  h.checkout is not null  and u.is_delete = 0 and h.checkin BETWEEN '${from}' and '${to}' and gm.group_id = ${group_id} group by h.user_id`
+        let all_salary = await sequelize.query(sql, {
+            replacements: { status: list },
             type: QueryTypes.SELECT
         });
         return all_salary;

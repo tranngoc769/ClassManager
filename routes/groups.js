@@ -288,8 +288,26 @@ router.get('/working/:group_id', async(req, res) => {
     if (groups == null) {
         return res.send("invalid group_id");
     }
+    let all_member = await GroupssService.getGroupMembers(group_id)
+    let sub = [];
+    let all = [];
     let workk_members = await GroupssService.getWorkingUsers(group_id, from, to, "");
-    let free_members = await GroupssService.getWorkingUsers(group_id, from, to, " not ");
+
+    for (let index = 0; index < workk_members.length; index++) {
+        const element = workk_members[index];
+        all.push(element.user_id)
+    }
+
+    for (let index = 0; index < all_member.length; index++) {
+        const element = all_member[index];
+        if (!all.includes(element.member_id)) {
+            sub.push(element.member_id)
+        }
+    }
+    let free_members = [];
+    if (sub.length > 0) {
+        free_members = await GroupssService.getFreeUsers(group_id, from, to, sub);
+    }
     let render_data = {
         title: "Tình trạng làm việc",
         moment: moment,

@@ -1,4 +1,4 @@
-var ListSettingProperties = [{ name: "checkout_ok" }, { name: "not_found_class" }, { name: "not_checkin_yet" }, { name: "not_checkout" }, { name: "not_existed" }, { name: "not_member" }, { name: "checkin_ok" }]
+var ListSettingProperties = [{ name: "checkout_ok" }, { name: "not_found_class" }, { name: "not_checkin_yet" }, { name: "not_checkout" }, { name: "not_existed" }, { name: "not_member" }, { name: "checkin_ok" }, { name: "not_leader" }]
 var dateTime = require('node-datetime');
 const { Op } = require("sequelize");
 const MAX_STACK = 50
@@ -7,15 +7,22 @@ var TelegramBot = require('node-telegram-bot-api');
 const TimeOut = 3600;
 var BOT;
 const GroupMembers = require('../models').GroupMembers;
+const GroupssService = require('../services/groups')
+const Groupss = require('../models').Groupss;
 const Classes = require('../models').Classes;
 const Users = require('../models').Users;
 const Histories = require('../models').Histories;
 const Settings = require('../models').Settings;
 const UsersService = require('../services/users');
+const Util = require('../internal/util');
 const SettingsService = require('../services/settings');
 
 function standardizedReplyMessage(reply, obj) {
-    reply = reply.replaceAll("@username", "@" + obj.username)
+    try {
+        reply = reply.replaceAll("@username", "@" + obj.username)
+    } catch (error) {
+
+    }
     for (const [key, val] of Object.entries(obj)) {
         reply = reply.replaceAll("@" + key, val)
     }
@@ -28,11 +35,12 @@ async function init_bot() {
         return false;
     }
     BOT = new TelegramBot(bot_token.value, { polling: true });
+    BOT.getMe().then(function(info) { console.log(`${info.first_name} is ready, the username is @${info.username}`); });
     BOT.onText(/\/VAO*/, async function(msg, match) {
         var settings = await SettingsService.getSettingByNames(ListSettingProperties)
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
-        let message = msg.text;
+        let message = msg.text.toLowerCase();
         let pars = message.split(" ");
         let class_name = pars[1];
         let action = pars[2];
@@ -110,7 +118,7 @@ async function init_bot() {
         var settings = await SettingsService.getSettingByNames(ListSettingProperties)
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
-        let message = msg.text;
+        let message = msg.text.toLowerCase();
         let pars = message.split(" ");
         let class_name = pars[1];
         let action = pars[2];
@@ -216,9 +224,138 @@ async function init_bot() {
         }
     });
 
-}
+    BOT.onText(/\/dangky*/, async function(msg, match) {
+        var settings = await SettingsService.getSettingByNames(ListSettingProperties)
+        var chatId = msg.chat.id;
+        // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
+        let message = msg.text.toLowerCase();
+        message = '/dangky {"full_name":"Trần văn A", "phone":"012345678","social":"link FB", "address":"34, Trần Phú"}'
+        let help = `Cú pháp: /dangky {"full_name":"Họ tên", "phone":"SĐT","social":"FB", "address":"Địa chỉ"}\nVí dụ: /dangky {"full_name":"Trần văn A", "phone":"012345678","social":"link FB", "address":"34, Trần Phú"}`
+        let reply = ''
+        if (message.substr(8, 10) == 'help') {
+            reply = help
+            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
+        }
+        let user_id = msg.from.id + "123";
+        let username = msg.from.username;
+        let body = message.substr(7, message.length).trim()
+        try {
+            body = JSON.parse(body)
+            if (body.full_name == undefined || body.full_name == undefined || body.full_name == undefined || body.full_name == undefined) {
+                reply = `Thiếu tham số, vui lòng kiểm tra lại dữ liệu đăng ký\n` + help;
+                return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
+            }
+            // Check user existed
+            const [user, created] = await Users.findOrCreate({
+                where: { tele_id: user_id },
+                defaults: {
+                    tele_id: user_id,
+                    tele_user: username,
+                    user_level: 0,
+                    is_delete: 1,
+                    full_name: body.full_name,
+                    phone: body.phone,
+                    social: body.social,
+                    address: body.address
+                }
+            })
+            if (created) {
+                reply = `Người dùng @${username} user_id:${user_id}  đã đăng ký thành công. Vui lòng chờ trưởng nhóm duyệt`;
+                return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
+            }
+            reply = `Người dùng ${user_id} đã tồn tại. Ngày đăng ký :${dateTime.create(dbUser.createdAt).format('Y-m-d H:M:S')} `;
+            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
+        } catch (error) {
+            reply = "Cú pháp không đúng\n" + help
+            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
+        }
 
+    });
+    BOT.onText(/\/list*/, async function(msg, match) {
+        var settings = await SettingsService.getSettingByNames(ListSettingProperties)
+        var chatId = msg.chat.id;
+        // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
+        let message = msg.text.toLowerCase();
+        let pars = message.split(" ");
+        let action = pars[1];
+        let user_id = msg.from.id;
+        let username = msg.from.username;
+        // Check user existed
+        let dbUser = await Users.findOne({
+            where: { tele_id: user_id, user_level: 0, is_delete: 0 },
+            someAttribute: {}
+        });
+        if (dbUser == null || !dbUser) {
+            reply = settings.not_existed;
+            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { user_id: user_id, username: username }))
+        }
+        let from = Util.getValidDatetime("", "00:00:00");
+        let to = Util.getValidDatetime("", "23:59:59");
+        // Check is leader
+        let dbUserid = dbUser.id;
+        let dbGroups = await Groupss.findAll({
+            where: { leader: dbUserid }
+        });
+        if (dbGroups.length == 0) {
+            reply = settings.not_leader;
+            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { user_id: user_id, username: username }))
+        }
+        let content = "";
+        if (action == undefined || action == "work") {
+            content += `Thành viên đang làm việc\n`;
+            for (let index = 0; index < dbGroups.length; index++) {
+                const element = dbGroups[index];
+                content += `-- Nhóm ${element.group_code}: ${element.group_name}\n`;
+                let working = await GroupssService.getWorkingUsers(element.id, from, to, "")
+                for (let i = 0; i < working.length; i++) {
+                    const uss = working[i];
+                    content += `+ ID:${uss.user_id}, ${uss.full_name}, ${uss.class_code}-${uss.room}\n`;
+                }
+            }
+            return BOT.sendMessage(chatId, standardizedReplyMessage(content, { user_id: user_id, username: username }))
+        } else {
+            content += `Thành viên đang rảnh\n`;
+            for (let index = 0; index < dbGroups.length; index++) {
+                const element = dbGroups[index];
+                content += `-- Nhóm ${element.group_code}: ${element.group_name}\n`;
+                // 
+                let group_id = element.id;
+                let all_member = await GroupssService.getGroupMembers(group_id)
+                let sub = [];
+                let all = [];
+                let workk_members = await GroupssService.getWorkingUsers(group_id, from, to, "");
+
+                for (let index = 0; index < workk_members.length; index++) {
+                    const element = workk_members[index];
+                    all.push(element.user_id)
+                }
+
+                for (let index = 0; index < all_member.length; index++) {
+                    const element = all_member[index];
+                    if (!all.includes(element.member_id)) {
+                        sub.push(element.member_id)
+                    }
+                }
+                if (sub.length > 0) {
+                    let free_members = await GroupssService.getFreeUsers(group_id, from, to, sub);
+                    for (let i = 0; i < free_members.length; i++) {
+                        const uss = free_members[i];
+                        content += `+ ID:${uss.user_id}, ${uss.full_name}\n`;
+                    }
+                }
+            }
+            return BOT.sendMessage(chatId, standardizedReplyMessage(content, { user_id: user_id, username: username }))
+        }
+
+
+    });
+
+}
+async function close_bot() {
+
+}
 module.exports = {
     init_bot,
+    close_bot,
     BOT
 }

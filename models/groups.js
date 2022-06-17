@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     }, {
+        freezeTableName: true,
         sequelize,
         modelName: 'Groupss',
     });
