@@ -1,4 +1,4 @@
-var ListSettingProperties = [{ name: "checkout_ok" }, { name: "not_found_class" }, { name: "not_checkin_yet" }, { name: "not_checkout" }, { name: "not_existed" }, { name: "not_member" }, { name: "checkin_ok" }, { name: "not_leader" }]
+var ListSettingProperties = [{ name: "not_checkout_other" }, { name: "checkout_ok" }, { name: "not_found_class" }, { name: "not_checkin_yet" }, { name: "not_checkout" }, { name: "not_existed" }, { name: "not_member" }, { name: "checkin_ok" }, { name: "not_leader" }]
 var dateTime = require('node-datetime');
 const { Op } = require("sequelize");
 const MAX_STACK = 50
@@ -35,12 +35,13 @@ async function init_bot() {
         return false;
     }
     BOT = new TelegramBot(bot_token.value, { polling: true });
-    BOT.getMe().then(function(info) { console.log(`${info.first_name} is ready, the username is @${info.username}`); });
-    BOT.onText(/\/VAO*/, async function(msg, match) {
+    BOT.getMe().then(function (info) { console.log(`${info.first_name} is ready, the username is @${info.username}`); });
+
+    async function VAO(msg, match) {
         var settings = await SettingsService.getSettingByNames(ListSettingProperties)
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
-        let message = msg.text.toLowerCase();
+        let message = msg.text.toUpperCase();
         let pars = message.split(" ");
         let class_name = pars[1];
         let action = pars[2];
@@ -83,7 +84,7 @@ async function init_bot() {
         // Check class
         let classes = await Classes.findOne({
             where: {
-                class_code: class_name,
+                class_code: class_name.toUpperCase(),
                 is_delete: 0
             }
         });
@@ -92,7 +93,7 @@ async function init_bot() {
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
         }
         let class_id = classes.id
-            // Check have checked in
+        // Check have checked in
         let history = await Histories.findOne({
             where: {
                 user_id: dbUserid,
@@ -100,9 +101,16 @@ async function init_bot() {
             }
         });
         if (history != null) {
-            reply = settings.not_checkout;
-            let last_checkin = dateTime.create(history.checkin).format('Y-m-d H:M:S');
-            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { checkin: last_checkin }))
+            reply = settings.not_checkin_yet;
+            let last_checked = await GroupssService.getLastCheckin(dbUserid);
+            if (last_checked.length == 0){
+                reply = settings.not_checkin_yet;
+                return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {action:action}))
+            }else{
+                last_checked= last_checked[0]
+                reply = settings.not_checkout_other;
+                return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {class_name:last_checked.class_name,action:last_checked.action}))
+            }
         }
         // Checkin
         var today = dateTime.create();
@@ -113,12 +121,12 @@ async function init_bot() {
             reply = settings.checkin_ok;
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { room: room, checkin: dateTime.create(checkin_history.checkin).format('Y-m-d H:M:S'), class_name: class_name, action, action, user_id: dbUserid, username, username, full_name: dbUser.full_name, id: checkin_history.id }))
         }
-    });
-    BOT.onText(/\/RA*/, async function(msg, match) {
+    }
+    async function RA(msg, match) {
         var settings = await SettingsService.getSettingByNames(ListSettingProperties)
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
-        let message = msg.text.toLowerCase();
+        let message = msg.text.toUpperCase();
         let pars = message.split(" ");
         let class_name = pars[1];
         let action = pars[2];
@@ -156,7 +164,7 @@ async function init_bot() {
         // Check class
         let classes = await Classes.findOne({
             where: {
-                class_code: class_name,
+                class_code: class_name.toUpperCase(),
                 is_delete: 0
             }
         });
@@ -165,7 +173,7 @@ async function init_bot() {
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
         }
         let class_id = classes.id
-            // Check have checked in
+        // Check have checked in
         let history = await Histories.findOne({
             where: {
                 class_id: class_id,
@@ -176,7 +184,16 @@ async function init_bot() {
         });
         if (history == null) {
             reply = settings.not_checkin_yet;
-            return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
+            // Check last checkin
+            let last_checked = await GroupssService.getLastCheckin(dbUserid);
+            if (last_checked.length == 0){
+                reply = settings.not_checkin_yet;
+                return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {action:action}))
+            }else{
+                last_checked= last_checked[0]
+                reply = settings.not_checkout_other;
+                return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {class_name:last_checked.class_name,action:last_checked.action}))
+            }
         }
         // Checkin
         var checkout_date = dateTime.create();
@@ -222,13 +239,31 @@ async function init_bot() {
             reply = settings.checkout_ok;
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, { time_keep: minute + " phút", action, action, class_name: class_name, salary: (user_salary).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + "đ", room: room, username, checkout: checkout_date_formatted, full_name: dbUser.full_name, id: checkout_history.id }))
         }
-    });
+    }
+    BOT.on('message', async function (msg, match) {
+        let first = "";
+        try {
+            if (msg.text.substr(0, 3+1).toUpperCase() == "/VAO") {
+                VAO(msg, match); return;
+            }
+            if (msg.text.substr(0, 2+1).toUpperCase() == "/RA") {
+                RA(msg, match); return
+            }
+            if (msg.text.substr(0, 6+1).toUpperCase() == "/DANGKY") {
+                DK(msg, match); return
+            }
+            if (msg.text.substr(0, 4+1).toUpperCase() == "/LIST") {
+                List(msg, match); return
+            }
+        } catch (error) {
 
-    BOT.onText(/\/dangky*/, async function(msg, match) {
+        }
+    });
+    async function DK(msg, match) {
         var settings = await SettingsService.getSettingByNames(ListSettingProperties)
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
-        let message = msg.text.toLowerCase();
+        let message = msg.text.toUpperCase();
         message = '/dangky {"full_name":"Trần văn A", "phone":"012345678","social":"link FB", "address":"34, Trần Phú"}'
         let help = `Cú pháp: /dangky {"full_name":"Họ tên", "phone":"SĐT","social":"FB", "address":"Địa chỉ"}\nVí dụ: /dangky {"full_name":"Trần văn A", "phone":"012345678","social":"link FB", "address":"34, Trần Phú"}`
         let reply = ''
@@ -236,7 +271,7 @@ async function init_bot() {
             reply = help
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
         }
-        let user_id = msg.from.id + "123";
+        let user_id = msg.from.id;
         let username = msg.from.username;
         let body = message.substr(7, message.length).trim()
         try {
@@ -270,12 +305,12 @@ async function init_bot() {
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
         }
 
-    });
-    BOT.onText(/\/list*/, async function(msg, match) {
+    };
+    async function List(msg, match) {
         var settings = await SettingsService.getSettingByNames(ListSettingProperties)
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
-        let message = msg.text.toLowerCase();
+        let message = msg.text.toUpperCase();
         let pars = message.split(" ");
         let action = pars[1];
         let user_id = msg.from.id;
@@ -306,10 +341,18 @@ async function init_bot() {
             for (let index = 0; index < dbGroups.length; index++) {
                 const element = dbGroups[index];
                 content += `-- Nhóm ${element.group_code}: ${element.group_name}\n`;
-                let working = await GroupssService.getWorkingUsers(element.id, from, to, "")
-                for (let i = 0; i < working.length; i++) {
-                    const uss = working[i];
-                    content += `+ ID:${uss.user_id}, ${uss.full_name}, ${uss.class_code}-${uss.room}\n`;
+                let working = await GroupssService.getWorkingUsers(element.id, from, to)
+                let sub = []
+                for (let index = 0; index < working.length; index++) {
+                    const element = working[index];
+                    sub.push(element.user_id)
+                }
+                if (working.length > 0) {
+                    let free_members = await GroupssService.getFreeUsers(element.id, from, to, sub,"");
+                    for (let i = 0; i < free_members.length; i++) {
+                        const uss = free_members[i];
+                        content += `+ ID:${uss.user_id}, ${uss.full_name}\n`;
+                    }
                 }
             }
             return BOT.sendMessage(chatId, standardizedReplyMessage(content, { user_id: user_id, username: username }))
@@ -348,8 +391,7 @@ async function init_bot() {
         }
 
 
-    });
-
+    };
 }
 async function close_bot() {
 

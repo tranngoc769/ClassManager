@@ -149,7 +149,7 @@ router.post('/add', async function(req, res, next) {
     const [groups, created] = await Groupss.findOrCreate({
         where: { group_code: json.group_code },
         defaults: {
-            group_code: json.group_code,
+            group_code: json.group_code.toUpperCase(),
             group_name: json.group_name,
             leader: json.leader,
         }

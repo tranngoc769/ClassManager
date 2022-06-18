@@ -50,7 +50,7 @@ router.post('/add', async function(req, res, next) {
         where: { class_code: json.class_code },
         defaults: {
             created_by: 1,
-            class_code: json.class_code,
+            class_code: json.class_code.toUpperCase(),
             class_name: json.class_name,
             address: json.address,
             min_price: json.min_price,
@@ -75,7 +75,7 @@ router.post('/update', async function(req, res, next) {
     }
     const updated = await Classes.update({
         created_by: 1,
-        class_code: json.class_code,
+        class_code: json.class_code.toUpperCase(),
         class_name: json.class_name,
         address: json.address,
         min_price: json.min_price,

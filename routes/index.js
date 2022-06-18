@@ -39,7 +39,19 @@ router.post('/settings', asyncHandler(async(req, res) => {
 
     let created = await Settings.bulkCreate(json);
     if (created) {
-        return res.send({ "code": 200, "msg": "Thành công" })
+        const { exec } = require("child_process");
+        console.log("This is pid " + process.pid);
+        setTimeout(function () {
+            process.on("exit", function () {
+                require("child_process").spawn(process.argv.shift(), process.argv, {
+                    cwd: process.cwd(),
+                    detached : true,
+                    stdio: "inherit"
+                });
+            });
+            process.exit();
+        }, 1000);
+        return res.send({ "code": 200, "msg": "Thành công" });
     }
     return res.send({ "code": 400, "msg": "Không thành công" })
 }));
