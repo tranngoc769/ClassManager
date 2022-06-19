@@ -264,22 +264,28 @@ async function init_bot() {
         var chatId = msg.chat.id;
         // VALIDATE INPUT : Ex: VAO LOP1 DAY 101
         let message = msg.text.toUpperCase();
-        message = '/dangky {"full_name":"Trần văn A", "phone":"012345678","social":"link FB", "address":"34, Trần Phú"}'
-        let help = `Cú pháp: /dangky {"full_name":"Họ tên", "phone":"SĐT","social":"FB", "address":"Địa chỉ"}\nVí dụ: /dangky {"full_name":"Trần văn A", "phone":"012345678","social":"link FB", "address":"34, Trần Phú"}`
+        let help = `Cú pháp: /dangky [Mã Nhóm]`
         let reply = ''
-        if (message.substr(8, 10) == 'help') {
+        let pars = message.split(" ");
+        if (pars.length < 2){
             reply = help
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
         }
+        let class_code = pars[1];
         let user_id = msg.from.id;
         let username = msg.from.username;
-        let body = message.substr(7, message.length).trim()
         try {
-            body = JSON.parse(body)
-            if (body.full_name == undefined || body.full_name == undefined || body.full_name == undefined || body.full_name == undefined) {
-                reply = `Thiếu tham số, vui lòng kiểm tra lại dữ liệu đăng ký\n` + help;
-                return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
+            // 
+            let group = await Groupss.findOne({
+                where:{
+                    group_code: class_code
+                }
+            })
+            if (group == null){
+                return BOT.sendMessage(chatId, standardizedReplyMessage("Mã nhóm không tồn tại", {}))
             }
+            let leader = group.leader;
+            // 
             // Check user existed
             const [user, created] = await Users.findOrCreate({
                 where: { tele_id: user_id },
@@ -287,18 +293,19 @@ async function init_bot() {
                     tele_id: user_id,
                     tele_user: username,
                     user_level: 0,
+                    leader:leader,
                     is_delete: 1,
-                    full_name: body.full_name,
-                    phone: body.phone,
-                    social: body.social,
-                    address: body.address
+                    full_name: "",
+                    phone:"",
+                    social: "",
+                    address: ""
                 }
             })
             if (created) {
                 reply = `Người dùng @${username} user_id:${user_id}  đã đăng ký thành công. Vui lòng chờ trưởng nhóm duyệt`;
                 return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
             }
-            reply = `Người dùng ${user_id} đã tồn tại. Ngày đăng ký :${dateTime.create(dbUser.createdAt).format('Y-m-d H:M:S')} `;
+            reply = `Người dùng ${user_id} đã tồn tại. Ngày đăng ký :${dateTime.create(user.createdAt).format('Y-m-d H:M:S')} `;
             return BOT.sendMessage(chatId, standardizedReplyMessage(reply, {}))
         } catch (error) {
             reply = "Cú pháp không đúng\n" + help
