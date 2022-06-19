@@ -23,7 +23,7 @@ module.exports = {
     },
     getGroupssByLeader: async(leader) => {
         let groups = await sequelize.query(
-            'SELECT g.id, g.is_delete, g.group_code, g.group_name, g.leader, g.createdAt, g.updatedAt, u.full_name, u.phone FROM Groupss AS g JOIN Users AS u ON g.leader = u.id where leader = ? and g.is_delete = 0', {
+            'SELECT g.id, g.is_delete, g.group_code, g.group_name, g.leader, g.createdAt, g.updatedAt, u.full_name, u.phone FROM Groupss AS g JOIN Users AS u ON g.leader = u.id where g.leader = ? and g.is_delete = 0', {
                 replacements: [leader],
                 type: QueryTypes.SELECT
             }

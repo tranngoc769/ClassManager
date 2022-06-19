@@ -39,6 +39,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: 0
         },
+        leader: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
         tele_id: {
             type: DataTypes.BIGINT,
             allowNull: false

@@ -11,6 +11,9 @@ const util = require('../internal/util');
 
 /* GET groups listing. */
 router.get('/', async function(req, res, next) {
+    if (req.session.user_level*1 < 2){
+        return res.redirect("/groups/my")
+    }
     let groups = await GroupssService.getAllGroupss();
     let render_data = {
         groups: groups,
@@ -22,7 +25,7 @@ router.get('/', async function(req, res, next) {
 });
 /* GET groups listing. */
 router.get('/my', async function(req, res, next) {
-    let leader = 24;
+    let leader = req.session.user_id;
     let groups = await GroupssService.getGroupssByLeader(leader);
     let render_data = {
         groups: groups,
@@ -34,6 +37,7 @@ router.get('/my', async function(req, res, next) {
 });
 router.get('/members/:group_id', async function(req, res, next) {
     let group_id = +req.params.group_id;
+    let leader = req.session.user_id;
     let from = util.getValidDatetime(req.query.from, "00:00:00");
     let to = util.getValidDatetime(req.query.to, "23:59:59");
     let groups = await Groupss.findOne({ where: { id: group_id, is_delete: 0 } });
@@ -52,7 +56,8 @@ router.get('/members/:group_id', async function(req, res, next) {
     let users = await GroupssService.getGroupMembers(group_id);
     let user_all = await Users.findAll({
         where: {
-            is_delete: 0
+            is_delete: 0,
+            leader: leader
         }
     });
     let render_data = {
